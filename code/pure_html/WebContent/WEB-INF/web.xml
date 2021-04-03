@@ -1,0 +1,17 @@
+<web-app> 
+	<servlet>
+	  <servlet-name>
+	 	HelloWorldServlet
+	  </servlet-name>
+	  <servlet-class>
+			controllers.HelloWorldServlet
+	  </servlet-class>
+	</servlet>
+	<servlet-mapping>
+	  <servlet-name>
+	    HelloWorldServlet
+	  </servlet-name>
+	  <url-pattern>  
+	  </url-pattern>
+	</servlet-mapping>
+</web-app>
