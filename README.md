@@ -1,7 +1,7 @@
 # Final Project of Web Information Technologies 2021 [085879]. 
 
-This project was made between March and July 2021 at Polytechnic University of Milan.
-The project 
+This project was made between March and June 2021 at Polytechnic University of Milan.
+
 
 The aim of the project is to develop two version of a WebSite for the Examination Results Record;
 a Pure HTML version, and a Javascript version. 
