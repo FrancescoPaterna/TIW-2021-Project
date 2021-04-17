@@ -4,7 +4,7 @@ package beans;
 public class Enroll {
 	private int IDstudent;
 	private int IDexamdate;
-	private int mark;
+	private String mark;
 	private Status status;
 	
 	public int getIDstudent() {
@@ -19,10 +19,10 @@ public class Enroll {
 	public void setIDexamdate(int iDexamdate) {
 		IDexamdate = iDexamdate;
 	}
-	public int getMark() {
+	public String getMark() {
 		return mark;
 	}
-	public void setMark(int mark) {
+	public void setMark(String mark) {
 		this.mark = mark;
 	}
 	public Status getStatus() {
