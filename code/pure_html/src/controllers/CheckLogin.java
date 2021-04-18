@@ -73,7 +73,7 @@ public class CheckLogin extends HttpServlet {
 			//response.sendRedirect(path + target);
 			//response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
-		    out.println("Ti reindirizzerò a --->" + path + target);
+		    out.println("Benvenuto " + user.getName() + ' ' + user.getSurname() +  " stai per essere indirizzato in   --->" + path + target);
 		}
 
 	}
