@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+//import org.thymeleaf.TemplateEngine;
+//import org.thymeleaf.context.WebContext;
+//import org.thymeleaf.templatemode.TemplateMode;
+//import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.User;
 import dao.UserDAO;
@@ -29,7 +29,7 @@ import utils.ConnectionHandler;
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
-	private TemplateEngine templateEngine;
+	//private TemplateEngine templateEngine;
 
 	public CheckLogin() {
 		super();
@@ -38,11 +38,11 @@ public class CheckLogin extends HttpServlet {
 	public void init() throws ServletException {
 		connection = ConnectionHandler.getConnection(getServletContext());
 		ServletContext servletContext = getServletContext();
-		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-		templateResolver.setTemplateMode(TemplateMode.HTML);
-		this.templateEngine = new TemplateEngine();
-		this.templateEngine.setTemplateResolver(templateResolver);
-		templateResolver.setSuffix(".html");
+		//ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+		//templateResolver.setTemplateMode(TemplateMode.HTML);
+		//this.templateEngine = new TemplateEngine();
+		//this.templateEngine.setTemplateResolver(templateResolver);
+		//templateResolver.setSuffix(".html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -79,10 +79,10 @@ public class CheckLogin extends HttpServlet {
 		String path;
 		if (user == null) {
 			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "Incorrect username or password");
+			//final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			//ctx.setVariable("errorMsg", "Incorrect username or password");
 			path = "/index.html";
-			templateEngine.process(path, ctx, response.getWriter());
+			//templateEngine.process(path, ctx, response.getWriter());
 		} else {
 			request.getSession().setAttribute("user", user);
 			path = getServletContext().getContextPath() + "/Home";
