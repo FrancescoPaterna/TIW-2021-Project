@@ -29,7 +29,6 @@ public class UserDAO {
 					user.setName(result.getString("name"));
 					user.setSurname(result.getString("surname"));
 					user.setEmail(result.getString("email"));
-					user.setRole(result.getString("role"));
 					if(result.getString("role").equals("student") ) {
 						user.setCoursedeg(result.getString("coursedeg"));
 					}
