@@ -34,5 +34,27 @@ public class CourseDAO {
 		}
 		return courses;
 	}
+	
+	public List<Course> findCoursesByIdStudent(int studId) throws SQLException {
+		List<Course> courses = new ArrayList<>();
+		
+		String query = "SELECT course.ID, course.name, course.IDProfessor\r\n"
+						+ "FROM projectdb.course course JOIN projectdb.signup signup ON course.ID = signup.IDCourse\r\n"
+						+ "WHERE IDStudent = ?\r\n"
+						+ "ORDER BY ID ASC";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, studId);
+			try (ResultSet result = pstatement.executeQuery();) {
+				while(result.next()) {
+					Course course = new Course();
+					course.setId(result.getInt("ID"));
+					course.setName(result.getString("name"));
+					course.setIDprofessor(result.getInt("IDProfessor"));
+					courses.add(course);
+				}
+			}
+		}
+		return courses;
+	}
 
 }

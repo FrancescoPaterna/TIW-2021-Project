@@ -60,7 +60,7 @@ public class GoToHomePagePro extends HttpServlet {
 		try {
 			courses = courseDAO.findCoursesByIdProf(user.getId());
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover missions");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
 			return;
 		}
 		

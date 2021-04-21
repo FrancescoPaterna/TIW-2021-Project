@@ -9,8 +9,21 @@
 	<div align="right">
 		<a th:href="@{/Logout}">Logout</a>
 	</div>
-	<h1>Welcome to the Mission Mamagement Home Page</h1>
+	<h1>Welcome to the Student Home page</h1>
 	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
-
+	<table>
+		<thead>
+			<tr>
+				<th>IDCourse</th>
+				<th>name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="c : ${courses}">
+				<td th:text="${c.id}"></td>
+				<td th:text="${c.name }"></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>
