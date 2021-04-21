@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.User;
 import dao.UserDAO;
@@ -25,11 +30,17 @@ import utils.ConnectionHandler;
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
-	//private TemplateEngine templateEngine;
+	private TemplateEngine templateEngine;
 
 
 	public void init() throws ServletException {
 		connection = ConnectionHandler.getConnection(getServletContext());
+		ServletContext servletContext = getServletContext();
+		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
+		templateResolver.setTemplateMode(TemplateMode.HTML);
+		this.templateEngine = new TemplateEngine();
+		this.templateEngine.setTemplateResolver(templateResolver);
+		templateResolver.setSuffix(".html");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -65,7 +76,11 @@ public class CheckLogin extends HttpServlet {
 
 		String path;
 		if (user == null) {
-			path = getServletContext().getContextPath() + "/index.html";
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "Incorrect username or password");
+			path = "/index.html";
+			templateEngine.process(path, ctx, response.getWriter());
 		} else {
 			request.getSession().setAttribute("user", user);
 			String target;
@@ -81,12 +96,11 @@ public class CheckLogin extends HttpServlet {
 			
 			
 			path = getServletContext().getContextPath();
-			//response.sendRedirect(path + target);
+			response.sendRedirect(path + target);
 			//response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-		    out.println("Benvenuto " + user.getName() + ' ' + user.getSurname() +  " stai per essere indirizzato in   --->" + path + target);
+			//PrintWriter out = response.getWriter();
+		    //out.println("Benvenuto " + user.getName() + ' ' + user.getSurname() +  " stai per essere indirizzato in   --->" + path + target);
 		}
-
 	}
 	
 	
