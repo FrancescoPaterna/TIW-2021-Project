@@ -2,7 +2,7 @@ package controllers;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -97,9 +97,6 @@ public class CheckLogin extends HttpServlet {
 			
 			path = getServletContext().getContextPath();
 			response.sendRedirect(path + target);
-			//response.setContentType("text/html");
-			//PrintWriter out = response.getWriter();
-		    //out.println("Benvenuto " + user.getName() + ' ' + user.getSurname() +  " stai per essere indirizzato in   --->" + path + target);
 		}
 	}
 	

@@ -3,6 +3,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Professor's home</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
 	<div align="right">
@@ -20,7 +22,14 @@
 		<tbody>
 			<tr th:each="c : ${courses}">
 				<td th:text="${c.id}"></td>
-				<td th:text="${c.name }"></td>
+				<td>
+					<a th:text="${c.name}" th:href = "@{/{name} (name=${c.name})}"></a>  <!--  Demo Only Linked Button -->
+				</td>
+				<td> 
+					<form action="GoToSessionEnrolls" method="POST">
+    				<input type="submit" name="${c.di}" value="VIEW" />
+					</form>				
+				</td>
 			</tr>
 		</tbody>
 	</table>

@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="ISO-8859-1">
+<title>Exam Enrolls</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+	<h1>EXAM ENROLLS</h1>
+		<table>
+		<thead>
+			<tr>
+				<th>IDC</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Email</th>				
+				<th>ICourseDeg</th>
+				<th>Mark</th>
+				<th>Status</th>
+		</tbody>
+	</table>
 </body>
 </html>
