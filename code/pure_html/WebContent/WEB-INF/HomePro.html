@@ -8,13 +8,13 @@
 </head>
 <body>
 	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
+		<a th:href="@{/LogOut}">Logout</a>
 	</div>
 	<h1>Welcome to the Professor Home page</h1>
 	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
 	<table>
 		<thead>
-			<tr>
+			<tr class=pro>
 				<th>IDCourse</th>
 				<th>name</th>
 			</tr>
@@ -26,8 +26,8 @@
 					<a th:text="${c.name}" th:href = "@{/{name} (name=${c.name})}"></a>  <!--  Demo Only Linked Button -->
 				</td>
 				<td> 
-					<form action="GoToSessionEnrolls" method="POST">
-    				<input type="submit" name="${c.di}" value="VIEW" />
+					<form action="GoToExamDates" method="get">
+ 					<button name="course_id" type="submit" th:value="${c.id}">VIEW</button>
 					</form>				
 				</td>
 			</tr>

@@ -2,6 +2,10 @@ table, th, td {
   border: 1px solid black;
 }
 
-th{
+.pro{
 	background-color:#FF0000;
+}
+
+.stud{
+	background-color:#3465a4;
 }
