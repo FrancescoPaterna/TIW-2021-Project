@@ -3,31 +3,65 @@ package beans;
 
 public class Enroll {
 	private int IDstudent;
-	private int IDexamdate;
+	private String name;
+	private String surname;
+	private String mail;
 	private String mark;
+	private String courseDeg;
 	private Status status;
 	
 	public int getIDstudent() {
 		return IDstudent;
 	}
+	
 	public void setIDstudent(int iDstudent) {
 		IDstudent = iDstudent;
 	}
-	public int getIDexamdate() {
-		return IDexamdate;
+	
+	public String getName() {
+		return name;
 	}
-	public void setIDexamdate(int iDexamdate) {
-		IDexamdate = iDexamdate;
+	
+	public void setName(String name) {
+		this.name = name;
 	}
+	
+	public String getSurname() {
+		return surname;
+	}
+	
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	public String getMail() {
+		return mail;
+	}
+	
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+	
+	public String getCourseDeg() {
+		return courseDeg;
+	}
+	
+	public void setCourseDeg(String courseDeg) {
+		this.courseDeg = courseDeg;
+	}
+	
 	public String getMark() {
 		return mark;
 	}
+	
 	public void setMark(String mark) {
 		this.mark = mark;
 	}
+	
 	public Status getStatus() {
 		return status;
 	}
+	
 	public void setStatus(Status status) {
 		this.status = status;
 	}
