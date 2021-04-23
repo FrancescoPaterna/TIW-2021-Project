@@ -21,6 +21,11 @@
 			<tr th:each="c : ${exams}">
 				<td th:text="${c.id}"></td>
 				<td th:text="${c.date}"></td>
+				<td> 
+					<form action="GoToExamDates" method="post">
+ 					<button name="ID" type="submit" th:value="${c.id}">VIEW</button>
+					</form>				
+				</td>
 			</tr>
 		</tbody>
 	</table>
