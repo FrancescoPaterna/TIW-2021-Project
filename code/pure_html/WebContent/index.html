@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
 <title>Login page</title>
 </head>
 <body>
@@ -10,7 +12,7 @@
 	<form action="CheckLogin" method="POST">
 		University ID : <input type="text" name="id" required> <br>
 		Password: <input type="password" name="pwd" required><br>
-		<input type="submit" value="login">
+		<input class=button1 type="submit" value="login">
 		<p th:text=" ${errorMsg}"></p>
 	</form>
 	

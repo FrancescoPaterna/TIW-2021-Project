@@ -9,3 +9,52 @@ table, th, td {
 .stud{
 	background-color:#3465a4;
 }
+
+.button3{
+	background-color: white;
+	border: none; 
+	color: blue;
+	cursor: pointer;
+}
+
+.button3:hover{
+	text-decoration: underline;
+}
+/*
+body {
+    text-align: center;
+    background-color: #729fcf;
+}
+
+.logout{
+  background-color: red;
+  color: white;
+ }
+
+form {
+    display: inline-block;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {background-color: #4CAF50;} 
+.button2 {background-color: #008CBA;} 
+
+.button3{
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}*/

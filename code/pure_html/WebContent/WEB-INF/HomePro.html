@@ -22,14 +22,12 @@
 		<tbody>
 			<tr th:each="c : ${courses}">
 				<td th:text="${c.id}"></td>
-				<td>
-					<a th:text="${c.name}" th:href = "@{/{name} (name=${c.name})}"></a>  <!--  Demo Only Linked Button -->
-				</td>
 				<td> 
 					<form action="GoToHomePagePro" method="post">
- 					<button name="course_id" type="submit" th:value="${c.id}">VIEW</button>
+ 					<button class=button3 name="course_id" type="submit" th:value="${c.id}" th:text= "${c.name}" ></button>
 					</form>				
 				</td>
+				
 			</tr>
 		</tbody>
 	</table>
