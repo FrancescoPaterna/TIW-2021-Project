@@ -73,18 +73,40 @@ public class GoToHomePagePro extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			String role = null;
-			String path = null;;
-			role = (String) request.getSession().getAttribute("user");
-			if(role.contentEquals("Professor")){
-				path = getServletContext().getContextPath();
-				response.sendRedirect(path + request);
-			}
-			else {
-				path = getServletContext().getContextPath();
-						response.sendRedirect(path);
+			String path = null;
+			int course_id; 
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			HttpSession session = request.getSession();
+			
+			User user = (User) session.getAttribute("user");
+			
+			CourseDAO courseDAO = new CourseDAO(connection);
+			List<Course> courses = new ArrayList<>();
+			
+			try {
+				courses = courseDAO.findCoursesByIdProf(user.getId());
+			} catch (SQLException e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
+				return;
 			}
 			
+			boolean course_found = false;
+			for(Course course : courses) {
+				if(course.getId() == course_id) {
+					course_found = true;
+				}
+			}
+			if(!course_found) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Accesso Non Autorizzato");
+			}
+			else {
+				request.getSession().setAttribute("course_id", course_id);
+				path = getServletContext().getContextPath();
+				String target = "/GoToExamDates";
+				response.sendRedirect(path + target);
+				
+			}
+
 	}
 	
 	public void destroy() {

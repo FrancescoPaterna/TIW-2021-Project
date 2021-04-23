@@ -1,10 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="ISO-8859-1">
+<title>Exam Enrolls</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
+	<div align="right">
+		<a th:href="@{/Logout}">Logout</a>
+	</div>
+		<h1>EXAM DATES</h1>
+	  	<table>
+		<thead>
+			<tr class=pro>
+				<th>IdAppello</th>
+				<th>Date</th>
+				</thead>
+		 <tbody>
+			<tr th:each="c : ${exams}">
+				<td th:text="${c.id}"></td>
+				<td th:text="${c.date}"></td>
+			</tr>
+		</tbody>
+	</table>
 
 </body>
 </html>

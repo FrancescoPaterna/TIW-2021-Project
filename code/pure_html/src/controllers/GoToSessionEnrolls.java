@@ -19,8 +19,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import beans.Course;
-import beans.User;
+import beans.Enroll;
 import dao.EnrollsDAO;
 import utils.ConnectionHandler;
 
@@ -56,16 +55,15 @@ public class GoToSessionEnrolls extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
-		//User user = (User) session.getAttribute("user");
-		//EnrollsDAO EnrollDAO = new EnrollsDAO(connection);
-		//List<Course> courses = new ArrayList<>();
+		EnrollsDAO EnrollDAO = new EnrollsDAO(connection);
+		List<Enroll> Enroll = new ArrayList<>();
 		
 		
 		// Redirect to the HomePage and add courses to the parameters
 		String path ="/WEB-INF/ExamEnrolls.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		//ctx.setVariable("courses", courses);
+		ctx.setVariable("Enroll", Enroll);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
