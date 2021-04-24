@@ -102,7 +102,7 @@ public class GoToHomePagePro extends HttpServlet {
 			else {
 				request.getSession().setAttribute("course_id", course_id);
 				path = getServletContext().getContextPath();
-				String target = "/GoToExamDates";
+				String target = "/GoToExamDatesPro";
 				response.sendRedirect(path + target);
 				
 			}

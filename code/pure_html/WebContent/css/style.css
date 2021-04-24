@@ -1,15 +1,19 @@
+/*Generic Table Border*/
 table, th, td {
   border: 1px solid black;
 }
 
+/*Professor Table*/
 .pro{
 	background-color:#FF0000;
 }
 
+/*Student Table*/
 .stud{
 	background-color:#3465a4;
 }
 
+/*Button for tables choice*/
 .button3{
 	background-color: white;
 	border: none; 
@@ -19,6 +23,14 @@ table, th, td {
 
 .button3:hover{
 	text-decoration: underline;
+}
+/*Login Form*/
+.loginform{
+	text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    color: blue;
 }
 /*
 body {

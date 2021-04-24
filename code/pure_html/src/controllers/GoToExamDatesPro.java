@@ -27,13 +27,13 @@ import utils.ConnectionHandler;
 /**
  * Servlet implementation class GoToSessionEnrolls
  */
-@WebServlet("/GoToExamDates")
-public class GoToExamDates extends HttpServlet {
+@WebServlet("/GoToExamDatesPro")
+public class GoToExamDatesPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	private Connection connection = null;
 	
-   public GoToExamDates() {
+   public GoToExamDatesPro() {
         super();
     }
    
