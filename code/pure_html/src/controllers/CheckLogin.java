@@ -43,6 +43,18 @@ public class CheckLogin extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+	String path;
+
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		ctx.setVariable("errorMsg", "Incorrect username or password");
+		path = "/index.html";
+		templateEngine.process(path, ctx, response.getWriter());
+	
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// obtain and escape params

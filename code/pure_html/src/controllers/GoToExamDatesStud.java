@@ -19,7 +19,6 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import beans.Course;
 import beans.ExamDate;
 import beans.User;
 import dao.ExamDateDAO;

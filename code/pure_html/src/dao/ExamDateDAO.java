@@ -18,44 +18,38 @@ public class ExamDateDAO {
 
 	public List<ExamDate> FindExameDateBYCourseForProfessor(int course_id) throws SQLException {
 		List<ExamDate> examdates = new ArrayList<>();
-		String query = "SELECT  ID, date  FROM examdate   WHERE IDCourse = ? ";
+		String query = "SELECT  IDExam, date  FROM examdate   WHERE IDCourse = ? ";
 		try (PreparedStatement pstatement = con.prepareStatement(query);) {
 			pstatement.setInt(1, course_id);
 			try (ResultSet result = pstatement.executeQuery();) {
-				if (!result.isBeforeFirst()) // no results, credential check failed
-					return null;
-				else {
-					result.next();
+				while(result.next()) {
 					ExamDate ExamDate = new ExamDate();
-					ExamDate.setID(result.getInt("ID"));
+					ExamDate.setID(result.getInt("IDExam"));
 					ExamDate.setDate(result.getDate("date"));
 					examdates.add(ExamDate);
-
-					return examdates;
 				}
 			}
 		}
+		return examdates;
+
 	}
 	
 	public List<ExamDate> FindExameDateBYCourseForStudent(int id_Stud, int course_id) throws SQLException {
 		List<ExamDate> examdates = new ArrayList<>();
-		String query = "SELECT IDExamDate, date FROM projectdb.enroll enroll JOIN projectdb.examdate examdate ON enroll.IDExamDate = examdate.ID WHERE IDStudent = ? AND IDCourse = ? ";
+		String query = "SELECT IDExamDate, date FROM projectdb.enroll enroll JOIN projectdb.examdate examdate ON enroll.IDExamDate = examdate.IDExam WHERE IDStudent = ? AND IDCourse = ? ORDER BY date DESC";
 		try (PreparedStatement pstatement = con.prepareStatement(query);) {
 			pstatement.setInt(1, id_Stud);
 			pstatement.setInt(2, course_id);
 			try (ResultSet result = pstatement.executeQuery();) {
-				if (!result.isBeforeFirst()) // no results, credential check failed
-					return null;
-				else {
-					result.next();
+				while(result.next()) {
 					ExamDate ExamDate = new ExamDate();
 					ExamDate.setID(result.getInt("IDExamDate"));
 					ExamDate.setDate(result.getDate("date"));
 					examdates.add(ExamDate);
-
-					return examdates;
 				}
 			}
 		}
+		return examdates;
+
 	}
 }

@@ -54,7 +54,7 @@ private Connection connection;
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
@@ -298,6 +298,31 @@ private Connection connection;
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setMark(result.getString("mark"));
+					enroll.setStatus(Status.valueOf(result.getString("status")));
+					enrolls.add(enroll);
+				}
+			}
+		}
+		return enrolls;
+	}
+	
+	public List<Enroll> FindStudentScore(int exameDateId, int user_id) throws SQLException {
+		List<Enroll> enrolls = new ArrayList<>();
+		
+		String query = "SELECT user.ID, user.name, user.surname, user.coursedeg, enroll.mark, enroll.status, examdate.IDExam FROM projectdb.user user JOIN projectdb.enroll enroll ON user.ID = enroll.IDStudent JOIN projectdb.examdate examdate ON enroll.IDExamDate = examdate.IDExam WHERE examdate.IDExam = ? AND user.ID= ?";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			
+			pstatement.setInt(1, exameDateId);
+			pstatement.setInt(2, user_id);
+			try (ResultSet result = pstatement.executeQuery();) {
+				while(result.next()) {
+					Enroll enroll = new Enroll();
+					enroll.setIDstudent(result.getInt("ID"));
+					enroll.setName(result.getString("name"));
+					enroll.setSurname(result.getString("surname"));
+					enroll.setMark(result.getString("mark"));
+					enroll.setIDSession(result.getInt("IDExam"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
 				}

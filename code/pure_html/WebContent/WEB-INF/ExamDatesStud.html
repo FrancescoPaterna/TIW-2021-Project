@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8"/>
 <title>Exam Enrolls</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
@@ -13,7 +13,7 @@
 		<h1>EXAM DATES</h1>
 	  	<table>
 		<thead>
-			<tr class=pro>
+			<tr class=stud>
 				<th>IdAppello</th>
 				<th>Date</th>
 				</thead>
@@ -21,7 +21,7 @@
 			<tr th:each="c : ${exams}">
 				<td th:text="${c.id}"></td>
 				<td> 
-					<form action="GoToExamDates" method="post">
+					<form action="GoToResult" method="post">
  					<button class=button3 name="IDExamDate" type="submit" th:value="${c.id}" th:text="${c.date}"></button>
 					</form>				
 				</td>

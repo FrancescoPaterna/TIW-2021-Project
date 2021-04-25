@@ -9,7 +9,25 @@ public class Enroll {
 	private String mark;
 	private String courseDeg;
 	private Status status;
+	private int IDSession;
+	private String course;
 	
+	public int getIDSession() {
+		return IDSession;
+	}
+
+	public void setIDSession(int iDSession) {
+		IDSession = iDSession;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
+	}
+
 	public int getIDstudent() {
 		return IDstudent;
 	}

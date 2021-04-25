@@ -1,6 +1,7 @@
 /*Generic Table Border*/
 table, th, td {
   border: 1px solid black;
+  width: auto;
 }
 
 /*Professor Table*/
@@ -11,6 +12,18 @@ table, th, td {
 /*Student Table*/
 .stud{
 	background-color:#3465a4;
+}
+
+/*Button to reject the evaluation*/
+.button2{
+	background-color: #ff0000;
+	border: none; 
+	color: white;
+	cursor: pointer;
+}
+
+.button2:hover{
+	background-color: #a40000;
 }
 
 /*Button for tables choice*/
@@ -24,14 +37,7 @@ table, th, td {
 .button3:hover{
 	text-decoration: underline;
 }
-/*Login Form*/
-.loginform{
-	text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-    color: blue;
-}
+
 /*
 body {
     text-align: center;
