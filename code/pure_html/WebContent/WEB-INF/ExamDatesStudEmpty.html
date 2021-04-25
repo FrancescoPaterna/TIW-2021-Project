@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>EXAM DATES</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
-
-<h1>The student is not registered on any exam date</h1>
 <body>
+	<div align="right">
+		<a th:href="@{/LogOut}">Logout</a>
+	</div>
+		<h1>The student is not registered on any exam date</h1>
+
 
 </body>
 </html>
+
+
+
+
+
+
+
