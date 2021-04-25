@@ -20,7 +20,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.Enroll;
-
+import beans.Status;
 import beans.User;
 import dao.EnrollsDAO;
 import utils.ConnectionHandler;
@@ -73,12 +73,20 @@ public class GoToResult extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get Scores");
 			return;
 		}
-		
+		if(!(enroll.get(0).getStatus() == Status.NOT_INSERTED)) {
 		String path ="/WEB-INF/Result.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("enroll", enroll);
 		templateEngine.process(path, ctx, response.getWriter());
+		}
+		else {
+			String path ="/WEB-INF/ResultEmpty.html";
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("enroll", enroll);
+			templateEngine.process(path, ctx, response.getWriter());
+		}
 	}
 
 }
