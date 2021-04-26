@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>EXAM DATES</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
@@ -10,24 +10,28 @@
 	<div align="right">
 		<a th:href="@{/LogOut}">Logout</a>
 	</div>
-		<h1>EXAM DATES</h1>
-	  	<table>
-		<thead>
-			<tr class=stud>
-				<th>IdAppello</th>
-				<th>Date</th>
-				</thead>
-		 <tbody>
-			<tr th:each="c : ${exams}">
-				<td th:text="${c.id}"></td>
-				<td> 
-					<form action="GoToResult" method="post">
- 					<button class=button3 name="IDExamDate" type="submit" th:value="${c.id}" th:text="${c.date}"></button>
-					</form>				
-				</td>
-			</tr>
-		</tbody>
-	</table>
+	<h1>EXAM DATES</h1>
+
+	<div>
+		<table>
+			<thead>
+				<tr class=stud>
+					<th>IdAppello</th>
+					<th>Date</th>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${exams}">
+					<td th:text="${c.id}"></td>
+					<td>
+						<form action="GoToResult" method="post">
+							<button class=button3 name="IDExamDate" type="submit"
+								th:value="${c.id}" th:text="${c.date}"></button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 </html>

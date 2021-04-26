@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Professor's home</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
@@ -11,25 +11,30 @@
 		<a th:href="@{/LogOut}">Logout</a>
 	</div>
 	<h1>Welcome to the Professor Home page</h1>
-	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
-	<table>
-		<thead>
-			<tr class=pro>
-				<th>IDCourse</th>
-				<th>name</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr th:each="c : ${courses}">
-				<td th:text="${c.id}"></td>
-				<td> 
-					<form action="GoToHomePagePro" method="post">
- 					<button class=button3 name="course_id" type="submit" th:value="${c.id}" th:text= "${c.name}" ></button>
-					</form>				
-				</td>
-				
-			</tr>
-		</tbody>
-	</table>
+	<p
+		th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
+
+	<div>
+		<table>
+			<thead>
+				<tr class=pro>
+					<th>ID</th>
+					<th>Course</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${courses}">
+					<td th:text="${c.id}"></td>
+					<td>
+						<form action="GoToHomePagePro" method="post">
+							<button class=button3 name="course_id" type="submit"
+								th:value="${c.id}" th:text="${c.name}"></button>
+						</form>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>
