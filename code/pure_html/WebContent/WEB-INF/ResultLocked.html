@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Result</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<div align="right">
+		<a th:href="@{/LogOut}">Logout</a>
+	</div>
+	<h1>EXAM DATES</h1>
+
+	<div>
+		<table>
+			<thead>
+				<tr class=stud>
+					<th>Id Student</th>
+					<th>Name</th>
+					<th>Surname</th>
+					<th>Course</th>
+					<th>Id Session</th>
+					<th>Score</th>
+					<th>State</th>
+			</thead>
+			<tbody>
+				<tr th:each="c : ${enroll}">
+					<td th:text="${c.IDStudent}"></td>
+					<td th:text="${c.name}"></td>
+					<td th:text="${c.surname}"></td>
+					<td th:text="${c.courseDeg}"></td>
+					<td th:text="${c.IDSession}"></td>
+					<td th:text="${c.mark}"></td>
+					<td th:text="${c.status}"></td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+</body>
