@@ -162,6 +162,7 @@ th, td{
 		padding: 12px 15px;
 		border-radius: 6px;
 		color: white;
+		cursor: pointer;
 }
 
 .modify:hover{
