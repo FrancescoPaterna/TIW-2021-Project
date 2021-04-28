@@ -168,6 +168,20 @@ th, td{
 .modify:hover{
 		background-color: #729fcf;
 }
+
+.record{
+		background-color: #4e9a06;
+		text-align: center;
+		width: 50%;
+		padding: 12px 15px;
+		border-radius: 6px;
+		color: white;
+		cursor: pointer;
+}
+
+.record:hover{
+		background-color: #8ae234;
+}
 /*
 body {
     text-align: center;

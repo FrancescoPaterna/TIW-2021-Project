@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Exam Enrolls</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
@@ -15,17 +15,17 @@
 			onclick="history.back()">
 	</form>
 	<h1>EXAM ENROLLS</h1>
-		<table>
+	<table>
 		<thead>
 			<tr class=pro>
 				<th>IDStud</th>
 				<th>Name</th>
 				<th>Surname</th>
-				<th>Email</th>				
+				<th>Email</th>
 				<th>CourseDeg</th>
 				<th>Mark</th>
 				<th>Status</th>
-				</thead>
+		</thead>
 		<tbody>
 			<tr th:each="e : ${enrolls}">
 				<td th:text="${e.IDstudent}"></td>
@@ -35,16 +35,22 @@
 				<td th:text="${e.courseDeg}"></td>
 				<td th:text="${e.mark}"></td>
 				<td th:text="${e.status}"></td>
-				<td> 
+				<td>
 					<form action="GoToSessionEnrolls" method="POST">
-    				<button class=modify name="modify" type="submit"
-    				th:value="${e.IDstudent}">Modify</button>
-    				
-					</form>				
+						<button class=modify name="modify" type="submit"
+							th:value="${e.IDstudent}">Modify</button>
+
+					</form>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+
+
+	<form action="GoToRecord" method="POST">
+		<button class=record name="record" type="submit">RECORD</button>
+
+	</form>
 
 </body>
 </html>
