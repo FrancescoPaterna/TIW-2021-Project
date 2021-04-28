@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron);
 
 h1 {
+	margin-top: 150px;
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
 	font-weight: bold;
@@ -107,6 +108,49 @@ th, td{
 
 .button3:hover {
 	text-decoration: underline;
+}
+
+.divbutton{
+	position: absolute;
+ 	top: 10px;
+	
+}
+
+.logoutbutton{
+    position: absolute;
+  	top: 16px;
+ 	right: 16px;
+ 	padding: 5px 5px;
+ 	font-size: 27px;
+	background-color: #ff0000;
+	border-radius: 6px;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.returnbutton{
+	position: absolute;
+  	top: 16px;
+ 	left: 16px;
+	font-weight: bold;
+ 	left: 50px;
+ 	padding: 5px 5px;
+ 	font-size: 27px;
+	background-color: #3465a4;
+	border-radius: 6px;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.logoutbutton:hover{
+	background-color: #f85f5f;
+}
+
+.returnbutton:hover{
+	background-color: #729fcf
+	;
 }
 
 .credits {

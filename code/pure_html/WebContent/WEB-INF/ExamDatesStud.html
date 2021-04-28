@@ -7,9 +7,12 @@
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/LogOut}">Logout</a>
-	</div>
+	<form action="LogOut" method="get">
+		<button class=logoutbutton type="submit">logout</button>
+	</form>
+	<form action="GoToHomePageStud" method="get">
+		<button class=returnbutton>&#8617</button>
+	</form>
 	<h1>EXAM DATES</h1>
 
 	<div>

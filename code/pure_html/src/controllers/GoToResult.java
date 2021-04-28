@@ -64,7 +64,7 @@ public class GoToResult extends HttpServlet {
 		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
-		List<Enroll> enroll = new ArrayList<>();
+		Enroll enroll;
 
 		try {
 			enroll = enrollsDAO.FindStudentScore(IDExamDate, user.getId());
@@ -74,8 +74,8 @@ public class GoToResult extends HttpServlet {
 			return;
 		}
 
-		if (!(enroll.get(0).getStatus() == Status.NOT_INSERTED || enroll.get(0).getStatus() == Status.INSERTED)) {
-			if (enroll.get(0).getStatus() == Status.PUBLISHED && GoodScore.CheckGoodScore(enroll.get(0).getMark())) {
+		if (!(enroll.getStatus() == Status.NOT_INSERTED || enroll.getStatus() == Status.INSERTED)) {
+			if (enroll.getStatus() == Status.PUBLISHED && GoodScore.CheckGoodScore(enroll.getMark())) {
 				String path = "/WEB-INF/Result.html";
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

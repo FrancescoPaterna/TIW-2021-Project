@@ -11,7 +11,16 @@ public class Enroll {
 	private Status status;
 	private int IDSession;
 	private String course;
+	private String courseName;
 	
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
 	public int getIDSession() {
 		return IDSession;
 	}

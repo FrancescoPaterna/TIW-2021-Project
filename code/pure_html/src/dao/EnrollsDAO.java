@@ -346,17 +346,20 @@ public class EnrollsDAO {
 		return enrolls;
 	}
 
-	public List<Enroll> FindStudentScore(int exameDateId, int user_id) throws SQLException {
-		List<Enroll> enrolls = new ArrayList<>();
+	public Enroll FindStudentScore(int exameDateId, int user_id) throws SQLException {
+		Enroll enroll;
 
-		String query = "SELECT user.ID, user.name, user.surname, user.coursedeg, enroll.mark, enroll.status, examdate.IDExam FROM projectdb.user user JOIN projectdb.enroll enroll ON user.ID = enroll.IDStudent JOIN projectdb.examdate examdate ON enroll.IDExamDate = examdate.IDExam WHERE examdate.IDExam = ? AND user.ID= ?";
+		String query = "SELECT user.ID, user.name, user.surname, user.coursedeg, enroll.mark, enroll.status, examdate.IDExam, course.name coursename, course.ID courseID \r\n"
+				+ "FROM projectdb.user user JOIN projectdb.enroll enroll ON user.ID = enroll.IDStudent JOIN projectdb.examdate examdate ON enroll.IDExamDate = examdate.IDExam JOIN projectdb.course course ON examdate.IDCourse = course.ID \r\n"
+				+ "WHERE examdate.IDExam = ? AND user.ID= ?";
+		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 
 			pstatement.setInt(1, exameDateId);
 			pstatement.setInt(2, user_id);
 			try (ResultSet result = pstatement.executeQuery();) {
-				while (result.next()) {
-					Enroll enroll = new Enroll();
+					result.next();
+					enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
 					enroll.setSurname(result.getString("surname"));
@@ -364,11 +367,11 @@ public class EnrollsDAO {
 					enroll.setIDSession(result.getInt("IDExam"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
-					enrolls.add(enroll);
+					enroll.setCourse(result.getString("courseID"));
+					enroll.setCourseName(result.getString("coursename"));
 				}
-			}
 		}
-		return enrolls;
+		return enroll;
 	}
 
 	public void RefuseScore(int examDateId, int user_id) throws SQLException {

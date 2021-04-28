@@ -67,7 +67,7 @@ public class UpdateResultStud extends HttpServlet {
 
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 			
-			List<Enroll> enroll = new ArrayList<>();
+			Enroll enroll;
 
 			try {
 				enrollsDAO.RefuseScore(IDExamDate, user.getId());
@@ -87,8 +87,8 @@ public class UpdateResultStud extends HttpServlet {
 				return;
 			}
 			
-			if (!(enroll.get(0).getStatus() == Status.NOT_INSERTED || enroll.get(0).getStatus() == Status.INSERTED)) {
-				if (enroll.get(0).getStatus() == Status.PUBLISHED && GoodScore.CheckGoodScore(enroll.get(0).getMark())) {
+			if (!(enroll.getStatus() == Status.NOT_INSERTED || enroll.getStatus() == Status.INSERTED)) {
+				if (enroll.getStatus() == Status.PUBLISHED && GoodScore.CheckGoodScore(enroll.getMark())) {
 					String path = "/WEB-INF/Result.html";
 					ServletContext servletContext = getServletContext();
 					final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -99,6 +99,7 @@ public class UpdateResultStud extends HttpServlet {
 					ServletContext servletContext = getServletContext();
 					final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 					ctx.setVariable("enroll", enroll);
+					ctx.setVariable("rej", "Score Rejected!");
 					templateEngine.process(path, ctx, response.getWriter());
 				}
 

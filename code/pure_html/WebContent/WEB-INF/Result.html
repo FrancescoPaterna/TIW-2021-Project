@@ -7,9 +7,13 @@
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/LogOut}">Logout</a>
-	</div>
+	<form action="LogOut" method="get">
+		<button class=logoutbutton type="submit">logout</button>
+	</form>
+	<form action="GoToExamDatesStud" method="post" >
+		<button class=returnbutton name="course_id"
+			type="submit" th:value="${enroll.course}">&#8617</button>
+	</form>
 	<h1>EXAM DATES</h1>
 
 	<div>
@@ -19,25 +23,29 @@
 					<th>Id Student</th>
 					<th>Name</th>
 					<th>Surname</th>
-					<th>Course</th>
+					<th>CourseDeg</th>
 					<th>Id Session</th>
+					<th>Id Course</th>
+					<th>Course</th>
 					<th>Score</th>
 					<th>State</th>
 					<th>Option</th>
 			</thead>
 			<tbody>
-				<tr th:each="c : ${enroll}">
-					<td th:text="${c.IDStudent}"></td>
-					<td th:text="${c.name}"></td>
-					<td th:text="${c.surname}"></td>
-					<td th:text="${c.courseDeg}"></td>
-					<td th:text="${c.IDSession}"></td>
-					<td th:text="${c.mark}"></td>
-					<td th:text="${c.status}"></td>
+				<tr>
+					<td th:text="${enroll.IDStudent}"></td>
+					<td th:text="${enroll.name}"></td>
+					<td th:text="${enroll.surname}"></td>
+					<td th:text="${enroll.courseDeg}"></td>
+					<td th:text="${enroll.IDSession}"></td>
+					<td th:text="${enroll.course}"></td>
+					<td th:text="${enroll.coursename}"></td>
+					<td th:text="${enroll.mark}"></td>
+					<td th:text="${enroll.status}"></td>
 					<td>
 						<form action="UpdateResultStud" method="post">
 							<button class=button2 name="IDExamDate" type="submit"
-								th:value="${c.IDSession}" th:text="REFUSE"></button>
+								th:value="${enroll.IDSession}" th:text="REFUSE"></button>
 						</form>
 					</td>
 				</tr>

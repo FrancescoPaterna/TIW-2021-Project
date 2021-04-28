@@ -7,9 +7,9 @@
 <title>Home</title>
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/LogOut}">Logout</a>
-	</div>
+	<form action="LogOut" method="get">
+		<button class=logoutbutton type="submit">logout</button>
+	</form>
 	<h1>Welcome to the Student Home page</h1>
 	<p
 		th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>

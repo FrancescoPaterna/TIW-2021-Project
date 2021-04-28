@@ -102,7 +102,8 @@ public class CheckLogin extends HttpServlet {
 				target = "/GoToHomePagePro";
 			}
 			else {
-				target = "/Errore Contattare Segreteria";
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Undefined User, Please Contact Registrar's office");
+				return;
 			}
 			
 			

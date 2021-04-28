@@ -7,13 +7,17 @@
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<div align="right">
-		<a th:href="@{/Logout}">Logout</a>
-	</div>
+	<form action="LogOut" method="get">
+		<button class=logoutbutton type="submit">logout</button>
+	</form>
+	<form>
+		<input class=returnbutton type="button" value=&#8617
+			onclick="history.back()">
+	</form>
 	<h1>EXAM ENROLLS</h1>
 		<table>
 		<thead>
-			<tr>
+			<tr class=pro>
 				<th>IDStud</th>
 				<th>Name</th>
 				<th>Surname</th>
