@@ -21,12 +21,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.ExamDate;
+import beans.User;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
 
-/**
- * Servlet implementation class GoToSessionEnrolls
- */
 @WebServlet("/GoToExamDatesPro")
 public class GoToExamDatesPro extends HttpServlet {
 	private static final long serialVersionUID = 1L;

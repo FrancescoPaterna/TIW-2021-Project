@@ -30,8 +30,9 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -54,8 +55,9 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -80,6 +82,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -104,6 +107,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -128,6 +132,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -152,6 +157,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -176,6 +182,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -200,6 +207,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -224,6 +232,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -250,6 +259,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -276,6 +286,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -300,6 +311,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);
@@ -324,6 +336,7 @@ public class EnrollsDAO {
 					enroll.setName(result.getString("name"));
 					enroll.setName(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
 					enroll.setStatus(Status.valueOf(result.getString("status")));
 					enrolls.add(enroll);

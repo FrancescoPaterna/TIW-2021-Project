@@ -55,15 +55,30 @@ public class GoToSessionEnrolls extends HttpServlet {
 			response.sendRedirect(loginpath);
 			return;
 		}
-		EnrollsDAO EnrollDAO = new EnrollsDAO(connection);
-		List<Enroll> Enroll = new ArrayList<>();
 		
+		Integer exam_date_id = null;
+		try {
+			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+		} catch (NumberFormatException | NullPointerException e) {
+			// only for debugging e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
+			return;
+		}
 		
+		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
+		List<Enroll> enrolls = new ArrayList<>();
+		
+		try {
+			enrolls = enrollsDAO.FindEnrolls(exam_date_id);
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover enrolls for this exam date");
+			return;
+		}
 		// Redirect to the HomePage and add courses to the parameters
 		String path ="/WEB-INF/ExamEnrolls.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("Enroll", Enroll);
+		ctx.setVariable("enrolls", enrolls);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
