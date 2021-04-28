@@ -37,7 +37,9 @@
 				<td th:text="${e.status}"></td>
 				<td> 
 					<form action="GoToSessionEnrolls" method="POST">
-    				<input type="submit" name="${c.di}" value="VIEW" />
+    				<button class=modify name="modify" type="submit"
+    				th:value="${e.IDstudent}">Modify</button>
+    				
 					</form>				
 				</td>
 			</tr>

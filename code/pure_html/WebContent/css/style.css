@@ -149,8 +149,7 @@ th, td{
 }
 
 .returnbutton:hover{
-	background-color: #729fcf
-	;
+	background-color: #729fcf;
 }
 
 .credits {
@@ -158,6 +157,16 @@ th, td{
 	text-align: center;
 }
 
+.modify{
+		background-color: #3465a4;
+		padding: 12px 15px;
+		border-radius: 6px;
+		color: white;
+}
+
+.modify:hover{
+		background-color: #729fcf;
+}
 /*
 body {
     text-align: center;
