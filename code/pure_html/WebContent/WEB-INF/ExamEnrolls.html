@@ -18,17 +18,16 @@
 	<table>
 		<thead>
 			<tr class=pro>
-				<th>IDStud</th>
-				<th>Name</th>
-				<th>Surname</th>
-				<th>Email</th>
-				<th>CourseDeg</th>
-				<th>Mark</th>
-				<th>Status</th>
+				<th>IDStud &#8645</th>
+				<th>Name &#8645</th>
+				<th>Surname &#8645</th>
+				<th><button class = "sort" type="button">Email &#8645</button></th>
+				<th>CourseDeg &#8645</th>
+				<th>Mark &#8645</th>
+				<th>Status &#8645</th>
 		</thead>
 		<tbody>
 			<tr th:each="e : ${enrolls}">
-				<td th:text="${e.IDstudent}"></td>
 				<td th:text="${e.name}"></td>
 				<td th:text="${e.surname}"></td>
 				<td th:text="${e.mail}"></td>
