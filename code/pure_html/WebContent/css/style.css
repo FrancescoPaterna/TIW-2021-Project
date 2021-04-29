@@ -1,7 +1,9 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron);
 
 .start{
-background-image: url("demo.jpg")
+background-image: url("demo.jpg");
+background-repeat: no-repeat;
+  background-size: cover;
 }
 .welcome{
 	width: 65%;
