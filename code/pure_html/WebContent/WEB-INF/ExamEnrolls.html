@@ -18,16 +18,18 @@
 	<table>
 		<thead>
 			<tr class=pro>
-				<th>IDStud &#8645</th>
-				<th>Name &#8645</th>
-				<th>Surname &#8645</th>
-				<th><button class = "sort" type="button">Email &#8645</button></th>
-				<th>CourseDeg &#8645</th>
-				<th>Mark &#8645</th>
-				<th>Status &#8645</th>
+				<th><button class = "sort" type="button">IDStud&nbsp&#8645</button></th>
+				<th><button class = "sort" type="button">Name&nbsp&#8645</button></th>
+				<th><button class = "sort" type="button">Surname&nbsp&#8645</button></th>
+				<th><button class = "sort" type="button">Email&nbsp&#8645</button></th>
+				<th><button class = "sort" type="button">CourseDeg&nbsp&#8645</button></th>
+				<th><button class = "sort" type="button">Mark&nbsp&#8645</button></th>
+				<th><button class = "sort" type="button">Status&nbsp&#8645</button></th>
+				<th class ="sortstatic">Option</th>
 		</thead>
 		<tbody>
 			<tr th:each="e : ${enrolls}">
+				<td th:text="${e.IDStudent}"></td>
 				<td th:text="${e.name}"></td>
 				<td th:text="${e.surname}"></td>
 				<td th:text="${e.mail}"></td>

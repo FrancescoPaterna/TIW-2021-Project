@@ -3,7 +3,7 @@
 .start{
 background-image: url("demo.jpg");
 background-repeat: no-repeat;
-  background-size: cover;
+ background-size: cover;
 }
 .welcome{
 	width: 65%;
@@ -212,7 +212,7 @@ th, td{
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
 	background-color: transparent;
-		border: 0px;
+	border: 0px;
 	
 }
 
@@ -222,6 +222,16 @@ th, td{
 
 .sort:active{
 	color:yellow;
+}
+
+.sortstatic{
+	color:black;
+	font-size: 20px;
+	text-align: center;
+	font-family: 'Orbitron', courier, sans-serif;
+	background-color: transparent;
+	font-weight:normal;
+	
 }
 /*
 body {
