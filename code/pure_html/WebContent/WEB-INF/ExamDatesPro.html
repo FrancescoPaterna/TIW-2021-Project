@@ -27,9 +27,13 @@
 				<tr th:each="c : ${exams}">
 					<td th:text="${c.id}"></td>
 					<td>
-						<a th:href="@{/GoToSessionEnrolls(exam_date_id=${c.id})}"> 
-							<button class=button3 name="exam_date_id" type="submit" th:value="${c.id}" th:text="${c.date}"></button> 
-						</a>
+
+						<form action="GoToSessionEnrolls" method="post">
+							<input type="hidden" name="name" id="coursename" th:value="${coursename}"/>
+							<input type="hidden" name="date" id="date" th:value="${c.date}"/>
+							<button class=button3 name="exam_date_id" type="submit"
+								th:value="${c.id}" th:text="${c.date}"></button>
+						</form>
 					</td>
 				</tr>
 			</tbody>

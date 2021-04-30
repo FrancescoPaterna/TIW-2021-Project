@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -75,7 +76,10 @@ public class GoToHomePagePro extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			String path = null;
 			int course_id; 
+			String coursename = null;
 			course_id = Integer.parseInt(request.getParameter("course_id"));
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+
 			HttpSession session = request.getSession();
 			
 			User user = (User) session.getAttribute("user");
@@ -85,6 +89,7 @@ public class GoToHomePagePro extends HttpServlet {
 			
 			try {
 				courses = courseDAO.findCoursesByIdProf(user.getId());
+				request.getSession().setAttribute("courses", courses); //TODO: Discutere con il Team
 			} catch (SQLException e) {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
 				return;
@@ -101,6 +106,7 @@ public class GoToHomePagePro extends HttpServlet {
 			}
 			else {
 				request.getSession().setAttribute("course_id", course_id);
+				request.getSession().setAttribute("coursename", coursename);
 				path = getServletContext().getContextPath();
 				String target = "/GoToExamDatesPro";
 				response.sendRedirect(path + target);

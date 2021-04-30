@@ -55,7 +55,9 @@ public class GoToExamDatesPro extends HttpServlet {
 			return;
 		}
 		int course_id = (int) session.getAttribute("course_id");
+		String coursename = (String) session.getAttribute("coursename");
 		
+
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);
 		List<ExamDate> exams = new ArrayList<>();
 		
@@ -70,6 +72,9 @@ public class GoToExamDatesPro extends HttpServlet {
 		String path ="/WEB-INF/ExamDatesPro.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+
+		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("exams", exams);
 		templateEngine.process(path, ctx, response.getWriter());
 	}

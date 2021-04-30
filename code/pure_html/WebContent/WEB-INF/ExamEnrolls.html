@@ -15,16 +15,17 @@
 			onclick="history.back()">
 	</form>
 	<h1>EXAM ENROLLS</h1>
+	 <p	th:text="${'All students enrolled in the ' + date + ' exam of ' + coursename}"></p>
 	<table>
 		<thead>
 			<tr class=pro>
-				<th><button class = "sort" type="button">IDStud&nbsp&#8645</button></th>
-				<th><button class = "sort" type="button">Name&nbsp&#8645</button></th>
-				<th><button class = "sort" type="button">Surname&nbsp&#8645</button></th>
-				<th><button class = "sort" type="button">Email&nbsp&#8645</button></th>
-				<th><button class = "sort" type="button">CourseDeg&nbsp&#8645</button></th>
-				<th><button class = "sort" type="button">Mark&nbsp&#8645</button></th>
-				<th><button class = "sort" type="button">Status&nbsp&#8645</button></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="1">IDStud&nbsp&#8645</button></form></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="2">Name&nbsp&#8645</button></form></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="3">Surname&nbsp&#8645</button></form></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="4">Email&nbsp&#8645</button></form></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="5">CourseDeg&nbsp&#8645</button></form></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="6">"Mark&nbsp&#8645</button></form></th>
+				<th><form action="GoToSessionEnrolls" method="GET"><input type="hidden" name="exam_date_id" th:value= "${exam_date_id}"/><input type="hidden" name="date" th:value= "${date}"/> <input type="hidden" name="coursename" th:value= "${coursename}"/><button class="sort" type="submit" name = "sort" th:value ="7">Status&nbsp&#8645</button></form></th>
 				<th class ="sortstatic">Option</th>
 		</thead>
 		<tbody>

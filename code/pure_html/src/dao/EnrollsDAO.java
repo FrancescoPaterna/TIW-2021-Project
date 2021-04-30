@@ -105,7 +105,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -130,7 +130,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -155,7 +155,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -180,7 +180,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -205,7 +205,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -230,7 +230,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -257,7 +257,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -284,7 +284,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -309,7 +309,7 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));
@@ -325,7 +325,7 @@ public class EnrollsDAO {
 		List<Enroll> enrolls = new ArrayList<>();
 
 		String query = "SELECT user.ID, user.name, user.surname, user.email, user.coursedeg, enroll.mark, enroll.status "
-				+ "FROM (user JOIN enroll ON user.ID = enroll.IDStudent) JOIN examdate ON enroll.IDExamDate = examdate.IDExam"
+				+ "FROM (user JOIN enroll ON user.ID = enroll.IDStudent) JOIN examdate ON enroll.IDExamDate = examdate.IDExam "
 				+ "WHERE IDExam = ? ORDER BY enroll.status DESC";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, exameDateId);
@@ -334,7 +334,57 @@ public class EnrollsDAO {
 					Enroll enroll = new Enroll();
 					enroll.setIDstudent(result.getInt("ID"));
 					enroll.setName(result.getString("name"));
-					enroll.setName(result.getString("surname"));
+					enroll.setSurname(result.getString("surname"));
+					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
+					enroll.setMark(result.getString("mark"));
+					enroll.setStatus(Status.valueOf(result.getString("status")));
+					enrolls.add(enroll);
+				}
+			}
+		}
+		return enrolls;
+	}
+	
+	public List<Enroll> FindEnrollsOrderedByCoursedegAsc(int exameDateId) throws SQLException {
+		List<Enroll> enrolls = new ArrayList<>();
+
+		String query = "SELECT user.ID, user.name, user.surname, user.email, user.coursedeg, enroll.mark, enroll.status "
+				+ "FROM (user JOIN enroll ON user.ID = enroll.IDStudent) JOIN examdate ON enroll.IDExamDate = examdate.IDExam "
+				+ "WHERE IDExam = ? ORDER BY user.coursedeg ASC ,user.ID ASC";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, exameDateId);
+			try (ResultSet result = pstatement.executeQuery();) {
+				while (result.next()) {
+					Enroll enroll = new Enroll();
+					enroll.setIDstudent(result.getInt("ID"));
+					enroll.setName(result.getString("name"));
+					enroll.setSurname(result.getString("surname"));
+					enroll.setMail(result.getString("email"));
+					enroll.setCourseDeg(result.getString("coursedeg"));
+					enroll.setMark(result.getString("mark"));
+					enroll.setStatus(Status.valueOf(result.getString("status")));
+					enrolls.add(enroll);
+				}
+			}
+		}
+		return enrolls;
+	}
+	
+	public List<Enroll> FindEnrollsOrderedByCoursedegDesc(int exameDateId) throws SQLException {
+		List<Enroll> enrolls = new ArrayList<>();
+
+		String query = "SELECT user.ID, user.name, user.surname, user.email, user.coursedeg, enroll.mark, enroll.status "
+				+ "FROM (user JOIN enroll ON user.ID = enroll.IDStudent) JOIN examdate ON enroll.IDExamDate = examdate.IDExam "
+				+ "WHERE IDExam = ? ORDER BY user.coursedeg DESC,user.ID ASC";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, exameDateId);
+			try (ResultSet result = pstatement.executeQuery();) {
+				while (result.next()) {
+					Enroll enroll = new Enroll();
+					enroll.setIDstudent(result.getInt("ID"));
+					enroll.setName(result.getString("name"));
+					enroll.setSurname(result.getString("surname"));
 					enroll.setMail(result.getString("email"));
 					enroll.setCourseDeg(result.getString("coursedeg"));
 					enroll.setMark(result.getString("mark"));

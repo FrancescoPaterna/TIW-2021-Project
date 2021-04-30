@@ -56,5 +56,19 @@ public class CourseDAO {
 		}
 		return courses;
 	}
+	
+	public String findCourseNameByIdExam(int id_exam_date) throws SQLException {
+		String coursename;
+		
+		String query = "SELECT course.name from projectdb.course course JOIN projectdb.examdate examdate ON course.ID = examdate = IDCourse WHERE examdate.ID = ? ";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, id_exam_date);
+			try (ResultSet result = pstatement.executeQuery();) {
+					result.next(); 
+					coursename = result.getString("course.name");
+			}
+		}
+		return coursename;
+	}
 
 }
