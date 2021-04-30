@@ -186,6 +186,7 @@ th, td{
 		border-radius: 6px;
 		color: white;
 		cursor: pointer;
+		display: inherit;
 }
 
 .modify:hover{
@@ -194,16 +195,29 @@ th, td{
 
 .record{
 		background-color: #4e9a06;
-		text-align: center;
-		width: 50%;
+		width: 25%;
+		padding: 12px 15px;
+		border-radius: 6px;
+		color: white;
+		cursor: pointer;
+		display: inherit;
+}
+
+.record:hover{
+		background-color: #8ae234;
+}
+
+.publish{
+		background-color: #edd400;
+		width: 25%;
 		padding: 12px 15px;
 		border-radius: 6px;
 		color: white;
 		cursor: pointer;
 }
 
-.record:hover{
-		background-color: #8ae234;
+.publish:hover{
+		background-color: #fce94f;
 }
 
 .sort{
@@ -233,6 +247,15 @@ th, td{
 	font-weight:normal;
 	
 }
+
+
+ .proenrollform{
+ display: inline;
+ width: inherit;
+ height: inherit;
+ margin-left: 20px;
+ margin-right: 20px;
+ }
 /*
 body {
     text-align: center;
