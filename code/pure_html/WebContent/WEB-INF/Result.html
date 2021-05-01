@@ -10,11 +10,16 @@
 	<form action="LogOut" method="get">
 		<button class=logoutbutton type="submit">logout</button>
 	</form>
-	<form action="GoToExamDatesStud" method="post" >
-		<button class=returnbutton name="course_id"
-			type="submit" th:value="${enroll.course}">&#8617</button>
+	<form action="GoToExamDatesStud" method="post">
+		<input type="hidden" name="coursename" id="coursename"
+			th:value="${coursename}" />
+		<button class=returnbutton name="course_id" type="submit"
+			th:value="${enroll.course}">&#8617</button>
 	</form>
 	<h1>EXAM DATES</h1>
+	<p
+		th:text="${'The result of the Session ' + enroll.IDSession + ' you have attended on the ' + date}"></p>
+
 
 	<div>
 		<table>
@@ -24,8 +29,8 @@
 					<th>Name</th>
 					<th>Surname</th>
 					<th>CourseDeg</th>
-					<th>Id Session</th>
-					<th>Id Course</th>
+					<th>Date</th>
+					<th>Course ID</th>
 					<th>Course</th>
 					<th>Score</th>
 					<th>State</th>
@@ -37,19 +42,50 @@
 					<td th:text="${enroll.name}"></td>
 					<td th:text="${enroll.surname}"></td>
 					<td th:text="${enroll.courseDeg}"></td>
-					<td th:text="${enroll.IDSession}"></td>
-					<td th:text="${enroll.course}"></td>
-					<td th:text="${enroll.coursename}"></td>
+					<td th:text="${date}"></td>
+					<td th:text="${IDExamDate}"></td>
+					<td th:text="${coursename}"></td>
 					<td th:text="${enroll.mark}"></td>
 					<td th:text="${enroll.status}"></td>
 					<td>
 						<form action="UpdateResultStud" method="post">
+							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+							<input type="hidden" name="date" id="date" th:value="${date}"/>
+							<input type="hidden" name="professorn" id="professorn" th:value="${professor.name}"/>
+							<input type="hidden" name="professors" id="professors" th:value="${professor.surname}"/>
+							<input type="hidden" name="professore" id="professore" th:value="${professor.email}"/>
 							<button class=button2 name="IDExamDate" type="submit"
 								th:value="${enroll.IDSession}" th:text="REFUSE"></button>
 						</form>
 					</td>
 				</tr>
 
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<br>
+	<br>
+	<div>
+		<br>
+		<br>
+		<br>
+		<p>Scores recorded cannot be refused, to arrange an interview with
+			the professor, please contact us by e-mail through your e-mail
+			address.</p>
+	</div>
+	<div>
+		<table>
+			<thead>
+				<tr class=stud>
+					<th>Surname</th>
+					<th>Name</th>
+					<th>Email</th>
+			</thead>
+			<tbody>
+				<td th:text="${professor.surname}"></td>
+				<td th:text="${professor.name}"></td>
+				<td th:text="${professor.email}"></td>
 			</tbody>
 		</table>
 	</div>

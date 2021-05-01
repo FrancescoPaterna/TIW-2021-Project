@@ -25,7 +25,7 @@ public class ExamDateDAO {
 				while(result.next()) {
 					ExamDate ExamDate = new ExamDate();
 					ExamDate.setID(result.getInt("IDExam"));
-					ExamDate.setDate(result.getDate("date"));
+					ExamDate.setData(result.getDate("date"));
 					examdates.add(ExamDate);
 				}
 			}
@@ -44,7 +44,7 @@ public class ExamDateDAO {
 				while(result.next()) {
 					ExamDate ExamDate = new ExamDate();
 					ExamDate.setID(result.getInt("IDExamDate"));
-					ExamDate.setDate(result.getDate("date"));
+					ExamDate.setData(result.getDate("date"));
 					examdates.add(ExamDate);
 				}
 			}

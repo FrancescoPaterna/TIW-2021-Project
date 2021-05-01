@@ -64,6 +64,8 @@ public class GoToSessionEnrolls extends HttpServlet {
 		}
 
 		Integer exam_date_id = null;
+		String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+
 
 		try {
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
@@ -90,7 +92,9 @@ public class GoToSessionEnrolls extends HttpServlet {
 		ctx.setVariable("exam_date_id", exam_date_id);
 		ctx.setVariable("enrolls", enrolls);
 		ctx.setVariable("coursename", request.getSession().getAttribute("coursename"));
-		try {
+		ctx.setVariable("date", date);
+
+		/*try {
 			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("date"));
 			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			String today = formatter.format(date);
@@ -98,7 +102,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
+		}*/
 
 		templateEngine.process(path, ctx, response.getWriter());
 	}

@@ -14,6 +14,8 @@
 		<button class=returnbutton>&#8617</button>
 	</form>
 	<h1>EXAM DATES</h1>
+	<p	th:text="${'All the sessions of the course ' + coursename + ' you have attended'}"></p>
+	
 
 	<div>
 		<table>
@@ -27,8 +29,10 @@
 					<td th:text="${c.id}"></td>
 					<td>
 						<form action="GoToResult" method="post">
+							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+							<input type="hidden" name="date" id="date" th:value="${c.data}"/>
 							<button class=button3 name="IDExamDate" type="submit"
-								th:value="${c.id}" th:text="${c.date}"></button>
+								th:value="${c.id}" th:text="${c.data}"></button>
 						</form>
 					</td>
 				</tr>

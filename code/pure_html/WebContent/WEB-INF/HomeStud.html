@@ -11,8 +11,9 @@
 		<button class=logoutbutton type="submit">logout</button>
 	</form>
 	<h1>Welcome to the Student Home page</h1>
-	<p
-		th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
+	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
+	<p>Courses you have enrolled in regularly</p>
+	
 
 	<div>
 		<table>
@@ -27,8 +28,8 @@
 					<td th:text="${c.id}"></td>
 					<td>
 						<form action="GoToExamDatesStud" method="post">
-							<button class=button3 name="course_id" type="submit"
-								th:value="${c.id}" th:text="${c.name}"></button>
+						<input type="hidden" name="coursename" id="coursename" th:value="${c.name}"/>
+						<button class=button3 name="course_id" type="submit" th:value="${c.id}" th:text="${c.name}"></button>
 						</form>
 					</td>
 				</tr>

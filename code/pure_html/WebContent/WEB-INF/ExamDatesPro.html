@@ -31,9 +31,9 @@
 
 						<form action="GoToSessionEnrolls" method="post">
 							<input type="hidden" name="name" id="coursename" th:value="${coursename}"/>
-							<input type="hidden" name="date" id="date" th:value="${c.date}"/>
+							<input type="hidden" name="date" id="date" th:value="${c.data}"/>
 							<button class=button3 name="exam_date_id" type="submit"
-								th:value="${c.id}" th:text="${c.date}"></button>
+								th:value="${c.id}" th:text="${c.data}"></button>
 						</form>
 					</td>
 				</tr>

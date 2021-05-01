@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -67,7 +68,10 @@ public class GoToExamDatesStud extends HttpServlet {
 		}
 		User user = (User) session.getAttribute("user");
 		int course_id; 
+		String coursename;
 		course_id = Integer.parseInt(request.getParameter("course_id"));
+		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+
 		
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);
 		List<ExamDate> exams = new ArrayList<>();
@@ -86,6 +90,7 @@ public class GoToExamDatesStud extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("exams", exams);
+		ctx.setVariable("coursename", coursename);
 		templateEngine.process(path, ctx, response.getWriter());
 		}
 		else {
@@ -93,6 +98,7 @@ public class GoToExamDatesStud extends HttpServlet {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("exams", exams);
+			ctx.setVariable("coursename", coursename);
 			templateEngine.process(path, ctx, response.getWriter());
 		}
 	}

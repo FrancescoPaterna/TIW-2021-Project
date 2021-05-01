@@ -1,10 +1,13 @@
 package beans;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ExamDate {
 	
 	private int ID;
-	private Date date; 
+	private String data; 
+	private DateFormat data2 = new SimpleDateFormat("dd-MM-yyyy");
 	private int IDcourse;
 	
 	
@@ -14,12 +17,13 @@ public class ExamDate {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	public Date getDate() {
-		return date;
+	public String getData() {
+		return data;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setData(Date date) {
+		this.data = data2.format(date);
 	}
+
 	public int getIDcourse() {
 		return IDcourse;
 	}

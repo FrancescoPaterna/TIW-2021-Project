@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
@@ -63,7 +64,16 @@ public class UpdateResultStud extends HttpServlet {
 			}
 			int IDExamDate;
 			User user = (User) session.getAttribute("user");
+			String coursename;
+			String date;
+			User professor = new User();
 			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			professor.setEmail(request.getParameter("professore"));
+			professor.setName(request.getParameter("professorn"));
+			professor.setSurname(request.getParameter("professors"));
 
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 			
@@ -93,6 +103,11 @@ public class UpdateResultStud extends HttpServlet {
 					ServletContext servletContext = getServletContext();
 					final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 					ctx.setVariable("enroll", enroll);
+					ctx.setVariable("enroll", enroll);
+					ctx.setVariable("date", date);
+					ctx.setVariable("coursename", coursename);
+					ctx.setVariable("IDExamDate", IDExamDate);
+					ctx.setVariable("professor", professor);
 					templateEngine.process(path, ctx, response.getWriter());
 				} else {
 					String path = "/WEB-INF/ResultLocked.html";
@@ -100,6 +115,11 @@ public class UpdateResultStud extends HttpServlet {
 					final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 					ctx.setVariable("enroll", enroll);
 					ctx.setVariable("rej", "Score Rejected!");
+					ctx.setVariable("enroll", enroll);
+					ctx.setVariable("date", date);
+					ctx.setVariable("coursename", coursename);
+					ctx.setVariable("IDExamDate", IDExamDate);
+					ctx.setVariable("professor", professor);
 					templateEngine.process(path, ctx, response.getWriter());
 				}
 
