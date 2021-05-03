@@ -45,30 +45,36 @@ public class GoToHomePageStud extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// If the user is not logged in (not present in session) redirect to the login
-			String loginpath = getServletContext().getContextPath() + "/index.html";
-			HttpSession session = request.getSession();
-			if(session.isNew() || session.getAttribute("user") == null) {
-				response.sendRedirect(loginpath);
-				return;
-			}
-			User user = (User) session.getAttribute("user");
-			CourseDAO courseDAO = new CourseDAO(connection);
-			List<Course> courses = new ArrayList<>();
-				
-			try {
-				courses = courseDAO.findCoursesByIdStudent(user.getId());
-			} catch (SQLException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
-				return;
-			}
-			
-			// Redirect to the HomePage and add courses to the parameters
-			String path ="/WEB-INF/HomeStud.html";
+		String loginpath = "/index.html";
+		HttpSession session = request.getSession();
+		if (session.isNew() || session.getAttribute("user") == null) {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("courses", courses);
-			templateEngine.process(path, ctx, response.getWriter());
+			ctx.setVariable("errorMsg", "You're not logged in");
+			templateEngine.process(loginpath, ctx, response.getWriter());
+		//response.sendRedirect(loginpath);
+			return;
+		}
+		
+		User user = (User) session.getAttribute("user");
+		CourseDAO courseDAO = new CourseDAO(connection);
+		List<Course> courses = new ArrayList<>();
+		
+		try {
+			courses = courseDAO.findCoursesByIdStudent(user.getId());
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
+			return;
+		}
+		
+		// Redirect to the HomePage and add courses to the parameters
+		String path ="/WEB-INF/HomeStud.html";
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		ctx.setVariable("courses", courses);
+		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 	
