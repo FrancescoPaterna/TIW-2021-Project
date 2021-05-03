@@ -1,6 +1,5 @@
 package controllers;
 
-
 import java.io.IOException;
 //import java.io.PrintWriter;
 import java.sql.Connection;
@@ -23,15 +22,11 @@ import beans.User;
 import dao.UserDAO;
 import utils.ConnectionHandler;
 
-
-
-
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
 	private TemplateEngine templateEngine;
-
 
 	public void init() throws ServletException {
 		connection = ConnectionHandler.getConnection(getServletContext());
@@ -45,15 +40,15 @@ public class CheckLogin extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	String path;
+		String path;
 
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		path = "/index.html";
 		templateEngine.process(path, ctx, response.getWriter());
-	
+
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// obtain and escape params
@@ -65,10 +60,11 @@ public class CheckLogin extends HttpServlet {
 
 		} catch (Exception e) {
 
-			// for debugging only 
+			// for debugging only
 			e.printStackTrace();
 
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value aka BRO NON HAI SCRITTO NIENTE!");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST,
+					"Missing credential value aka BRO NON HAI SCRITTO NIENTE!");
 			return;
 		}
 
@@ -78,7 +74,8 @@ public class CheckLogin extends HttpServlet {
 		try {
 			user = userDao.checkCredentials(id, pwd);
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not Possible to check credentials aka BRO STO DATABASE SI FA I CAZZI SUOI");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"Not Possible to check credentials aka BRO STO DATABASE SI FA I CAZZI SUOI");
 			return;
 		}
 
@@ -95,24 +92,20 @@ public class CheckLogin extends HttpServlet {
 		} else {
 			request.getSession().setAttribute("user", user);
 			String target;
-			if(user.getRole().equals("student")) {
+			if (user.getRole().equals("student")) {
 				target = "/GoToHomePageStud";
-			}
-			else if(user.getRole().equals("professor")){
+			} else if (user.getRole().equals("professor")) {
 				target = "/GoToHomePagePro";
-			}
-			else {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Undefined User, Please Contact Registrar's office");
+			} else {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"Undefined User, Please Contact Registrar's office");
 				return;
 			}
-			
-			
+
 			path = getServletContext().getContextPath();
 			response.sendRedirect(path + target);
 		}
 	}
-	
-	
 
 	public void destroy() {
 		try {
