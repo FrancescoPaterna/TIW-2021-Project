@@ -434,5 +434,48 @@ public class EnrollsDAO {
 		}
 
 	}
+	
+	public void PublishScore(int examDateId) throws SQLException {
+
+		String query = "UPDATE projectdb.enroll SET status='PUBLISHED' WHERE IDExamDate = ? AND status = 'INSERTED";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, examDateId);
+			pstatement.executeUpdate();
+		}
+
+	}
+	
+	public void RecordScore(int examDateId) throws SQLException {
+
+		String query = "UPDATE projectdb.enroll SET status='RECORDED' WHERE IDExamDate = ? AND status = 'PUBLISHED'";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, examDateId);
+			pstatement.executeUpdate();
+		}
+
+	}
+	
+	
+	public List<Enroll> FindRecordedStudents (int exameDateId) throws SQLException {
+		List<Enroll> enrolls = new ArrayList<>();
+
+		String query = "SELECT user.ID, user.name, user.surname, enroll.mark\r\n"
+				+ "FROM (user JOIN enroll ON user.ID = enroll.IDStudent) JOIN examdate ON enroll.IDExamDate = examdate.IDExam\r\n"
+				+ "WHERE IDExam = ? AND enroll.status = 'RECORDED'";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, exameDateId);
+			try (ResultSet result = pstatement.executeQuery();) {
+				while (result.next()) {
+					Enroll enroll = new Enroll();
+					enroll.setIDstudent(result.getInt("ID"));
+					enroll.setName(result.getString("name"));
+					enroll.setSurname(result.getString("surname"));
+					enroll.setMark(result.getString("mark"));
+					enrolls.add(enroll);
+				}
+			}
+		}
+		return enrolls;
+	}
 
 }

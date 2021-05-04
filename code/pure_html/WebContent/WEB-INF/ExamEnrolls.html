@@ -55,7 +55,8 @@
 	</form>
 
 	<form class = proenrollform action="GoToRecord" method="POST">
-		<button class=record name="record" type="submit">RECORD</button>
+		<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+		<button class=record name="exam_date_id" type="submit" th:value="${exam_date_id}">RECORD</button>
 
 	</form>
 	</div>

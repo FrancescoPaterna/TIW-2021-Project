@@ -1,24 +1,29 @@
 package beans;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Record {
 	
 	private int id; 
-	private Date date;
+	private Timestamp timestamp;
 	private int IDExamDate;
 	
+	
+	
+	
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
 	public int getIDExamDate() {
 		return IDExamDate;
 	}

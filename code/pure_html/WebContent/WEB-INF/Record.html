@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
 <title>Record Page</title>
-
-
 </head>
 <body>
-<h1>University of NightCity Record # [.....]</h1>
-<p>Document digitally signed on [.....],
-Registration of the appeal of the [.....], with code [.....], relating to the course of [.....], with the code[.....], 
-supported by the professor[.....], with code[.....].</p>
+	<h1>University of NightCity Official Record</h1>
+	<p
+		th:utext="${'Document # ' + rec + ' - generated and digitally signed on ' + date + ' at ' + time +  '<br />' +  'Registration of the Session ' + exam_date_id + ' relating to the course of ' + coursename}"></p>
 
 	<div>
 		<table>
 			<thead>
-				<tr class=pro>
+				<tr class=rec>
 					<th>ID</th>
 					<th>Surname</th>
 					<th>Name</th>
@@ -23,18 +22,18 @@ supported by the professor[.....], with code[.....].</p>
 				</tr>
 			</thead>
 			<tbody>
-			<!-- 	<tr th:each="c : ${courses}">
-					<td th:text="${c.id}"></td>
-										<td th:text="${c.id}"></td>
-										<td th:text="${c.id}"></td>
-										<td th:text="${c.id}"></td>
-				</tr> -->
+				<tr th:each="c : ${recorded}">
+					<td th:text="${c.IDStudent}"></td>
+					<td th:text="${c.surname}"></td>
+					<td th:text="${c.name}"></td>
+					<td th:text="${c.mark}"></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>
 
-
-<p>The document has legal value and must be printed and kept on file./p>
-
+	<br>
+	<br>
+	<p>The document has legal value and must be printed and stored</p>
 </body>
 </html>

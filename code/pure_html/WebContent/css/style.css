@@ -109,6 +109,11 @@ th, td{
 	background-color: #3465a4;
 }
 
+/*Record table*/
+.rec {
+	background-color: #888a85;
+}
+
 /*Button to reject the evaluation*/
 .button2 {
 	background-color: #ff0000;
