@@ -75,10 +75,14 @@ public class GoToRecord extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = getServletContext().getContextPath() + "/index.html";
+		String loginpath = "/index.html";
 		HttpSession session = request.getSession();
 		if (session.isNew() || session.getAttribute("user") == null) {
-			response.sendRedirect(loginpath);
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "You're not logged in");
+			templateEngine.process(loginpath, ctx, response.getWriter());
+		//response.sendRedirect(loginpath);
 			return;
 		}
 		int exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));

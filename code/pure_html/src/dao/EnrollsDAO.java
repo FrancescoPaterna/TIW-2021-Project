@@ -423,6 +423,17 @@ public class EnrollsDAO {
 		}
 		return enroll;
 	}
+	
+	public void insertMark(int examDateId, int studentId, String mark) throws SQLException {
+		
+		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE IDExamDate = ? AND IDStudent = ? ";
+		try(PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setString(1, mark);
+			pstatement.setInt(2, examDateId);
+			pstatement.setInt(3, studentId);
+			pstatement.executeUpdate();
+		}
+	}
 
 	public void RefuseScore(int examDateId, int user_id) throws SQLException {
 
