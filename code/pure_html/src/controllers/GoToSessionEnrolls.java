@@ -67,6 +67,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		Integer exam_date_id = null;
 		String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		String mask = "0000000";
+		int secretsortcode = 00;
 
 		try {
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
@@ -95,6 +96,8 @@ public class GoToSessionEnrolls extends HttpServlet {
 		ctx.setVariable("coursename", request.getSession().getAttribute("coursename"));
 		ctx.setVariable("date", date);
 		ctx.setVariable("mask", mask);
+		ctx.setVariable("secret_code", secretsortcode);
+
 
 		templateEngine.process(path, ctx, response.getWriter());
 	}
@@ -114,6 +117,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		}
 
 		Integer exam_date_id = null;
+		Integer secretsortcode = null;
 		String sort;
 		String coursename;
 		String date;
@@ -142,7 +146,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		if (sort.equals("1")) {
 			if (mask.charAt(0) == '0') {
 				maskget = '1' + mask.substring(1, 7);
-
+				secretsortcode = 10;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
 
@@ -153,6 +157,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = '0' + mask.substring(1, 7);
+				secretsortcode = 11;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByIDDesc(exam_date_id);
 
@@ -166,6 +171,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		} else if (sort.equals("2")) {
 			if (mask.charAt(1) == '0') {
 				maskget = mask.substring(0,1) + '1' + mask.substring(2, 7);
+				secretsortcode = 20;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByNameAsc(exam_date_id);
 
@@ -176,6 +182,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = mask.substring(0,1) + '0' + mask.substring(2, 7);
+				secretsortcode = 21;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByNameDesc(exam_date_id);
 
@@ -188,6 +195,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		} else if (sort.equals("3")) {
 			if (mask.charAt(2) == '0') {
 				maskget = mask.substring(0, 2) + '1' + mask.substring(3, 7);
+				secretsortcode = 30;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedBySurnameAsc(exam_date_id);
 
@@ -198,6 +206,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = mask.substring(0, 2) + '0' + mask.substring(3, 7);
+				secretsortcode = 31;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedBySurnameDesc(exam_date_id);
 
@@ -210,6 +219,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		} else if (sort.equals("4")) {
 			if (mask.charAt(3) == '0') {
 				maskget = mask.substring(0, 3) + '1' + mask.substring(4, 7);
+				secretsortcode = 40;
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByEmailAsc(exam_date_id);
@@ -220,6 +230,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = mask.substring(0, 3) + '0' + mask.substring(4, 7);
+				secretsortcode = 41;
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByEmailDesc(exam_date_id);
@@ -232,6 +243,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		} else if (sort.equals("5")) {
 			if (mask.charAt(4) == '0') {
 				maskget = mask.substring(0, 4) + '1' + mask.substring(5, 7);
+				secretsortcode = 50;
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByCoursedegAsc(exam_date_id);
@@ -242,6 +254,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = mask.substring(0, 4) + '0' + mask.substring(5, 7);
+				secretsortcode = 51;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByCoursedegDesc(exam_date_id);
 				} catch (SQLException e) {
@@ -253,6 +266,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		} else if (sort.equals("6")) {
 			if (mask.charAt(5) == '0') {
 				maskget = mask.substring(0, 5) + '1' + mask.substring(6, 7);
+				secretsortcode = 60;
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByMarkAsc(exam_date_id);
@@ -263,6 +277,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = mask.substring(0, 5) + '0' + mask.substring(6, 7);
+				secretsortcode = 61;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByMarkDesc(exam_date_id);
 				} catch (SQLException e) {
@@ -276,6 +291,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		else if (sort.equals("7")) {
 			if (mask.charAt(6) == '0') {
 				maskget = mask.substring(0, 6) + '1';
+				secretsortcode = 70;
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByStatusAsc(exam_date_id);
@@ -286,6 +302,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			} else {
 				maskget = mask.substring(0, 6) + '0';
+				secretsortcode = 71;
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByStatusDesc(exam_date_id);
 				} catch (SQLException e) {
@@ -314,6 +331,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("date", date);
 		ctx.setVariable("mask", maskget);
+		ctx.setVariable("secret_code", secretsortcode);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

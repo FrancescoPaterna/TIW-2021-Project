@@ -148,8 +148,10 @@ th, td{
     position: absolute;
   	top: 16px;
  	right: 16px;
- 	padding: 5px 5px;
+ 	width: 143px;
+ 	height: 42px;
  	font-size: 27px;
+ 	font-weight: bold;
 	background-color: #ff0000;
 	border-radius: 6px;
 	border: none;
@@ -163,7 +165,8 @@ th, td{
  	left: 16px;
 	font-weight: bold;
  	left: 50px;
- 	padding: 5px 5px;
+ 	width: 143px;
+ 	height: 42px;
  	font-size: 27px;
 	background-color: #3465a4;
 	border-radius: 6px;

@@ -448,7 +448,7 @@ public class EnrollsDAO {
 	
 	public void PublishScore(int examDateId) throws SQLException {
 
-		String query = "UPDATE projectdb.enroll SET status='PUBLISHED' WHERE IDExamDate = ? AND status = 'INSERTED";
+		String query = "UPDATE projectdb.enroll SET status='PUBLISHED' WHERE IDExamDate = ? AND status = 'INSERTED'";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, examDateId);
 			pstatement.executeUpdate();

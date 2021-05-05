@@ -8,15 +8,15 @@
 </head>
 <body>
 	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout</button>
+		<button class=logoutbutton type="submit">logout &#10008</button>
 	</form>
 	<form action="GoToExamDatesStud" method="post">
 		<input type="hidden" name="coursename" id="coursename"
 			th:value="${coursename}" />
 		<button class=returnbutton name="course_id" type="submit"
-			th:value="${enroll.course}">&#8617</button>
+			th:value="${enroll.course}">go back &#11144</button>
 	</form>
-	<h1>EXAM DATES</h1>
+	<h1>EXAM RESULT</h1>
 	<p
 		th:text="${'The result of the Session ' + enroll.IDSession + ' you have attended on the ' + date}"></p>
 
@@ -35,8 +35,10 @@
 					<th>Score</th>
 					<th>State</th>
 					<th>Option</th>
+				</tr>
 			</thead>
 			<tbody>
+
 				<tr>
 					<td th:text="${enroll.IDStudent}"></td>
 					<td th:text="${enroll.name}"></td>
@@ -49,11 +51,13 @@
 					<td th:text="${enroll.status}"></td>
 					<td>
 						<form action="UpdateResultStud" method="post">
-							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
-							<input type="hidden" name="date" id="date" th:value="${date}"/>
-							<input type="hidden" name="professorn" id="professorn" th:value="${professor.name}"/>
-							<input type="hidden" name="professors" id="professors" th:value="${professor.surname}"/>
-							<input type="hidden" name="professore" id="professore" th:value="${professor.email}"/>
+							<input type="hidden" name="coursename" id="coursename"
+								th:value="${coursename}" /> <input type="hidden" name="date"
+								id="date" th:value="${date}" /> <input type="hidden"
+								name="professorn" id="professorn" th:value="${professor.name}" />
+							<input type="hidden" name="professors" id="professors"
+								th:value="${professor.surname}" /> <input type="hidden"
+								name="professore" id="professore" th:value="${professor.email}" />
 							<button class=button2 name="IDExamDate" type="submit"
 								th:value="${enroll.IDSession}" th:text="REFUSE"></button>
 						</form>
@@ -67,12 +71,10 @@
 	<br>
 	<br>
 	<div>
-		<br>
-		<br>
-		<br>
+		<br> <br> <br>
 		<p>Scores recorded cannot be refused, to arrange an interview with
-			the professor, please contact us by e-mail through your e-mail
-			address.</p>
+			the professor, please contact him by e-mail with your institutional
+			address</p>
 	</div>
 	<div>
 		<table>
@@ -81,11 +83,14 @@
 					<th>Surname</th>
 					<th>Name</th>
 					<th>Email</th>
+				</tr>
 			</thead>
 			<tbody>
-				<td th:text="${professor.surname}"></td>
-				<td th:text="${professor.name}"></td>
-				<td th:text="${professor.email}"></td>
+				<tr>
+					<td th:text="${professor.surname}"></td>
+					<td th:text="${professor.name}"></td>
+					<td th:text="${professor.email}"></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

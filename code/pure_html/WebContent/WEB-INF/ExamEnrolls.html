@@ -8,10 +8,10 @@
 </head>
 <body>
 	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout</button>
+		<button class=logoutbutton type="submit">logout  &#10008</button>
 	</form>
 	<form>
-		<input class=returnbutton type="button" value=&#8617
+		<input class=returnbutton type="button" value="go back &#11144"
 			onclick="history.back()">
 	</form>
 	<h1>EXAM ENROLLS</h1>
@@ -49,13 +49,18 @@
 	</table>
 	
 	<div>
-	<form class = proenrollform action="UpdateResultPro" method="POST">
-		<button class=publish name="publish" type="submit">PUBLISH</button>
+	<form class = proenrollform action="UpdateStatus" method="POST">
+		<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+		<input type="hidden" name="mask" th:value= "${mask}"/>
+		<input type="hidden" name="date" th:value= "${date}"/> 
+		<input type="hidden" name="secret_code" th:value= "${secret_code}"/> 
+		<button class=publish name="exam_date_id" type="submit" th:value="${exam_date_id}">PUBLISH</button>
 
 	</form>
 
 	<form class = proenrollform action="GoToRecord" method="POST">
 		<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+		<input type="hidden" name="secret_code" th:value= "${secret_code}"/> 
 		<button class=record name="exam_date_id" type="submit" th:value="${exam_date_id}">RECORD</button>
 
 	</form>

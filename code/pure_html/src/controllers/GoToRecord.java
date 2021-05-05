@@ -100,7 +100,6 @@ public class GoToRecord extends HttpServlet {
 		
 		try {
 			enrollsDAO.RecordScore(exam_date_id);
-			System.out.println("OK 1");
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot record any Score");
 			return;
@@ -108,7 +107,6 @@ public class GoToRecord extends HttpServlet {
 		
 		try {
 			recorded = enrollsDAO.FindRecordedStudents(exam_date_id);
-			System.out.println("OK 2");
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot Find any Recorded Student");
 			return;
@@ -116,7 +114,6 @@ public class GoToRecord extends HttpServlet {
 		
 		try {
 			recordDAO.WriteRecordOnDb(exam_date_id);
-			System.out.println("OK 3");
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot generate new RECORD");
 			return;
@@ -124,7 +121,6 @@ public class GoToRecord extends HttpServlet {
 		
 		try {
 			rec = recordDAO.getCurrentID(exam_date_id);
-			System.out.println(rec);
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot find the new RECORD ID");
 			return;
@@ -134,11 +130,8 @@ public class GoToRecord extends HttpServlet {
 			
 		try {
 			timestamp = recordDAO.getCurrentTimestamp(rec);
-			System.out.println(timestamp);
 			date = new SimpleDateFormat("dd-MM-yyyy").format(timestamp);
-			System.out.println(date);
 			time = new SimpleDateFormat("HH:mm").format(timestamp);
-			System.out.println(time);
 
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot find timestamp and work on the date");
