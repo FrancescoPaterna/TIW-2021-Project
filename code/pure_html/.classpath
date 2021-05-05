@@ -13,17 +13,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/svg-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/styled-xml-parser-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/sign-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/pdfa-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/layout-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/kernel-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/io-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/hyph-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/forms-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/font-asian-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/pdf/barcodes-7.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/blackaltair77/Scrivania/html2pdf-3.0.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
