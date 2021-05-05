@@ -8,13 +8,13 @@
 </head>
 <body>
 	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout</button>
+		<button class=logoutbutton type="submit">logout &#10008</button>
 	</form>
 	<form action="GoToExamDatesStud" method="post">
 		<input type="hidden" name="coursename" id="coursename"
 			th:value="${coursename}" />
 		<button class=returnbutton name="course_id" type="submit"
-			th:value="${enroll.course}">&#8617</button>
+			th:value="${enroll.course}">go back &#11144</button>
 	</form>
 	<h1>EXAM DATES</h1>
 	<p
