@@ -30,6 +30,7 @@
 					<td>
 						<form action="GoToResult" method="post">
 							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+							<input type="hidden" name="course_id" id="course_id" th:value="${course_id}"/>
 							<input type="hidden" name="date" id="date" th:value="${c.data}"/>
 							<button class=button3 name="IDExamDate" type="submit"
 								th:value="${c.id}" th:text="${c.data}"></button>

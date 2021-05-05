@@ -9,9 +9,15 @@
 <form action="LogOut" method="get">
 	<button class=logoutbutton type="submit">logout &#10008</button>
 </form>
-<form>
-	<input class=returnbutton type="button" value="go back &#11144"
-		onclick="history.back()">
+<form action="GoToSessionEnrolls" method="get">
+	<input type="hidden" name="mask" id="mask" th:value="${mask}" /> 
+	<input type="hidden" name="exam_date_id" id="exam_date_id" th:value="${exam_date_id}" /> 
+	<input type="hidden" name="date" id="date" th:value="${date}" /> 
+	<input type="hidden" name="coursename" id="coursename" th:value="${coursename}" /> 
+	<input type="hidden" name="course_id" th:value="${course_id}" />
+	<input type="hidden" name="sort" id="sort" th:value="${sort}" />
+	<button class=returnbutton  type="submit"
+		th:value="${sorturl}">go back &#11144</button>
 </form>
 <body>
 	<h1>University of NightCity Official Record</h1>

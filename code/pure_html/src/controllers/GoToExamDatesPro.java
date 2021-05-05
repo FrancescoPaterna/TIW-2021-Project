@@ -14,12 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import beans.Course;
 import beans.ExamDate;
+import beans.User;
+import dao.CourseDAO;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
 
@@ -53,12 +57,43 @@ public class GoToExamDatesPro extends HttpServlet {
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "You're not logged in");
 			templateEngine.process(loginpath, ctx, response.getWriter());
-		//response.sendRedirect(loginpath);
 			return;
 		}
-
-		int course_id = (int) session.getAttribute("course_id");
-		String coursename = (String) session.getAttribute("coursename");
+		
+		String path = null;
+		int course_id; 
+		String coursename = null;
+		course_id = Integer.parseInt(request.getParameter("course_id"));
+		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		
+		User user = (User) session.getAttribute("user");
+		
+		
+		
+		
+		/*Verifichiamo che il corso inserito appartenga al professore (Protezione Attacco SQL)*/
+		CourseDAO courseDAO = new CourseDAO(connection);
+		List<Course> courses = new ArrayList<>();
+		
+		try {
+			courses = courseDAO.findCoursesByIdProf(user.getId());
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
+			return;
+		}
+		
+		boolean course_found = false;
+		for(Course course : courses) {
+			if(course.getId() == course_id) {
+				course_found = true;
+			}
+		}
+		
+		if(!course_found) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Accesso Non Autorizzato");
+			return;
+		}
+		/********************************************************************************************/
+		
 		
 
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);
@@ -72,12 +107,11 @@ public class GoToExamDatesPro extends HttpServlet {
 		}
 		
 		// Redirect to the HomePage and add courses to the parameters*/
-		String path ="/WEB-INF/ExamDatesPro.html";
+		path = "/WEB-INF/ExamDatesPro.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
-
 		ctx.setVariable("coursename", coursename);
+		ctx.setVariable("course_id", course_id);
 		ctx.setVariable("exams", exams);
 		templateEngine.process(path, ctx, response.getWriter());
 	}

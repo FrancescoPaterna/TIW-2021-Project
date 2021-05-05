@@ -25,7 +25,6 @@ import dao.EnrollsDAO;
 
 import utils.ConnectionHandler;
 
-//TODO send flag attraverso il ctx
 /**
  * Servlet implementation class GoToSessionEnrolls
  */
@@ -64,18 +63,13 @@ public class GoToSessionEnrolls extends HttpServlet {
 		}
 
 
-		Integer exam_date_id = null;
+		Integer exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+		Integer course_id = Integer.parseInt(request.getParameter("course_id"));
 		String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		String mask = "0000000";
+		String coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		
 		int secretsortcode = 00;
 
-		try {
-			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
-		} catch (NumberFormatException | NullPointerException e) {
-			// only for debugging e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
-			return;
-		}
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		List<Enroll> enrolls = new ArrayList<>();
@@ -93,10 +87,13 @@ public class GoToSessionEnrolls extends HttpServlet {
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("exam_date_id", exam_date_id);
 		ctx.setVariable("enrolls", enrolls);
-		ctx.setVariable("coursename", request.getSession().getAttribute("coursename"));
+		ctx.setVariable("coursename",coursename);
 		ctx.setVariable("date", date);
 		ctx.setVariable("mask", mask);
 		ctx.setVariable("secret_code", secretsortcode);
+		ctx.setVariable("course_id", course_id);
+
+		
 
 
 		templateEngine.process(path, ctx, response.getWriter());
@@ -112,10 +109,9 @@ public class GoToSessionEnrolls extends HttpServlet {
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "You're not logged in");
 			templateEngine.process(loginpath, ctx, response.getWriter());
-		//response.sendRedirect(loginpath);
 			return;
 		}
-
+		Integer course_id = null;
 		Integer exam_date_id = null;
 		Integer secretsortcode = null;
 		String sort;
@@ -128,6 +124,9 @@ public class GoToSessionEnrolls extends HttpServlet {
 		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		sort = StringEscapeUtils.escapeJava(request.getParameter("sort"));
 		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
+		course_id = Integer.parseInt(request.getParameter("course_id"));
+
+		
 
 		try {
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
@@ -319,13 +318,8 @@ public class GoToSessionEnrolls extends HttpServlet {
 
 		}
 
-		// Redirect to the HomePage and add courses to the parameters
 
-		// ctx.setVariable("sort_par4", sort_par4);
-		// ctx.setVariable("sort_par5", sort_par5);
-		// ctx.setVariable("sort_par6", sort_par6);
-		// ctx.setVariable("sort_par7", sort_par7);
-
+		ctx.setVariable("course_id", course_id);
 		ctx.setVariable("exam_date_id", exam_date_id);
 		ctx.setVariable("enrolls", enrolls);
 		ctx.setVariable("coursename", coursename);

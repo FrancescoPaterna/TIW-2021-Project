@@ -78,47 +78,7 @@ public class GoToHomePagePro extends HttpServlet {
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			String path = null;
-			int course_id; 
-			String coursename = null;
-			course_id = Integer.parseInt(request.getParameter("course_id"));
-			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 
-			HttpSession session = request.getSession();
-			
-			User user = (User) session.getAttribute("user");
-			
-			CourseDAO courseDAO = new CourseDAO(connection);
-			List<Course> courses = new ArrayList<>();
-			
-			try {
-				courses = courseDAO.findCoursesByIdProf(user.getId());
-				request.getSession().setAttribute("courses", courses); //TODO: Discutere con il Team
-			} catch (SQLException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
-				return;
-			}
-			
-			boolean course_found = false;
-			for(Course course : courses) {
-				if(course.getId() == course_id) {
-					course_found = true;
-				}
-			}
-			if(!course_found) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Accesso Non Autorizzato");
-			}
-			else {
-				request.getSession().setAttribute("course_id", course_id);
-				request.getSession().setAttribute("coursename", coursename);
-				path = getServletContext().getContextPath();
-				String target = "/GoToExamDatesPro";
-				response.sendRedirect(path + target);
-				
-			}
-
-	}
 	
 	public void destroy() {
 		try {

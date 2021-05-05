@@ -345,7 +345,7 @@ public class EnrollsDAO {
 		}
 		return enrolls;
 	}
-	
+
 	public List<Enroll> FindEnrollsOrderedByCoursedegAsc(int exameDateId) throws SQLException {
 		List<Enroll> enrolls = new ArrayList<>();
 
@@ -370,7 +370,7 @@ public class EnrollsDAO {
 		}
 		return enrolls;
 	}
-	
+
 	public List<Enroll> FindEnrollsOrderedByCoursedegDesc(int exameDateId) throws SQLException {
 		List<Enroll> enrolls = new ArrayList<>();
 
@@ -402,32 +402,32 @@ public class EnrollsDAO {
 		String query = "SELECT user.ID, user.name, user.surname, user.coursedeg, enroll.mark, enroll.status, examdate.IDExam, course.name coursename, course.ID courseID \r\n"
 				+ "FROM projectdb.user user JOIN projectdb.enroll enroll ON user.ID = enroll.IDStudent JOIN projectdb.examdate examdate ON enroll.IDExamDate = examdate.IDExam JOIN projectdb.course course ON examdate.IDCourse = course.ID \r\n"
 				+ "WHERE examdate.IDExam = ? AND user.ID= ?";
-		
+
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 
 			pstatement.setInt(1, exameDateId);
 			pstatement.setInt(2, user_id);
 			try (ResultSet result = pstatement.executeQuery();) {
-					result.next();
-					enroll = new Enroll();
-					enroll.setIDstudent(result.getInt("ID"));
-					enroll.setName(result.getString("name"));
-					enroll.setSurname(result.getString("surname"));
-					enroll.setMark(result.getString("mark"));
-					enroll.setIDSession(result.getInt("IDExam"));
-					enroll.setCourseDeg(result.getString("coursedeg"));
-					enroll.setStatus(Status.valueOf(result.getString("status")));
-					enroll.setCourse(result.getString("courseID"));
-					enroll.setCourseName(result.getString("coursename"));
-				}
+				result.next();
+				enroll = new Enroll();
+				enroll.setIDstudent(result.getInt("ID"));
+				enroll.setName(result.getString("name"));
+				enroll.setSurname(result.getString("surname"));
+				enroll.setMark(result.getString("mark"));
+				enroll.setIDSession(result.getInt("IDExam"));
+				enroll.setCourseDeg(result.getString("coursedeg"));
+				enroll.setStatus(Status.valueOf(result.getString("status")));
+				enroll.setCourse(result.getString("courseID"));
+				enroll.setCourseName(result.getString("coursename"));
+			}
 		}
 		return enroll;
 	}
-	
+
 	public void insertMark(int examDateId, int studentId, String mark) throws SQLException {
-		
+
 		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE IDExamDate = ? AND IDStudent = ? ";
-		try(PreparedStatement pstatement = connection.prepareStatement(query);) {
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, mark);
 			pstatement.setInt(2, examDateId);
 			pstatement.setInt(3, studentId);
@@ -445,7 +445,7 @@ public class EnrollsDAO {
 		}
 
 	}
-	
+
 	public void PublishScore(int examDateId) throws SQLException {
 
 		String query = "UPDATE projectdb.enroll SET status='PUBLISHED' WHERE IDExamDate = ? AND status = 'INSERTED'";
@@ -455,19 +455,26 @@ public class EnrollsDAO {
 		}
 
 	}
-	
-	public void RecordScore(int examDateId) throws SQLException {
+
+	public void RecordScore(int examDateId, int recordID) throws SQLException {
 
 		String query = "UPDATE projectdb.enroll SET status='RECORDED' WHERE IDExamDate = ? AND status = 'PUBLISHED'";
+		String query2 = "UPDATE projectdb.enroll SET IDRecord= ? WHERE IDExamDate = ? AND status='RECORDED'";
+
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, examDateId);
 			pstatement.executeUpdate();
 		}
+		try (PreparedStatement pstatement = connection.prepareStatement(query2);) {
 
+			pstatement.setInt(1, recordID);
+			pstatement.setInt(2, examDateId);
+			pstatement.executeUpdate();
+
+		}
 	}
-	
-	
-	public List<Enroll> FindRecordedStudents (int exameDateId) throws SQLException {
+
+	public List<Enroll> FindRecordedStudents(int exameDateId) throws SQLException {
 		List<Enroll> enrolls = new ArrayList<>();
 
 		String query = "SELECT user.ID, user.name, user.surname, enroll.mark\r\n"
@@ -487,6 +494,29 @@ public class EnrollsDAO {
 			}
 		}
 		return enrolls;
+	}
+
+	public boolean assertion_record(int id_exam) throws SQLException {
+		int check = 0;
+
+		String query = "SELECT COUNT(*) FROM projectdb.enroll WHERE enroll.IDExamDate = ? AND enroll.status = 'PUBLISHED'";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+
+			pstatement.setInt(1, id_exam);
+			try (ResultSet result = pstatement.executeQuery();) {
+				while (result.next()) {
+					check = result.getInt("COUNT(*)");
+				}
+
+			}
+		}
+		if (check == 0) {
+			System.out.println("ndo cazzo vai");
+			return false;
+		} else {
+			System.out.println("puoi passare");
+			return true;
+		}
 	}
 
 }

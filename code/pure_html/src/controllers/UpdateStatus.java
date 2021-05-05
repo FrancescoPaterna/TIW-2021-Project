@@ -78,7 +78,7 @@ public class UpdateStatus extends HttpServlet {
 
 			int exam_date_id;
 			int sort = 1;
-			int secretsortcode;
+			int secretsortcode, course_id;
 			String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 			String mask;
 			String recovered_mask;
@@ -88,14 +88,12 @@ public class UpdateStatus extends HttpServlet {
 			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 			secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
-			System.out.println(secretsortcode);
-
+			course_id = Integer.parseInt(request.getParameter("course_id"));
 
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 			try {
 				enrollsDAO.PublishScore(exam_date_id);
-				System.out.println("OK");
 			} catch (SQLException e) {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot Publish Any Score");
 				return;
@@ -106,7 +104,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(0) == '0') {
 					recovered_mask = '0' + mask.substring(1, 7);
 					sort = 1;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -116,7 +114,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(0) == '0') {
 					recovered_mask = '1' + mask.substring(1, 7);
 					sort = 1;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -125,7 +123,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(0) == '1') {
 					recovered_mask = '0' + mask.substring(1, 7);
 					sort = 1;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -136,7 +134,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(1) == '0') {
 					recovered_mask = mask.substring(0,1) + '1' + mask.substring(2, 7);
 					sort = 2;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -147,7 +145,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(1) == '1') {
 					recovered_mask = mask.substring(0,1) + '0' + mask.substring(2, 7);
 					sort = 2;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -159,7 +157,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(2) == '0') {
 					recovered_mask = mask.substring(0, 2) + '1' + mask.substring(3, 7);
 					sort = 3;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -170,7 +168,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(2) == '1') {
 					recovered_mask = mask.substring(0, 2) + '0' + mask.substring(3, 7);
 					sort = 3;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -180,7 +178,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(3) == '0') {
 					recovered_mask = mask.substring(0, 3) + '1' + mask.substring(4, 7);
 					sort = 4;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -191,7 +189,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(3) == '1') {
 					recovered_mask = mask.substring(0, 3) + '0' + mask.substring(4, 7);
 					sort = 4;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -201,7 +199,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(4) == '0') {
 					recovered_mask = mask.substring(0, 4) + '1' + mask.substring(5, 7);
 					sort = 5;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -212,7 +210,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(4) == '1') {
 					recovered_mask = mask.substring(0, 4) + '0' + mask.substring(5, 7);
 					sort = 5;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -222,7 +220,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(5) == '0') {
 					recovered_mask = mask.substring(0, 5) + '1' + mask.substring(6, 7);
 					sort = 6;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -233,7 +231,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(5) == '1') {
 					recovered_mask = mask.substring(0, 5) + '0' + mask.substring(6, 7);
 					sort = 6;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -243,7 +241,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(6) == '0') {
 					recovered_mask = mask.substring(0, 6) + '1';
 					sort = 7;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);
@@ -254,7 +252,7 @@ public class UpdateStatus extends HttpServlet {
 				if (mask.charAt(6) == '1') {
 					recovered_mask = mask.substring(0, 6) + '0';
 					sort = 7;
-					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&sort=" + String.valueOf(sort);
+					String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
 					target = "/GoToSessionEnrolls";
 					path = getServletContext().getContextPath();
 					response.sendRedirect(path + target + sorturl);

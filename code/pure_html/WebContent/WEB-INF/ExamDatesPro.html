@@ -10,9 +10,8 @@
 	<form action="LogOut" method="get">
 		<button class=logoutbutton type="submit">logout  &#10008</button>
 	</form>
-	<form>
-		<input class=returnbutton type="button" value="go back &#11144"
-			onclick="history.back()">
+	<form action="GoToHomePagePro" method="get">
+		<button class=returnbutton>go back &#11144</button>
 	</form>
 	<h1>EXAM DATES</h1>
 	<p	th:text="${'All exam dates of the course ' + coursename}"></p>
@@ -30,8 +29,9 @@
 					<td>
 
 						<form action="GoToSessionEnrolls" method="post">
-							<input type="hidden" name="name" id="coursename" th:value="${coursename}"/>
+							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
 							<input type="hidden" name="date" id="date" th:value="${c.data}"/>
+							<input type="hidden" name="course_id" id="course_id" th:value="${course_id}"/>
 							<button class=button3 name="exam_date_id" type="submit"
 								th:value="${c.id}" th:text="${c.data}"></button>
 						</form>

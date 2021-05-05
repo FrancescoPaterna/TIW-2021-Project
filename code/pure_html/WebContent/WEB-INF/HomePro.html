@@ -25,7 +25,7 @@
 				<tr th:each="c : ${courses}">
 					<td th:text="${c.id}"></td>
 					<td>
-						<form action="GoToHomePagePro" method="post">
+						<form action="GoToExamDatesPro" method="get">
 							<input type="hidden" name="coursename" th:value="${c.name}"/>
 							<button class=button3 name="course_id" type="submit"
 								th:value="${c.id}" th:text="${c.name}"></button>
