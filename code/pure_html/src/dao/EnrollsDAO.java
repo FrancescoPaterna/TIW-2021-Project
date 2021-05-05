@@ -511,10 +511,8 @@ public class EnrollsDAO {
 			}
 		}
 		if (check == 0) {
-			System.out.println("ndo cazzo vai");
 			return false;
 		} else {
-			System.out.println("puoi passare");
 			return true;
 		}
 	}

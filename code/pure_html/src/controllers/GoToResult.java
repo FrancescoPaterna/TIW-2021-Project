@@ -88,7 +88,6 @@ public class GoToResult extends HttpServlet {
 			return;
 		}
 		id_course = Integer.parseInt(enroll.getCourse());
-		System.out.println(id_course);
 
 		try {
 			professor = userDAO.findProfessorByIdCourse(id_course);
