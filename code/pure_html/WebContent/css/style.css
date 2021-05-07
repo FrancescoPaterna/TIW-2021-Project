@@ -264,6 +264,19 @@ th, td{
  margin-left: 20px;
  margin-right: 20px;
  }
+ 
+ .score{
+   	border-color: #000000 white white white;
+	font-family: 'Orbitron', courier, sans-serif;
+ 	text-align: center;
+	background-color: white;
+	color: black;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight:normal;
+	
+ }
+ 
 /*
 body {
     text-align: center;

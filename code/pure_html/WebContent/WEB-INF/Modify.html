@@ -16,7 +16,7 @@
 <body>
 	<h1>MODIFY SCORE</h1>
 	<h3
-		th:text="${'Change the score of ' + name + surname + ' in the session ' + exam_date_id + 'of the ' + date}"></h3>
+		th:text="${'Change the score of ' + name + ' ' + surname + ' in the session ' + exam_date_id + ' of the ' + date}"></h3>
 
 
 	<div>
@@ -56,7 +56,7 @@
 	<br>
 	<div>
 		<br> <br> <br>
-		<p>Change The Score</p>
+		<h4>Change The Score</h4>
 	</div>
 	<div>
 		<table>
@@ -75,9 +75,9 @@
 					<td th:text="${name}"></td>
 					<td>
 					<form>
- <select name="subject" id="subject">
+ <select class=score name="subject" id="subject">
     	<option value="" selected="selected"></option>
-        <option value="ABSENT" selected="selected">ABSENT,</option>
+        <option value="ABSENT" selected="selected">ABSENT</option>
         <option value="RIMANDATO" selected="selected">RIMANDATO</option>
         <option value="RIROVATO" selected="selected">RIROVATO</option>
         <option value="18" selected="selected">18</option>

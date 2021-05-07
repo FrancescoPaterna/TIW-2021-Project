@@ -90,11 +90,10 @@ public class GoToModify extends HttpServlet {
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("secret_code", secret_code);
 			ctx.setVariable("course_id", course_id);
-			ctx.setVariable("mark", mark);
 			ctx.setVariable("id_stud", id_stud);
 			ctx.setVariable("exam_date_id", exam_date_id);
 
-
+			ctx.setVariable("mark", mark);
 			ctx.setVariable("coursename", coursename);
 			ctx.setVariable("mask", mask);
 			ctx.setVariable("date", date);
