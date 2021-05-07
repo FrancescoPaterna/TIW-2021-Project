@@ -6,13 +6,22 @@
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 <title>Modify Score</title>
 </head>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008</button>
-	</form>
-	<form>
-		<input class=returnbutton type="button" value="go back &#11144"
-			onclick="history.back()">
-	</form>
+<form action="LogOut" method="get">
+	<button class=logoutbutton type="submit">logout &#10008</button>
+</form>
+
+<form action="GoToSessionEnrolls" method="get">
+	<input type="hidden" name="mask" id="mask" th:value="${mask}" /> <input
+		type="hidden" name="exam_date_id" id="exam_date_id"
+		th:value="${exam_date_id}" /> <input type="hidden" name="date"
+		id="date" th:value="${date}" /> <input type="hidden"
+		name="coursename" id="coursename" th:value="${coursename}" /> <input
+		type="hidden" name="course_id" th:value="${course_id}" /> <input
+		type="hidden" name="sort" id="sort" th:value="${sort}" />
+	<button class=returnbutton type="submit" th:value="${sorturl}">go
+		back &#11144</button>
+</form>
+
 <body>
 	<h1>MODIFY SCORE</h1>
 	<h3
@@ -66,6 +75,7 @@
 					<th>Surname</th>
 					<th>Name</th>
 					<th>New Score</th>
+					<th>Option</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -74,30 +84,43 @@
 					<td th:text="${surname}"></td>
 					<td th:text="${name}"></td>
 					<td>
-					<form>
- <select class=score name="subject" id="subject">
-    	<option value="" selected="selected"></option>
-        <option value="ABSENT" selected="selected">ABSENT</option>
-        <option value="RIMANDATO" selected="selected">RIMANDATO</option>
-        <option value="RIROVATO" selected="selected">RIROVATO</option>
-        <option value="18" selected="selected">18</option>
-        <option value="19" selected="selected">19</option>
-        <option value="20" selected="selected">20</option>
-        <option value="21" selected="selected">21</option>
-        <option value="22" selected="selected">22</option>
-        <option value="23" selected="selected">23</option>
-        <option value="24" selected="selected">24</option>
-        <option value="25" selected="selected">25</option>
-        <option value="26" selected="selected">26</option>
-        <option value="27" selected="selected">27</option>
-        <option value="28" selected="selected">28</option>
-        <option value="29" selected="selected">29</option>
-        <option value="30" selected="selected">30</option>
-        <option value="30L" selected="selected">30L</option>
-    
-  </select>
-  </form>
-  </td>
+						<form action="UpdateScore" method="post">
+							<select class=score name="score" id="score">
+								<option value="" selected="selected"></option>
+								<option value="ABSENT" selected="selected">ABSENT</option>
+								<option value="RIMANDATO" selected="selected">RIMANDATO</option>
+								<option value="RIROVATO" selected="selected">RIROVATO</option>
+								<option value="18" selected="selected">18</option>
+								<option value="19" selected="selected">19</option>
+								<option value="20" selected="selected">20</option>
+								<option value="21" selected="selected">21</option>
+								<option value="22" selected="selected">22</option>
+								<option value="23" selected="selected">23</option>
+								<option value="24" selected="selected">24</option>
+								<option value="25" selected="selected">25</option>
+								<option value="26" selected="selected">26</option>
+								<option value="27" selected="selected">27</option>
+								<option value="28" selected="selected">28</option>
+								<option value="29" selected="selected">29</option>
+								<option value="30" selected="selected">30</option>
+								<option value="30L" selected="selected">30L</option>
+							</select>
+					</td>
+					<td><input type="hidden" name="coursename" id="coursename"
+						th:value="${coursename}" /> <input type="hidden"
+						name="secret_code" th:value="${secret_code}" /> <input
+						type="hidden" name="mask" th:value="${mask}" /> <input
+						type="hidden" name="date" th:value="${date}" /> <input
+						type="hidden" name="exam_date_id" th:value="${exam_date_id}" /> <input
+						type="hidden" name="course_id" th:value="${course_id}" /> <input
+						type="hidden" name="name" th:value="${name}" /> <input
+						type="hidden" name="surname" th:value="${surname}" /> <input
+						type="hidden" name="email" th:value="${email}" /> <input
+						type="hidden" name="coursedeg" th:value="${coursedeg}" /> <input
+						type="hidden" name="sort" th:value="${sort}" />
+						<button class=modify name="id_stud" type="submit"
+							th:value="${id_stud}">UPDATE</button>
+						</form></td>
 				</tr>
 			</tbody>
 		</table>
