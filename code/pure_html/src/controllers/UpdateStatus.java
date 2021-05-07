@@ -76,9 +76,9 @@ public class UpdateStatus extends HttpServlet {
 
 		if (user.getRole().equals("professor")) {
 
-			int exam_date_id;
-			int sort = 1;
-			int secretsortcode, course_id;
+			Integer exam_date_id;
+			Integer sort = 1;
+			Integer secretsortcode, course_id;
 			String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 			String mask;
 			String recovered_mask;

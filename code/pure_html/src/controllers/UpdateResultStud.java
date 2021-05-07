@@ -65,7 +65,7 @@ public class UpdateResultStud extends HttpServlet {
 			return;
 		}
 		
-		int IDExamDate;
+		Integer IDExamDate;
 		User user = (User) session.getAttribute("user");
 		String coursename;
 		String date;

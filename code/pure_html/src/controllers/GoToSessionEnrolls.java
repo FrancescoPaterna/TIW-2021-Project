@@ -68,7 +68,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		String mask = "0000000";
 		String coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		
-		int secretsortcode = 00;
+		Integer secretsortcode = 00;
 
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);

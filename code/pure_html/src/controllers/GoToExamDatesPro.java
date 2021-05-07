@@ -61,7 +61,7 @@ public class GoToExamDatesPro extends HttpServlet {
 		}
 		
 		String path = null;
-		int course_id; 
+		Integer course_id; 
 		String coursename = null;
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		

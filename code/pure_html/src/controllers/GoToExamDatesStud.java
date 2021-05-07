@@ -71,7 +71,7 @@ public class GoToExamDatesStud extends HttpServlet {
 			return;
 		}
 		User user = (User) session.getAttribute("user");
-		int course_id; 
+		Integer course_id; 
 		String coursename;
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));

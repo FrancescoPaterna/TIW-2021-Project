@@ -65,8 +65,8 @@ public class GoToResult extends HttpServlet {
 			return;
 		}
 		
-		int IDExamDate;
-		int id_course;
+		Integer IDExamDate;
+		Integer id_course;
 		String coursename;
 		String date;
 		User user = (User) session.getAttribute("user");
