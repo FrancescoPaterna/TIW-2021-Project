@@ -66,13 +66,15 @@ public class GoToResult extends HttpServlet {
 		}
 		
 		Integer IDExamDate;
-		Integer id_course;
+		Integer course_id;
 		String coursename;
 		String date;
 		User user = (User) session.getAttribute("user");
 		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+		course_id = Integer.parseInt(request.getParameter("course_id"));
+
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		Enroll enroll;
@@ -87,10 +89,9 @@ public class GoToResult extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get Scores");
 			return;
 		}
-		id_course = Integer.parseInt(enroll.getCourse());
 
 		try {
-			professor = userDAO.findProfessorByIdCourse(id_course);
+			professor = userDAO.findProfessorByIdCourse(course_id);
 			
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to find professor for that course");
@@ -104,6 +105,7 @@ public class GoToResult extends HttpServlet {
 				String path = "/WEB-INF/Result.html";
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+				ctx.setVariable("course_id", course_id);
 				ctx.setVariable("enroll", enroll);
 				ctx.setVariable("date", date);
 				ctx.setVariable("coursename", coursename);
@@ -119,6 +121,8 @@ public class GoToResult extends HttpServlet {
 				ctx.setVariable("coursename", coursename);
 				ctx.setVariable("IDExamDate", IDExamDate);
 				ctx.setVariable("professor", professor);
+				ctx.setVariable("course_id", course_id);
+
 
 				templateEngine.process(path, ctx, response.getWriter());
 			}
@@ -132,6 +136,8 @@ public class GoToResult extends HttpServlet {
 			ctx.setVariable("coursename", coursename);
 			ctx.setVariable("IDExamDate", IDExamDate);
 			ctx.setVariable("professor", professor);
+			ctx.setVariable("course_id", course_id);
+
 			templateEngine.process(path, ctx, response.getWriter());
 		}
 	}
