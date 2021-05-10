@@ -10,16 +10,10 @@ public class Enroll {
 	private String courseDeg;
 	private Status status;
 	private int IDSession;
-	private String course;
-	private String courseName;
 	
-	public String getCourseName() {
-		return courseName;
-	}
+	//rimosso course_id e coursename, verificare corretto funzionamento v.31
+	
 
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
 
 	public int getIDSession() {
 		return IDSession;
@@ -29,13 +23,6 @@ public class Enroll {
 		IDSession = iDSession;
 	}
 
-	public String getCourse() {
-		return course;
-	}
-
-	public void setCourse(String course) {
-		this.course = course;
-	}
 
 	public int getIDstudent() {
 		return IDstudent;

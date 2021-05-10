@@ -417,8 +417,6 @@ public class EnrollsDAO {
 				enroll.setIDSession(result.getInt("IDExam"));
 				enroll.setCourseDeg(result.getString("coursedeg"));
 				enroll.setStatus(Status.valueOf(result.getString("status")));
-				enroll.setCourse(result.getString("courseID"));
-				enroll.setCourseName(result.getString("coursename"));
 			}
 		}
 		return enroll;

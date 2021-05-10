@@ -14,7 +14,7 @@
 		<input type="hidden" name="coursename" id="coursename"
 			th:value="${coursename}" />
 		<button class=returnbutton name="course_id" type="submit"
-			th:value="${enroll.course}">go back &#11144</button>
+			th:value="${course_id}">go back &#11144</button>
 	</form>
 	<h1>EXAM RESULT</h1>
 	<p
@@ -42,7 +42,7 @@
 					<td th:text="${enroll.surname}"></td>
 					<td th:text="${enroll.courseDeg}"></td>
 					<td th:text="${date}"></td>
-					<td th:text="${IDExamDate}"></td>
+					<td th:text="${course_id}"></td>
 					<td th:text="${coursename}"></td>
 					<td th:text="${enroll.mark}"></td>
 					<td th:text="${enroll.status}"></td>
