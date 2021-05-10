@@ -58,8 +58,6 @@ public class LoginChecker implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		
-		// java.lang.String loginpath = "/index.html";
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String loginpath = "/index.html";

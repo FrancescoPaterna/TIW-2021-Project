@@ -421,6 +421,27 @@ public class EnrollsDAO {
 		}
 		return enroll;
 	}
+	
+	public boolean checkModifiableCondition(int examDateId, int studentId) throws SQLException {
+		
+		boolean isStatusModifiable;
+		//String query = "SELECT * FROM projectdb.enroll WHERE IDExamDate = ? AND IDStudent = ? AND status =  "
+		String query = "SELECT * \r\n" +
+				"FROM projectdb.enroll \r\n" + 
+				"WHERE IDExamDate = ? AND IDStudent = ? AND (status = 'NOT_INSERTED' OR 'INSERTED')";
+		
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+			pstatement.setInt(1, examDateId);
+			pstatement.setInt(2, studentId);
+			try(ResultSet result = pstatement.executeQuery();) {
+				if(!result.isBeforeFirst()) {
+					isStatusModifiable = false;
+				} else isStatusModifiable = true;
+			}
+		}
+		return isStatusModifiable;
+		
+	}
 
 	public void insertMark(int examDateId, int studentId, String mark) throws SQLException {
 

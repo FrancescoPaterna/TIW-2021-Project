@@ -2,7 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.sql.Connection;
-
+import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,6 +18,7 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import dao.EnrollsDAO;
 //import beans.User;
 import utils.ConnectionHandler;
 
@@ -86,6 +87,18 @@ public class GoToModify extends HttpServlet {
 		String path ="/WEB-INF/Modify.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
+		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
+		boolean isModifiable = false;
+		try {
+			isModifiable = enrollsDAO.checkModifiableCondition(exam_date_id, id_stud);
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to modify mark");
+			return;
+		}
+		
+		
+		
 
 		/* Recover URI To Go Back */
 		if (secretsortcode == 00) {
@@ -251,6 +264,10 @@ public class GoToModify extends HttpServlet {
 
 
 			}
+		}
+		
+		if(!isModifiable) {
+			// TODO 
 		}
 
 		

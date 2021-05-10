@@ -55,7 +55,7 @@ public class ProfessorChecker implements Filter {
 		if (!u.getRole().equals("professor")) {
 			ServletContext servletContext = req.getServletContext();
 			final WebContext ctx = new WebContext(req, res, servletContext, req.getLocale());
-			ctx.setVariable("errorMsg", "unauthorized access");
+			ctx.setVariable("errorMsg", "Unauthorized access");
 			templateEngine.process(loginpath, ctx, response.getWriter());
 			req.getSession().invalidate();
 			return;
