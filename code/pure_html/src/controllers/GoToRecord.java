@@ -329,6 +329,14 @@ public class GoToRecord extends HttpServlet {
 
 				templateEngine.process(path, ctx, response.getWriter());
 			}
+			else {
+				 path ="/WEB-INF/Warning.html";
+					ctx.setVariable("error", "Impossible To Record Score");
+					ctx.setVariable("description", "Cannot Find Any Score in Published State!");
+					templateEngine.process(path, ctx, response.getWriter());
+					return;
+
+			}
 
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Course not recognized");

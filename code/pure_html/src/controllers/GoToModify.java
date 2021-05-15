@@ -267,7 +267,11 @@ public class GoToModify extends HttpServlet {
 		}
 		
 		if(!isModifiable) {
-			// TODO 
+		 path ="/WEB-INF/Warning.html";
+			ctx.setVariable("error", "Impossible To Modify Score");
+			ctx.setVariable("description", "You Can Only Modify Score in NOT_INSERTED, INSERT and PUBLISHED State!");
+			templateEngine.process(path, ctx, response.getWriter());
+			return;
 		}
 
 		

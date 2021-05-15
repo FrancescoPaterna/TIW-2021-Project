@@ -277,6 +277,13 @@ th, td{
 	
  }
  
+ .warning{
+ background-color: red;
+ font-size: 142px;
+ color: white;
+ }
+ 
+ 
 /*
 body {
     text-align: center;

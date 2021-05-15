@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Warning</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<form action="LogOut" method="get">
+		<button class=logoutbutton type="submit">logout  &#10008</button>
+	</form>
+	<form>
+		<input class=returnbutton type="button" value="go back &#11144"
+			onclick="history.back()">
+	</form>
+	<div>
+		<h1 class= warning>WARNING</h1>
+		</div>
+		<h1 th:text="${error}"></h1>
+		<br>
+		<h2 th:text="${description}"></h2>
+		
+
+
+
+</body>
+</html>
