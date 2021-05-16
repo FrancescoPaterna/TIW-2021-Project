@@ -327,7 +327,7 @@ public class GoToRecord extends HttpServlet {
 				}
 
 				try {
-					recorded = enrollsDAO.FindRecordedStudents(exam_date_id);
+					recorded = enrollsDAO.FindRecordedStudents(rec);
 				} catch (SQLException e) {
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Cannot Find any Recorded Student");

@@ -478,7 +478,7 @@ public class EnrollsDAO {
 	public void RecordScore(int examDateId, int recordID) throws SQLException {
 
 		String query = "UPDATE projectdb.enroll SET status='RECORDED' WHERE IDExamDate = ? AND status = 'PUBLISHED'";
-		String query2 = "UPDATE projectdb.enroll SET IDRecord= ? WHERE IDExamDate = ? AND status='RECORDED'";
+		String query2 = "UPDATE projectdb.enroll SET IDRecord= ? WHERE IDRecord is null AND IDExamDate = ? AND status='RECORDED'";
 
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, examDateId);
@@ -493,14 +493,14 @@ public class EnrollsDAO {
 		}
 	}
 
-	public List<Enroll> FindRecordedStudents(int exameDateId) throws SQLException {
+	public List<Enroll> FindRecordedStudents(int record_id) throws SQLException {
 		List<Enroll> enrolls = new ArrayList<>();
 
-		String query = "SELECT user.ID, user.name, user.surname, enroll.mark\r\n"
-				+ "FROM (user JOIN enroll ON user.ID = enroll.IDStudent) JOIN examdate ON enroll.IDExamDate = examdate.IDExam\r\n"
-				+ "WHERE IDExam = ? AND enroll.status = 'RECORDED'";
+		String query = "SELECT user.ID, user.name, user.surname, enroll.mark \r\n"
+				+ "FROM user JOIN enroll ON user.ID = enroll.IDStudent \r\n"
+				+ "WHERE enroll.IDRecord = ? ";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
-			pstatement.setInt(1, exameDateId);
+			pstatement.setInt(1, record_id);
 			try (ResultSet result = pstatement.executeQuery();) {
 				while (result.next()) {
 					Enroll enroll = new Enroll();
