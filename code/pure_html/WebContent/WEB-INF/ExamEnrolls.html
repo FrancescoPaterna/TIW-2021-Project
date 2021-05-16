@@ -87,7 +87,7 @@
 				<th class="sortstatic">Option</th>
 		</thead>
 		<tbody>
-			<tr th:each="e : ${enrolls}">
+			<tr th:each="e : ${enrolls}" th:class="${eStat.even}? 'even'">
 				<td th:text="${e.IDStudent}"></td>
 				<td th:text="${e.name}"></td>
 				<td th:text="${e.surname}"></td>

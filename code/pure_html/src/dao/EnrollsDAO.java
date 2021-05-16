@@ -445,7 +445,7 @@ public class EnrollsDAO {
 
 	public void insertMark(int examDateId, int studentId, String mark) throws SQLException {
 
-		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE IDExamDate = ? AND IDStudent = ? ";
+		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE (IDExamDate = ? AND IDStudent = ?) AND (status = 'INSERTED' OR status = 'NOT_INSERTED' OR status = 'PUBLISHED') ";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, mark);
 			pstatement.setInt(2, examDateId);

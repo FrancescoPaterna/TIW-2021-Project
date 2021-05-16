@@ -289,6 +289,10 @@ th, td {
 	font-size: 142px;
 	color: white;
 }
+
+.even{
+	background-color: #dbe6db;
+}
 /*
 body {
     text-align: center;

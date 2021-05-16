@@ -103,8 +103,12 @@ public class UpdateScore extends HttpServlet {
 					try {
 						enrollsdao.insertMark(exam_date_id, id_stud, score);
 					} catch (SQLException e) {
-						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot UPDATE Score");
-						return;
+						 path ="/WEB-INF/Forbidden.html";
+							ctx.setVariable("error", "UNAUTHORIZED MODIFY");
+							ctx.setVariable("description", "Attempt to mody a score recorded or refused");
+							templateEngine.process(path, ctx, response.getWriter());
+							session.invalidate();
+							return;
 					}
 				}
 				else {
