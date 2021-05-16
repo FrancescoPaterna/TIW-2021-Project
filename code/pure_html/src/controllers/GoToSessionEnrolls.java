@@ -79,6 +79,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		String mask;
 		String maskget;
 		String path;
+		Boolean publish = true, record = true;
 		
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -306,8 +307,20 @@ public class GoToSessionEnrolls extends HttpServlet {
 			return;
 
 		}
+		
+	
+			try {
+				publish = enrollsDAO.assertion_published(exam_date_id);
+				record = enrollsDAO.assertion_record(exam_date_id);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+	
+		
 
-
+		
+		ctx.setVariable("publish", publish);
+		ctx.setVariable("record", record);
 		ctx.setVariable("course_id", course_id);
 		ctx.setVariable("exam_date_id", exam_date_id);
 		ctx.setVariable("enrolls", enrolls);

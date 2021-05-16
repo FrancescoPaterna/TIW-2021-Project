@@ -217,7 +217,17 @@ th, td {
 }
 
 .record:hover {
+	background-color: #80dd25;
+}
+
+.recordlo {
 	background-color: #8ae234;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
 }
 
 .publish {
@@ -231,6 +241,15 @@ th, td {
 
 .publish:hover {
 	background-color: #fce94f;
+}
+
+.publishlo {
+	background-color: #fde946;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
 }
 
 .sort {

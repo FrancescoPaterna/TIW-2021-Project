@@ -136,7 +136,7 @@
 				th:value="${secret_code}" /> <input type="hidden" name="course_id"
 				th:value="${course_id}" />
 
-			<button class=publish name="exam_date_id" type="submit"
+			<button th:class="${publish} ? publish : publishlo" name="exam_date_id" th:type="${publish} ? submit : button"
 				th:value="${exam_date_id}">PUBLISH</button>
 
 		</form>
@@ -149,7 +149,7 @@
 				th:value="${date}" /> <input type="hidden" name="course_id"
 				th:value="${course_id}" />
 
-			<button class=record name="exam_date_id" type="submit"
+			<button th:class="${record} ? record : recordlo" name="exam_date_id" th:type="${record} ? submit : button"
 				th:value="${exam_date_id}">RECORD</button>
 
 		</form>
