@@ -428,7 +428,7 @@ public class EnrollsDAO {
 		//String query = "SELECT * FROM projectdb.enroll WHERE IDExamDate = ? AND IDStudent = ? AND status =  "
 		String query = "SELECT * \r\n" +
 				"FROM projectdb.enroll \r\n" + 
-				"WHERE IDExamDate = ? AND IDStudent = ? AND (status = 'NOT_INSERTED' OR 'INSERTED')";
+				"WHERE IDExamDate = ? AND IDStudent = ? AND (status = 'NOT_INSERTED' OR status = 'INSERTED' OR status = 'PUBLISHED')";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, examDateId);
