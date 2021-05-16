@@ -69,6 +69,8 @@ public class GoToExamDatesPro extends HttpServlet {
 		
 		
 		
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		/*Verifichiamo che il corso inserito appartenga al professore (Protezione Attacco SQL)*/
 		CourseDAO courseDAO = new CourseDAO(connection);
@@ -89,7 +91,11 @@ public class GoToExamDatesPro extends HttpServlet {
 		}
 		
 		if(!course_found) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Accesso Non Autorizzato");
+			 path ="/WEB-INF/Forbidden.html";
+				ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+				ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+				templateEngine.process(path, ctx, response.getWriter());
+				session.invalidate();
 			return;
 		}
 		/********************************************************************************************/
@@ -108,8 +114,6 @@ public class GoToExamDatesPro extends HttpServlet {
 		
 		// Redirect to the HomePage and add courses to the parameters*/
 		path = "/WEB-INF/ExamDatesPro.html";
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("course_id", course_id);
 		ctx.setVariable("exams", exams);

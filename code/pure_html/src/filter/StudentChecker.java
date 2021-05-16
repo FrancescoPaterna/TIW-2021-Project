@@ -48,7 +48,7 @@ public class StudentChecker implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String loginpath = "/index.html";
+		String loginpath = "WEB-INF/Forbidden.html";
 		HttpSession s = req.getSession();
 		User u = null;
         // check if the client is a worker
@@ -56,7 +56,8 @@ public class StudentChecker implements Filter {
 		if (!u.getRole().equals("student")) {
 			ServletContext servletContext = req.getServletContext();
 			final WebContext ctx = new WebContext(req, res, servletContext, req.getLocale());
-			ctx.setVariable("errorMsg", "unauthorized access");
+			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+			ctx.setVariable("description", "Attempt to access a resource not owned by you!");
 			templateEngine.process(loginpath, ctx, response.getWriter());
 			req.getSession().invalidate();
 			return;

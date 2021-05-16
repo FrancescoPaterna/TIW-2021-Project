@@ -279,11 +279,16 @@ th, td {
 }
 
 .warning {
-	background-color: red;
+	background-color: #e7c517;
 	font-size: 142px;
 	color: white;
 }
 
+.forbidden {
+	background-color: red;
+	font-size: 142px;
+	color: white;
+}
 /*
 body {
     text-align: center;

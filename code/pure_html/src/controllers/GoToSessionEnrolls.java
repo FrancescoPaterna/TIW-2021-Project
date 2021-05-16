@@ -21,7 +21,9 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.Enroll;
+import beans.User;
 import dao.EnrollsDAO;
+import dao.ExamDateDAO;
 
 import utils.ConnectionHandler;
 
@@ -48,55 +50,12 @@ public class GoToSessionEnrolls extends HttpServlet {
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = "/index.html";
-		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "You're not logged in");
-			templateEngine.process(loginpath, ctx, response.getWriter());
-		//response.sendRedirect(loginpath);
-			return;
-		}
+	
 
-
-		Integer exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
-		Integer course_id = Integer.parseInt(request.getParameter("course_id"));
-		String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-		String mask = "0000000";
-		String coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		
-		Integer secretsortcode = 00;
-
-
-		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
-		List<Enroll> enrolls = new ArrayList<>();
-
-		try {
-			enrolls = enrollsDAO.FindEnrolls(exam_date_id);
-		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-					"Not possible to recover enrolls for this exam date");
-			return;
-		}
-		// Redirect to the HomePage and add courses to the parameters
-		String path = "/WEB-INF/ExamEnrolls.html";
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("exam_date_id", exam_date_id);
-		ctx.setVariable("enrolls", enrolls);
-		ctx.setVariable("coursename",coursename);
-		ctx.setVariable("date", date);
-		ctx.setVariable("mask", mask);
-		ctx.setVariable("secret_code", secretsortcode);
-		ctx.setVariable("course_id", course_id);
-
-		
-
-
-		templateEngine.process(path, ctx, response.getWriter());
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(req, resp);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -119,30 +78,60 @@ public class GoToSessionEnrolls extends HttpServlet {
 		String date;
 		String mask;
 		String maskget;
+		String path;
+		
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		sort = StringEscapeUtils.escapeJava(request.getParameter("sort"));
 		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
 		course_id = Integer.parseInt(request.getParameter("course_id"));
+		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 
 		
+		ExamDateDAO examdateDAO = new ExamDateDAO(connection);
+		User user = (User) session.getAttribute("user");
 
+		
 		try {
-			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+			if(!examdateDAO.CheckExamDateByProf(user.getId(), exam_date_id)) {
+				 path ="/WEB-INF/Forbidden.html";
+					ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+					ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+					templateEngine.process(path, ctx, response.getWriter());
+					session.invalidate();
+					return;
+			}
 		} catch (NumberFormatException | NullPointerException e) {
 			// only for debugging e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			return;
+		} catch (SQLException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "DB Error");
+			e.printStackTrace();
 		}
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		List<Enroll> enrolls = new ArrayList<>();
-		String path = "/WEB-INF/ExamEnrolls.html";
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		path = "/WEB-INF/ExamEnrolls.html";
 
-		if (sort.equals("1")) {
+		
+		if (sort.equals("0")) {
+			maskget = "0000000";
+			secretsortcode = 00;
+			try {
+				enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
+
+			} catch (SQLException e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+						"Not possible to recover enrolls for this exam date");
+				return;
+			}
+		}
+		
+		else if (sort.equals("1")) {
 			if (mask.charAt(0) == '0') {
 				maskget = '1' + mask.substring(1, 7);
 				secretsortcode = 10;

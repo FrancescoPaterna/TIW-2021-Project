@@ -1,6 +1,9 @@
 package controllers;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest; 
+import java.security.NoSuchAlgorithmException;
 //import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -21,6 +24,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import beans.User;
 import dao.UserDAO;
 import utils.ConnectionHandler;
+import utils.HexString;
 
 @WebServlet("/CheckLogin")
 public class CheckLogin extends HttpServlet {
@@ -54,6 +58,7 @@ public class CheckLogin extends HttpServlet {
 		// obtain and escape params
 		String id = null;
 		String pwd = null;
+		String secure_pwd = null;
 		try {
 			id = StringEscapeUtils.escapeJava(request.getParameter("id"));
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
@@ -67,12 +72,23 @@ public class CheckLogin extends HttpServlet {
 					"Missing credential value aka BRO NON HAI SCRITTO NIENTE!");
 			return;
 		}
+		
+
+		MessageDigest digest;
+		try {
+			digest = MessageDigest.getInstance("SHA-1");
+			byte[] hash = digest.digest(pwd.getBytes(StandardCharsets.UTF_8));
+			secure_pwd = HexString.toHexString(hash);
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		// query db to authenticate for user
 		UserDAO userDao = new UserDAO(connection);
 		User user = null;
 		try {
-			user = userDao.checkCredentials(id, pwd);
+			user = userDao.checkCredentials(id, secure_pwd);
 		} catch (SQLException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 					"Not Possible to check credentials aka BRO STO DATABASE SI FA I CAZZI SUOI");

@@ -28,8 +28,11 @@
 					<td th:text="${c.id}"></td>
 					<td>
 
-						<form action="GoToSessionEnrolls" method="post">
+						<form action="GoToSessionEnrolls" method="get">
 							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
+							<input type="hidden" name="mask" id="mask" value="0000000"/>
+							<input type="hidden" name="secret_code" id="secret_code" value="00"/>
+							<input type="hidden" name="sort" id="sort" value="0"/>
 							<input type="hidden" name="date" id="date" th:value="${c.data}"/>
 							<input type="hidden" name="course_id" id="course_id" th:value="${course_id}"/>
 							<button class=button3 name="exam_date_id" type="submit"

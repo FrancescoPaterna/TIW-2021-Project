@@ -47,7 +47,7 @@ public class ProfessorChecker implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String loginpath = "/index.html";
+		String loginpath = "WEB-INF/Forbidden.html";
 		// check if the client is an admin
 		HttpSession s = req.getSession();
 		User u = null;
@@ -55,7 +55,8 @@ public class ProfessorChecker implements Filter {
 		if (!u.getRole().equals("professor")) {
 			ServletContext servletContext = req.getServletContext();
 			final WebContext ctx = new WebContext(req, res, servletContext, req.getLocale());
-			ctx.setVariable("errorMsg", "Unauthorized access");
+			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+			ctx.setVariable("description", "Attempt to access a resource not owned by you!");
 			templateEngine.process(loginpath, ctx, response.getWriter());
 			req.getSession().invalidate();
 			return;

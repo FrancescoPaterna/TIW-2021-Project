@@ -53,5 +53,21 @@ public class ExamDateDAO {
 
 	}
 	
+	public boolean CheckExamDateByProf(int user_id, int exam_id) throws SQLException {
+		boolean allowed;
+		String query = "SELECT * FROM projectdb.examdate examdate JOIN projectdb.course course ON IDCourse = course.ID WHERE IDprofessor = ? AND IDExam = ? ";
+		try (PreparedStatement pstatement = con.prepareStatement(query);) {
+			pstatement.setInt(1, user_id);
+			pstatement.setInt(2, exam_id);
+			try(ResultSet result = pstatement.executeQuery();) {
+				if(!result.isBeforeFirst()) {
+					allowed = false;
+				} else allowed = true;
+			}
+		}
+		return allowed;
+	}
+	
+	
 	
 }
