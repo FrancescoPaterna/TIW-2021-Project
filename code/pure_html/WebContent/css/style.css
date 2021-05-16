@@ -1,11 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron);
 
-.start{
-background-image: url("demo.jpg");
-background-repeat: no-repeat;
- background-size: cover;
+.start {
+	background-image: url("../resources/demo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
 }
-.welcome{
+
+.welcome {
 	width: 65%;
 	border-radius: 5px;
 	background-color: #f2f2f2;
@@ -13,7 +14,6 @@ background-repeat: no-repeat;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
-	
 }
 
 h1 {
@@ -23,8 +23,6 @@ h1 {
 	font-weight: bold;
 	font-size: 350%
 }
-
-
 
 form {
 	text-align: center;
@@ -84,7 +82,6 @@ input[type=submit]:hover {
 	text-align: center;
 }
 
-
 /*Generic Table Border*/
 table, th, td {
 	text-align: center;
@@ -92,10 +89,10 @@ table, th, td {
 	padding: 12px 15px;
 	margin: 8px 0;
 	margin-left: auto;
-    margin-right: auto;
+	margin-right: auto;
 }
 
-th, td{
+th, td {
 	border: 1px solid black;
 }
 
@@ -138,20 +135,19 @@ th, td{
 	text-decoration: underline;
 }
 
-.divbutton{
+.divbutton {
 	position: absolute;
- 	top: 10px;
-	
+	top: 10px;
 }
 
-.logoutbutton{
-    position: absolute;
-  	top: 16px;
- 	right: 16px;
- 	width: 143px;
- 	height: 42px;
- 	font-size: 27px;
- 	font-weight: bold;
+.logoutbutton {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 143px;
+	height: 42px;
+	font-size: 27px;
+	font-weight: bold;
 	background-color: #ff0000;
 	border-radius: 6px;
 	border: none;
@@ -159,15 +155,15 @@ th, td{
 	cursor: pointer;
 }
 
-.returnbutton{
+.returnbutton {
 	position: absolute;
-  	top: 16px;
- 	left: 16px;
+	top: 16px;
+	left: 16px;
 	font-weight: bold;
- 	left: 50px;
- 	width: 143px;
- 	height: 42px;
- 	font-size: 27px;
+	left: 50px;
+	width: 143px;
+	height: 42px;
+	font-size: 27px;
 	background-color: #3465a4;
 	border-radius: 6px;
 	border: none;
@@ -175,11 +171,11 @@ th, td{
 	cursor: pointer;
 }
 
-.logoutbutton:hover{
+.logoutbutton:hover {
 	background-color: #f85f5f;
 }
 
-.returnbutton:hover{
+.returnbutton:hover {
 	background-color: #729fcf;
 }
 
@@ -188,102 +184,106 @@ th, td{
 	text-align: center;
 }
 
-.modify{
-		background-color: #3465a4;
-		padding: 12px 15px;
-		border-radius: 6px;
-		color: white;
-		cursor: pointer;
-		display: inherit;
+.modify {
+	background-color: #3465a4;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
 }
 
-.modify:hover{
-		background-color: #729fcf;
+.modify:hover {
+	background-color: #5893d1;
 }
 
-.record{
-		background-color: #4e9a06;
-		width: 25%;
-		padding: 12px 15px;
-		border-radius: 6px;
-		color: white;
-		cursor: pointer;
-		display: inherit;
+.modifylo {
+	background-color: #b4c9e1;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
 }
 
-.record:hover{
-		background-color: #8ae234;
+.record {
+	background-color: #4e9a06;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
 }
 
-.publish{
-		background-color: #edd400;
-		width: 25%;
-		padding: 12px 15px;
-		border-radius: 6px;
-		color: white;
-		cursor: pointer;
+.record:hover {
+	background-color: #8ae234;
 }
 
-.publish:hover{
-		background-color: #fce94f;
+.publish {
+	background-color: #edd400;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
 }
 
-.sort{
-	color:black;
+.publish:hover {
+	background-color: #fce94f;
+}
+
+.sort {
+	color: black;
 	cursor: pointer;
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
 	background-color: transparent;
 	border: 0px;
-	
 }
 
-.sort:hover{
-	color:blue;
+.sort:hover {
+	color: blue;
 }
 
-.sort:active{
-	color:yellow;
+.sort:active {
+	color: yellow;
 }
 
-.sortstatic{
-	color:black;
+.sortstatic {
+	color: black;
 	font-size: 20px;
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
 	background-color: transparent;
-	font-weight:normal;
-	
+	font-weight: normal;
 }
 
+.proenrollform {
+	display: inline;
+	width: inherit;
+	height: inherit;
+	margin-left: 20px;
+	margin-right: 20px;
+}
 
- .proenrollform{
- display: inline;
- width: inherit;
- height: inherit;
- margin-left: 20px;
- margin-right: 20px;
- }
- 
- .score{
-   	border-color: #000000 white white white;
+.score {
+	border-color: #000000 white white white;
 	font-family: 'Orbitron', courier, sans-serif;
- 	text-align: center;
+	text-align: center;
 	background-color: white;
 	color: black;
 	border-radius: 6px;
 	cursor: pointer;
-	font-weight:normal;
-	
- }
- 
- .warning{
- background-color: red;
- font-size: 142px;
- color: white;
- }
- 
- 
+	font-weight: normal;
+}
+
+.warning {
+	background-color: red;
+	font-size: 142px;
+	color: white;
+}
+
 /*
 body {
     text-align: center;

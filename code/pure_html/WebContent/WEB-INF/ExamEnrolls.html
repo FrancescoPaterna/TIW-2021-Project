@@ -18,7 +18,7 @@
 	<h1>EXAM ENROLLS</h1>
 	<p
 		th:text="${'All students enrolled in the ' + date + ' exam of ' + coursename}"></p>
-		<p th:text=" ${errorMsg}"></p>
+	<p th:text=" ${errorMsg}"></p>
 	<table>
 		<thead>
 			<tr class=pro>
@@ -97,20 +97,30 @@
 				<td th:text="${e.status}"></td>
 				<td>
 					<form action="GoToModify" method="GET">
-						<input type="hidden" name="coursename" id="coursename"th:value="${coursename}" /> 
-						<input type="hidden" name="secret_code" th:value="${secret_code}" /> 
-						<input type="hidden" name="mask" th:value="${mask}" /> 
-						<input type="hidden" name="date" th:value="${date}" /> 
-						<input type="hidden" name="exam_date_id" th:value="${exam_date_id}" />
+						<input type="hidden" name="coursename" id="coursename"
+							th:value="${coursename}" /> <input type="hidden"
+							name="secret_code" th:value="${secret_code}" /> <input
+							type="hidden" name="mask" th:value="${mask}" /> <input
+							type="hidden" name="date" th:value="${date}" /> <input
+							type="hidden" name="exam_date_id" th:value="${exam_date_id}" />
 						<input type="hidden" name="course_id" th:value="${course_id}" />
-						<input type="hidden" name="name" th:value="${e.name}" />
-						<input type="hidden" name="surname" th:value="${e.surname}" />
-						<input type="hidden" name="email" th:value="${e.mail}" />
-						<input type="hidden" name="coursedeg" th:value="${e.courseDeg}" />
-						<input type="hidden" name="mark" th:value="${e.mark}" />
-						<input type="hidden" name="status" th:value="${e.status}" />
-						<button class=modify name="id_stud" type="submit"
-							th:value="${e.IDstudent}">Modify</button>
+						<input type="hidden" name="name" th:value="${e.name}" /> <input
+							type="hidden" name="surname" th:value="${e.surname}" /> <input
+							type="hidden" name="email" th:value="${e.mail}" /> <input
+							type="hidden" name="coursedeg" th:value="${e.courseDeg}" /> <input
+							type="hidden" name="mark" th:value="${e.mark}" /> <input
+							type="hidden" name="status" th:value="${e.status}" />
+						<div th:switch="${#strings.toString(e.status)}">
+							<button th:case="'RECORDED'" th:class=modifylo name="id_stud"
+								type="button" th:value="${e.IDstudent}">Modify</button>
+
+							<button th:case="'REJECTED'" th:class=modifylo name="id_stud"
+								type="button" th:value="${e.IDstudent}">Modify</button>
+
+							<button th:case="*" th:class=modify name="id_stud" type="submit"
+								th:value="${e.IDstudent}">Modify</button>
+						</div>
+
 					</form>
 				</td>
 			</tr>
