@@ -516,24 +516,36 @@ public class EnrollsDAO {
 	}
 
 	public boolean assertion_record(int id_exam) throws SQLException {
-		int check = 0;
+		boolean assert_rec;
 
-		String query = "SELECT COUNT(*) FROM projectdb.enroll WHERE enroll.IDExamDate = ? AND enroll.status = 'PUBLISHED'";
+		String query = "SELECT * FROM projectdb.enroll WHERE enroll.IDExamDate = ? AND enroll.status = 'PUBLISHED'";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 
 			pstatement.setInt(1, id_exam);
 			try (ResultSet result = pstatement.executeQuery();) {
-				while (result.next()) {
-					check = result.getInt("COUNT(*)");
-				}
-
+				if(!result.isBeforeFirst()) {
+					assert_rec = false;
+				} else assert_rec = true;
 			}
 		}
-		if (check == 0) {
-			return false;
-		} else {
-			return true;
-		}
+		return assert_rec;
 	}
+	
+	public boolean assertion_published(int id_exam) throws SQLException {
+		boolean assert_pub;
+
+		String query = "SELECT * FROM projectdb.enroll WHERE enroll.IDExamDate = ? AND enroll.status = 'INSERTED'";
+		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+
+			pstatement.setInt(1, id_exam);
+			try (ResultSet result = pstatement.executeQuery();) {
+				if(!result.isBeforeFirst()) {
+					assert_pub = false;
+				} else assert_pub = true;
+			}
+		}
+		return assert_pub;
+	}
+	
 
 }

@@ -19,8 +19,10 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.Status;
+import beans.User;
 import utils.ConnectionHandler;
 import dao.EnrollsDAO;
+import dao.ExamDateDAO;
 
 /**
  * Servlet implementation class UpdateMark
@@ -70,7 +72,7 @@ public class UpdateScore extends HttpServlet {
 		//User user = (User) session.getAttribute("user");   //TDDO Da usare per un controllo
 		
 		Integer secret_code, course_id, id_stud, exam_date_id, sort; 
-		String coursename, mask, date, name, surname, email, coursedeg, score, status;
+		String coursename, mask, date, name, surname, email, coursedeg, score, status, path;
 		
 		secret_code = Integer.parseInt(request.getParameter("secret_code"));
 		course_id = Integer.parseInt(request.getParameter("course_id"));
@@ -90,20 +92,41 @@ public class UpdateScore extends HttpServlet {
 		coursedeg = StringEscapeUtils.escapeJava(request.getParameter("coursedeg"));
 
 		EnrollsDAO enrollsdao = new EnrollsDAO(connection);
-		
+		ExamDateDAO examdatedao = new ExamDateDAO(connection);
+		User user = (User) session.getAttribute("user");
 
-				try {
-					enrollsdao.insertMark(exam_date_id, id_stud, score);
-				} catch (SQLException e) {
-					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot UPDATE Score");
-					return;
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+			try {
+				if(examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {
+					try {
+						enrollsdao.insertMark(exam_date_id, id_stud, score);
+					} catch (SQLException e) {
+						response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot UPDATE Score");
+						return;
+					}
 				}
+				else {
+					 path ="/WEB-INF/Forbidden.html";
+						ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+						ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+						templateEngine.process(path, ctx, response.getWriter());
+						session.invalidate();
+						return;
+				}
+			} catch (SQLException s) {
+				 path ="/WEB-INF/Forbidden.html";
+					ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+					ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+					templateEngine.process(path, ctx, response.getWriter());
+					session.invalidate();
+					return;
+			}
+		
+		
+			path ="/WEB-INF/Modify.html";
 
-		
-		
-			String path ="/WEB-INF/Modify.html";
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("secret_code", secret_code);
 			ctx.setVariable("course_id", course_id);
 			ctx.setVariable("id_stud", id_stud);

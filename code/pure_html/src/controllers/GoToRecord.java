@@ -22,9 +22,11 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.Enroll;
+import beans.User;
 import utils.ConnectionHandler;
 
 import dao.EnrollsDAO;
+import dao.ExamDateDAO;
 import dao.RecordDAO;
 
 //import utils.GenPdf;
@@ -90,6 +92,8 @@ public class GoToRecord extends HttpServlet {
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		RecordDAO recordDAO = new RecordDAO(connection);
+		ExamDateDAO examdatedao = new ExamDateDAO(connection);
+		User user = (User) session.getAttribute("user");
 
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
@@ -275,6 +279,30 @@ public class GoToRecord extends HttpServlet {
 		List<Enroll> recorded;
 
 		try {
+			if(!examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {
+					 path ="/WEB-INF/Forbidden.html";
+						ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+						ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+						templateEngine.process(path, ctx, response.getWriter());
+						session.invalidate();
+						return;
+				}
+		}
+			catch (SQLException s) {
+			 path ="/WEB-INF/Forbidden.html";
+				ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+				ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+				templateEngine.process(path, ctx, response.getWriter());
+				session.invalidate();
+				return;
+		}
+		
+		
+		
+		
+		
+		
+		try {
 			if (enrollsDAO.assertion_record(exam_date_id)) {
 
 				try {
@@ -316,6 +344,7 @@ public class GoToRecord extends HttpServlet {
 							"Cannot find timestamp and work on the date");
 					return;
 				}
+
 
 				// Redirect to the HomePage and add courses to the parameters*/
 

@@ -20,6 +20,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import beans.User;
 import dao.EnrollsDAO;
+import dao.ExamDateDAO;
 import utils.ConnectionHandler;
 
 /**
@@ -92,12 +93,54 @@ public class UpdateStatus extends HttpServlet {
 
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
+			ExamDateDAO examdatedao = new ExamDateDAO(connection);
+			
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			
+			
+
+			
 			try {
-				enrollsDAO.PublishScore(exam_date_id);
-			} catch (SQLException e) {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot Publish Any Score");
-				return;
+				if(!examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {
+					 path ="/WEB-INF/Forbidden.html";
+						ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+						ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+						templateEngine.process(path, ctx, response.getWriter());
+						session.invalidate();
+						return;
+				}
+			} catch (SQLException s) {
+				 path ="/WEB-INF/Forbidden.html";
+					ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+					ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+					templateEngine.process(path, ctx, response.getWriter());
+					session.invalidate();
+					return;
 			}
+			
+
+				try {
+					if(enrollsDAO.assertion_published(exam_date_id)) {
+						try {
+							enrollsDAO.PublishScore(exam_date_id);
+						} catch (SQLException e) {
+							response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot Publish Any Score");
+							return;
+						}
+					}
+					else {
+						 path ="/WEB-INF/Warning.html";
+							ctx.setVariable("error", "Impossible To Record Score");
+							ctx.setVariable("description", "Cannot Find Any Score in Published State!");
+							templateEngine.process(path, ctx, response.getWriter());
+							return;
+					}
+				} catch (SQLException | IOException e) {
+					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot Publish Any Score");
+					e.printStackTrace();
+				}
+			
 
 			
 			if (secretsortcode == 00) {
