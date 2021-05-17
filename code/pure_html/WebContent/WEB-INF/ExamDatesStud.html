@@ -28,7 +28,7 @@
 				<tr th:each="c : ${exams}">
 					<td th:text="${c.id}"></td>
 					<td>
-						<form action="GoToResult" method="post">
+						<form action="GoToResult" method="get">
 							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
 							<input type="hidden" name="course_id" id="course_id" th:value="${course_id}"/>
 							<input type="hidden" name="date" id="date" th:value="${c.data}"/>

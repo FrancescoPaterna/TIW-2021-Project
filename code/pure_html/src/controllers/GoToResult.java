@@ -45,30 +45,17 @@ public class GoToResult extends HttpServlet {
 		templateResolver.setSuffix(".html");
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
+	
+	
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = "/index.html";
-		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "You're not logged in");
-			templateEngine.process(loginpath, ctx, response.getWriter());
-		//response.sendRedirect(loginpath);
-			return;
-		}
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Integer IDExamDate;
 		Integer course_id;
 		String coursename;
 		String date;
+		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
@@ -141,5 +128,16 @@ public class GoToResult extends HttpServlet {
 			templateEngine.process(path, ctx, response.getWriter());
 		}
 	}
+	
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+	
 }
