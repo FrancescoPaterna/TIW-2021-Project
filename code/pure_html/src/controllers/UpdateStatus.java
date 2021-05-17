@@ -57,18 +57,9 @@ public class UpdateStatus extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String loginpath = "/index.html";
-
 		User user = null;
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "You're not logged in");
-			templateEngine.process(loginpath, ctx, response.getWriter());
-			return;
-		}
-
+		
 		String path;
 		user = (User) request.getSession().getAttribute("user");
 		String target;
