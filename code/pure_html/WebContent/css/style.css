@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron);
 
+
 .start {
 	background-image: url("../resources/demo.jpg");
 	background-repeat: no-repeat;
@@ -312,41 +313,22 @@ th, td {
 .even{
 	background-color: #dbe6db;
 }
-/*
-body {
-    text-align: center;
-    background-color: #729fcf;
+
+.prb{
+	background-color:grey;
+	color: white;
+	position: absolute;
+	top: 16px;
+	left: 250px;
+	font-weight: bold;
+	width: 143px;
+	height: 42px;
+	font-size: 27px;
+	border-radius:6px;
+	border: none;
+	cursor: pointer;
 }
 
-.logout{
-  background-color: red;
-  color: white;
- }
-
-form {
-    display: inline-block;
+.prb:hover{
+	background-color: #888a85;
 }
-
-.button {
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-.button1 {background-color: #4CAF50;} 
-.button2 {background-color: #008CBA;} 
-
-.button3{
-  background: none!important;
-  border: none;
-  padding: 0!important;
-  color: #069;
-  text-decoration: underline;
-  cursor: pointer;
-}*/

@@ -4,11 +4,16 @@
 <meta charset="UTF-8" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../CSS/style.css" th:href="@{/css/print.css}" />
 <title>Record Page</title>
 </head>
 <form action="LogOut" method="get">
-	<button class=logoutbutton type="submit">logout &#10008</button>
+	<button class='logoutbutton no-print' type="submit">logout &#10008</button>
 </form>
+
+<button onclick="window.print();" class='prb no-print'>print  &#9881</button>
+
 <form action="GoToSessionEnrolls" method="get">
 	<input type="hidden" name="mask" id="mask" th:value="${mask}" /> 
 	<input type="hidden" name="exam_date_id" id="exam_date_id" th:value="${exam_date_id}" /> 
@@ -16,9 +21,10 @@
 	<input type="hidden" name="coursename" id="coursename" th:value="${coursename}" /> 
 	<input type="hidden" name="course_id" th:value="${course_id}" />
 	<input type="hidden" name="sort" id="sort" th:value="${sort}" />
-	<button class=returnbutton  type="submit"
+	<button class='returnbutton no-print' type="submit"
 		th:value="${sorturl}">go back &#11144</button>
 </form>
+
 <body>
 	<h1>University of NightCity Official Record</h1>
 	<p
