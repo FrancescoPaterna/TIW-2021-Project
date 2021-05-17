@@ -101,11 +101,18 @@ public class UpdateScore extends HttpServlet {
 			try {
 				if(examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {
 					try {
-						enrollsdao.insertMark(exam_date_id, id_stud, score);
+						if(enrollsdao.insertMark(exam_date_id, id_stud, score) == 0) {
+							path ="/WEB-INF/Forbidden.html";
+							ctx.setVariable("error", "UNAUTHORIZED MODIFY");
+							ctx.setVariable("description", "Attempt to modify a score recorded or refused");
+							templateEngine.process(path, ctx, response.getWriter());
+							session.invalidate();
+							return;
+						}
 					} catch (SQLException e) {
 						 path ="/WEB-INF/Forbidden.html";
 							ctx.setVariable("error", "UNAUTHORIZED MODIFY");
-							ctx.setVariable("description", "Attempt to mody a score recorded or refused");
+							ctx.setVariable("description", "Attempt to modify a score recorded or refused");
 							templateEngine.process(path, ctx, response.getWriter());
 							session.invalidate();
 							return;

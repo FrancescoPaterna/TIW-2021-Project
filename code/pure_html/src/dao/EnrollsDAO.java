@@ -443,15 +443,16 @@ public class EnrollsDAO {
 		
 	}
 
-	public void insertMark(int examDateId, int studentId, String mark) throws SQLException {
-
+	public int insertMark(int examDateId, int studentId, String mark) throws SQLException {
+		int modifiedRows = 0;
 		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE (IDExamDate = ? AND IDStudent = ?) AND (status = 'INSERTED' OR status = 'NOT_INSERTED' OR status = 'PUBLISHED') ";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, mark);
 			pstatement.setInt(2, examDateId);
 			pstatement.setInt(3, studentId);
-			pstatement.executeUpdate();
+			modifiedRows = pstatement.executeUpdate();
 		}
+		return modifiedRows;
 	}
 
 	public void RefuseScore(int examDateId, int user_id) throws SQLException {
