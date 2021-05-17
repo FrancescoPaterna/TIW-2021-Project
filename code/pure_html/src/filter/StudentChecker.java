@@ -51,7 +51,7 @@ public class StudentChecker implements Filter {
 		String loginpath = "WEB-INF/Forbidden.html";
 		HttpSession s = req.getSession();
 		User u = null;
-        // check if the client is a worker
+        // check if the client is a student
 		u = (User) s.getAttribute("user");
 		if (!u.getRole().equals("student")) {
 			ServletContext servletContext = req.getServletContext();

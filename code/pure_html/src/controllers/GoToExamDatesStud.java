@@ -50,26 +50,8 @@ public class GoToExamDatesStud extends HttpServlet {
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-			String path ="/WEB-INF/ExamDatesStud.html";
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			templateEngine.process(path, ctx, response.getWriter());
-			
-		}
-	
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = "/index.html";
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "You're not logged in");
-			templateEngine.process(loginpath, ctx, response.getWriter());
-		//response.sendRedirect(loginpath);
-			return;
-		}
+		
 		User user = (User) session.getAttribute("user");
 		Integer course_id; 
 		String coursename;
@@ -81,6 +63,7 @@ public class GoToExamDatesStud extends HttpServlet {
 		List<ExamDate> exams = new ArrayList<>();
 		
 		try {
+			
 			exams = ExamDateDAO.FindExameDateBYCourseForStudent(user.getId(), course_id);
 
 		} catch (SQLException e) {
@@ -107,6 +90,12 @@ public class GoToExamDatesStud extends HttpServlet {
 			ctx.setVariable("coursename", coursename);
 			templateEngine.process(path, ctx, response.getWriter());
 		}
+			
+		}
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 	
 	public void destroy() {
