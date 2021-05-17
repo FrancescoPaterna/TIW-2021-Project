@@ -66,12 +66,13 @@ public class UpdateResultStud extends HttpServlet {
 		}
 		
 		Integer IDExamDate;
+		Integer course_id;
 		User user = (User) session.getAttribute("user");
 		String coursename;
 		String date;
 		User professor = new User();
 		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
-		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+		course_id = Integer.parseInt(request.getParameter("course_id"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		professor.setEmail(request.getParameter("professore"));
@@ -104,7 +105,7 @@ public class UpdateResultStud extends HttpServlet {
 				String path = "/WEB-INF/Result.html";
 				ServletContext servletContext = getServletContext();
 				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-				ctx.setVariable("enroll", enroll);
+				ctx.setVariable("course_id", course_id);
 				ctx.setVariable("enroll", enroll);
 				ctx.setVariable("date", date);
 				ctx.setVariable("coursename", coursename);
@@ -114,7 +115,8 @@ public class UpdateResultStud extends HttpServlet {
 			} else {
 				String path = "/WEB-INF/ResultLocked.html";
 				ServletContext servletContext = getServletContext();
-				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());		
+				final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());	
+				ctx.setVariable("course_id", course_id);
 				ctx.setVariable("enroll", enroll);
 				ctx.setVariable("rej", "Score Rejected!");
 				ctx.setVariable("enroll", enroll);
@@ -130,6 +132,7 @@ public class UpdateResultStud extends HttpServlet {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("enroll", enroll);
+			ctx.setVariable("course_id", course_id);
 			templateEngine.process(path, ctx, response.getWriter());
 		}
 	}
