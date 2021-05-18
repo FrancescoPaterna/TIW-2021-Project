@@ -114,7 +114,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 
 		
 		if (sort.equals("0")) {
-			maskget = "0000000";
+			maskget = "2222222";
 			secretsortcode = 00;
 			try {
 				enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
@@ -127,7 +127,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		}
 		
 		else if (sort.equals("1")) {
-			if (mask.charAt(0) == '0') {
+			if (mask.charAt(0) == '0' || mask.charAt(0) == '2') {
 				maskget = '1' + mask.substring(1, 7);
 				secretsortcode = 10;
 				try {
@@ -152,7 +152,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 			}
 
 		} else if (sort.equals("2")) {
-			if (mask.charAt(1) == '0') {
+			if (mask.charAt(1) == '0' || mask.charAt(1) == '2') {
 				maskget = mask.substring(0,1) + '1' + mask.substring(2, 7);
 				secretsortcode = 20;
 				try {
@@ -176,7 +176,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			}
 		} else if (sort.equals("3")) {
-			if (mask.charAt(2) == '0') {
+			if (mask.charAt(2) == '0' || mask.charAt(2) == '2') {
 				maskget = mask.substring(0, 2) + '1' + mask.substring(3, 7);
 				secretsortcode = 30;
 				try {
@@ -200,7 +200,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			}
 		} else if (sort.equals("4")) {
-			if (mask.charAt(3) == '0') {
+			if (mask.charAt(3) == '0' || mask.charAt(3) == '2') {
 				maskget = mask.substring(0, 3) + '1' + mask.substring(4, 7);
 				secretsortcode = 40;
 
@@ -224,7 +224,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			}
 		} else if (sort.equals("5")) {
-			if (mask.charAt(4) == '0') {
+			if (mask.charAt(4) == '0' || mask.charAt(4) == '2') {
 				maskget = mask.substring(0, 4) + '1' + mask.substring(5, 7);
 				secretsortcode = 50;
 
@@ -247,7 +247,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 				}
 			}
 		} else if (sort.equals("6")) {
-			if (mask.charAt(5) == '0') {
+			if (mask.charAt(5) == '0' || mask.charAt(5) == '2') {
 				maskget = mask.substring(0, 5) + '1' + mask.substring(6, 7);
 				secretsortcode = 60;
 
@@ -272,7 +272,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		}
 
 		else if (sort.equals("7")) {
-			if (mask.charAt(6) == '0') {
+			if (mask.charAt(6) == '0' || mask.charAt(6) == '2') {
 				maskget = mask.substring(0, 6) + '1';
 				secretsortcode = 70;
 

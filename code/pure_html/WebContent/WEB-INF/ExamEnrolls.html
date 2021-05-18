@@ -28,7 +28,16 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
-						<button class="sort" type="submit" name="sort" th:value="1">IDStud&nbsp&#8645</button>
+						<div th:switch="${#strings.substring(mask,0,1)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="1">IDStud&nbsp&#8645</button>
+
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="1">IDStud&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="1">IDStud&nbsp&#8648</button>
+						</div>
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
 						<input type="hidden" name="mask" th:value="${mask}" /><input
@@ -36,8 +45,16 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
+						<div th:switch="${#strings.substring(mask,1,2)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="2">Name&nbsp&#8645</button>
 
-						<button class="sort" type="submit" name="sort" th:value="2">Name&nbsp&#8645</button>
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="2">Name&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="2">Name&nbsp&#8648</button>
+						</div>
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
 						<input type="hidden" name="mask" th:value="${mask}" /><input
@@ -45,8 +62,17 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
+						<div th:switch="${#strings.substring(mask,2,3)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="3">Surname&nbsp&#8645</button>
 
-						<button class="sort" type="submit" name="sort" th:value="3">Surname&nbsp&#8645</button>
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="3">Surname&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="3">Surname&nbsp&#8648</button>
+						</div>
+
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
 						<input type="hidden" name="mask" th:value="${mask}" /><input
@@ -54,8 +80,17 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
+						<div th:switch="${#strings.substring(mask,3,4)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="4">Email&nbsp&#8645</button>
 
-						<button class="sort" type="submit" name="sort" th:value="4">Email&nbsp&#8645</button>
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="4">Email&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="4">Email&nbsp&#8648</button>
+						</div>
+
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
 						<input type="hidden" name="mask" th:value="${mask}" /><input
@@ -63,8 +98,17 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
+						<div th:switch="${#strings.substring(mask,4,5)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="5">CourseDeg&nbsp&#8645</button>
 
-						<button class="sort" type="submit" name="sort" th:value="5">CourseDeg&nbsp&#8645</button>
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="5">CourseDeg&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="5">CourseDeg&nbsp&#8648</button>
+						</div>
+
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
 						<input type="hidden" name="mask" th:value="${mask}" /><input
@@ -72,8 +116,17 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
+						<div th:switch="${#strings.substring(mask,5,6)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="6">Mark&nbsp&#8645</button>
 
-						<button class="sort" type="submit" name="sort" th:value="6">Mark&nbsp&#8645</button>
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="6">Mark&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="6">Mark&nbsp&#8648</button>
+						</div>
+
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
 						<input type="hidden" name="mask" th:value="${mask}" /><input
@@ -81,8 +134,17 @@
 							type="hidden" name="date" th:value="${date}" /> <input
 							type="hidden" name="coursename" th:value="${coursename}" /> <input
 							type="hidden" name="course_id" th:value="${course_id}" />
+						<div th:switch="${#strings.substring(mask,6,7)}">
+							<button th:case="'2'" class="sort" type="submit" name="sort"
+								th:value="7">Status&nbsp&#8645</button>
 
-						<button class="sort" type="submit" name="sort" th:value="7">Status&nbsp&#8645</button>
+							<button th:case="'0'" class="sort" type="submit" name="sort"
+								th:value="7">Status&nbsp&#8650</button>
+
+							<button th:case="'1'" class="sort" type="submit" name="sort"
+								th:value="7">Status&nbsp&#8648</button>
+						</div>
+
 					</form></th>
 				<th class="sortstatic">Option</th>
 		</thead>
@@ -136,7 +198,8 @@
 				th:value="${secret_code}" /> <input type="hidden" name="course_id"
 				th:value="${course_id}" />
 
-			<button th:class="${publish} ? publish : publishlo" name="exam_date_id" th:type="${publish} ? submit : button"
+			<button th:class="${publish} ? publish : publishlo"
+				name="exam_date_id" th:type="${publish} ? submit : button"
 				th:value="${exam_date_id}">PUBLISH</button>
 
 		</form>
@@ -149,8 +212,8 @@
 				th:value="${date}" /> <input type="hidden" name="course_id"
 				th:value="${course_id}" />
 
-			<button th:class="${record} ? record : recordlo" name="exam_date_id" th:type="${record} ? submit : button"
-				th:value="${exam_date_id}">RECORD</button>
+			<button th:class="${record} ? record : recordlo" name="exam_date_id"
+				th:type="${record} ? submit : button" th:value="${exam_date_id}">RECORD</button>
 
 		</form>
 	</div>
