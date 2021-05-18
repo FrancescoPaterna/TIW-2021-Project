@@ -5,10 +5,11 @@
 	background-image: url("../resources/demo.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
+	background-attachment: fixed;
 }
 
 .welcome {
-	width: 65%;
+	width: 68%;
 	border-radius: 5px;
 	background-color: #f2f2f2;
 	opacity: 0.9;
@@ -17,13 +18,24 @@
 	text-align: center;
 }
 
+
+
 h1 {
 	margin-top: 150px;
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
-	font-weight: bold;
-	font-size: 350%
+	font-size: 350%;
+	font-weight: 600;	
+	letter-spacing: 0.010 em;
 }
+
+html[data-useragent*='chrome'] h1 {
+ 	font-weight: normal;
+ 	color: red;
+}
+
+
+
 
 form {
 	text-align: center;
@@ -44,6 +56,7 @@ input[type=text] {
 	border-radius: 4px;
 	box-sizing: border-box;
 	font-family: 'Orbitron', courier, sans-serif;
+	font-size: 20px;
 }
 
 input[type=password] {
@@ -55,6 +68,7 @@ input[type=password] {
 	border-radius: 4px;
 	box-sizing: border-box;
 	font-family: 'Orbitron', courier, sans-serif;
+	font-size: 20px;
 }
 
 input[type=submit] {
@@ -95,6 +109,7 @@ table, th, td {
 
 th, td {
 	border: 1px solid black;
+	font-size: 16px;
 }
 
 /*Professor Table*/
@@ -130,6 +145,7 @@ th, td {
 	border: none;
 	color: blue;
 	cursor: pointer;
+	font-size: 20px;
 }
 
 .button3:hover {
@@ -145,7 +161,7 @@ th, td {
 	position: absolute;
 	top: 16px;
 	right: 16px;
-	width: 143px;
+	width: 155px;
 	height: 42px;
 	font-size: 27px;
 	font-weight: bold;
@@ -162,7 +178,7 @@ th, td {
 	left: 16px;
 	font-weight: bold;
 	left: 50px;
-	width: 143px;
+	width: 155px;
 	height: 42px;
 	font-size: 27px;
 	background-color: #3465a4;
@@ -221,8 +237,11 @@ th, td {
 	background-color: #80dd25;
 }
 
+/* RECORDLO OLD COLOR #8ae234;  #8c8768*  #cab928/
+/* PUBLISHLO OLD COLOR #fde946 */
+
 .recordlo {
-	background-color: #8ae234;
+	background-color:#8c8768;   
 	width: 25%;
 	padding: 12px 15px;
 	border-radius: 6px;
@@ -245,7 +264,7 @@ th, td {
 }
 
 .publishlo {
-	background-color: #fde946;
+	background-color: #8c8768;
 	width: 25%;
 	padding: 12px 15px;
 	border-radius: 6px;
@@ -254,6 +273,7 @@ th, td {
 }
 
 .sort {
+	font-size: 20px;
 	color: black;
 	cursor: pointer;
 	text-align: center;
@@ -319,9 +339,9 @@ th, td {
 	color: white;
 	position: absolute;
 	top: 16px;
-	left: 250px;
+	left: 262px;
 	font-weight: bold;
-	width: 143px;
+	width: 155px;
 	height: 42px;
 	font-size: 27px;
 	border-radius:6px;
