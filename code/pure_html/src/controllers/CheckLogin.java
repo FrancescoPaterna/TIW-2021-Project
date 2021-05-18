@@ -2,7 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest; 
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 //import java.io.PrintWriter;
 import java.sql.Connection;
@@ -59,20 +59,29 @@ public class CheckLogin extends HttpServlet {
 		String id = null;
 		String pwd = null;
 		String secure_pwd = null;
-		try {
-			id = StringEscapeUtils.escapeJava(request.getParameter("id"));
-			pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
-
-		} catch (Exception e) {
-
-			// for debugging only
-			e.printStackTrace();
-
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST,
-					"Missing credential value aka BRO NON HAI SCRITTO NIENTE!");
-			return;
+		
+		id = request.getParameter("id");
+		pwd = request.getParameter("pwd");
+		
+		if(id == null || id == "") {
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "No ID Inserted!");
+			String path = "/index.html";
+			templateEngine.process(path, ctx, response.getWriter());
+			
 		}
 		
+		if(pwd == null || pwd == "") {
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "No Password Inserted!");
+			String path = "/index.html";
+			templateEngine.process(path, ctx, response.getWriter());
+			
+		}
+
+
 
 		MessageDigest digest;
 		try {

@@ -23,6 +23,7 @@ import beans.User;
 import utils.ConnectionHandler;
 import dao.EnrollsDAO;
 import dao.ExamDateDAO;
+import utils.GoodScore;
 
 /**
  * Servlet implementation class UpdateMark
@@ -97,6 +98,17 @@ public class UpdateScore extends HttpServlet {
 
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
+		if(score == null || !(GoodScore.CheckValidScore(score))) {
+			 path ="/WEB-INF/Warning.html";
+				ctx.setVariable("error", "Not Valid Score");
+				ctx.setVariable("description", "Selected Score is not Valid");
+				templateEngine.process(path, ctx, response.getWriter());
+				return;
+			
+		}
+		
+		
 
 			try {
 				if(examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {
