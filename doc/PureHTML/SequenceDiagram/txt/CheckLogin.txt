@@ -1,0 +1,41 @@
+title CheckLogin
+
+participant Browser
+participant CheckLogin
+participant TemplateEngine
+participant Utils
+participant UserDAO
+participant Session
+participant GoToHomePageStud
+
+
+Browser->CheckLogin:POST
+note over Browser, CheckLogin: Id, Pwd
+
+
+
+
+alt id = null || id = '' ||  pwd = null || pwd ='' 
+CheckLogin->TemplateEngine: ("index.html", "No pwd/id insert")
+end
+
+CheckLogin->Utils: pwd
+Utils->CheckLogin: secure_pwd (hash)
+
+CheckLogin->UserDAO: CheckCredentials(id, secure_pwd)
+
+UserDAO->CheckLogin: User 
+
+alt  user = null
+CheckLogin->TemplateEngine: process("index.html", "Incorrect Usr or Pwd")
+end
+
+CheckLogin->Session: SetAttribute("user", user)
+
+alt user.getRole().equals("Student")
+CheckLogin->GoToHomePageStud: redirect
+end
+
+alt user.getRole().equals("Professor")
+CheckLogin->GoToHomePagePro: redirect
+end

@@ -49,14 +49,7 @@ public class GoToHomePageStud extends HttpServlet {
 		// If the user is not logged in (not present in session) redirect to the login
 		String loginpath = "/index.html";
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "You're not logged in");
-			templateEngine.process(loginpath, ctx, response.getWriter());
-		//response.sendRedirect(loginpath);
-			return;
-		}
+
 		
 		User user = (User) session.getAttribute("user");
 		CourseDAO courseDAO = new CourseDAO(connection);
