@@ -1,0 +1,43 @@
+title GoToSessionEnrolls
+
+participant Browser
+participant GoToSessionEnrolls
+participant GoToHomePageStud
+participant UserDAO
+participant ExamDateDAO
+participant EnrollsDAO
+participant Session
+participant TemplateEngine
+
+
+note left of Browser:coursename\ncourse_id\nexam_date_id\ndate \nmask,sort 
+
+
+Browser->GoToSessionEnrolls:GET
+
+GoToSessionEnrolls->UserDAO: CheckExamDateByProf(user.getId())
+
+alt ExamDate Not Owned By User.id 
+GoToSessionEnrolls->TemplateEngine: ("Forbidden.html", "UNAUTHORIZED ACCESS")
+GoToSessionEnrolls->Session: invalidate
+end 
+
+
+==SORTING SYSTEM SUMMARY \n==
+alt Sort By IDStud (sort = 1)
+alt mask[0] = '0'OR mask[0] = '2'
+note over GoToSessionEnrolls:secretsortcode [Column][ASC]\nmaskget Set '0' To Position (Column -1)\n
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByXXXXAsc(exam_date_id)
+end
+alt mask[0] = '1'
+note over GoToSessionEnrolls:secretsortcode [Column][DESC]\nmaskget Set '1' To Position (Column -1)
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByXXXXAsc(exam_date_id)
+end
+end
+
+
+
+==END SORTING SYSTEM\n\n   See all function in the\n      complete version==
+GoToSessionEnrolls->EnrollsDAO: assertion_published(exam_date_id)
+GoToSessionEnrolls->EnrollsDAO: assertion_record(exam_date_id)
+GoToSessionEnrolls->TemplateEngine: ExamEnrolls.html, publish, record, course_id, exam_date_id, enrolls, coursenam, date, maskget, secretsortcode

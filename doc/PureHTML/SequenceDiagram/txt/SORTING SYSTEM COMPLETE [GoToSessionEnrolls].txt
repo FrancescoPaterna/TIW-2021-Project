@@ -1,0 +1,100 @@
+title SORTING SYSTEM COMPLETE
+
+
+participant GoToSessionEnrolls
+participant TemplateEngine
+participant Utils
+participant ExamDateDAO
+participant EnrollsDAO
+
+
+
+
+
+
+alt DEFAULT SORT
+note over GoToSessionEnrolls:secretsortcode 00\nmaskget 2222222
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByIDAsc(exam_date_id)
+end
+
+space
+alt Sort By IDStud (sort = 1)
+alt mask[0] = '0'OR mask[0] = '2'
+note over GoToSessionEnrolls:secretsortcode 10\nmaskget 0######
+GoToSessionEnrolls->EnrollsDAO: FindEnrollsOrderedByIDAsc(exam_date_id)
+end
+
+alt mask[0] = '1'
+note over GoToSessionEnrolls:secretsortcode 11\nmaskget 1######
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByIDDesc(exam_date_id)
+end
+end
+
+space
+alt Sort By Name (sort = 2)
+alt mask[1] = '0'OR mask[1] = '2'
+note over GoToSessionEnrolls:secretsortcode 20\nmaskget #0#####
+GoToSessionEnrolls->EnrollsDAO: FindEnrollsOrderedByNameAsc(exam_date_id)
+end
+alt mask[1] = '1'
+note over GoToSessionEnrolls:secretsortcode 21\nmaskget #1#####\n
+
+GoToSessionEnrolls->EnrollsDAO: FindEnrollsOrderedByNameDesc(exam_date_id)
+end
+end
+space
+alt Sort By Surname (sort = 3)
+alt mask[2] = '0'OR mask[2] = '2'
+note over GoToSessionEnrolls:secretsortcode 30\nmaskget ##0####\n
+GoToSessionEnrolls->EnrollsDAO: FindEnrollsOrderedBySurnameAsc(exam_date_id)
+end
+alt mask[2] = '1'
+note over GoToSessionEnrolls:secretsortcode 31\nmaskget ##0####
+GoToSessionEnrolls->EnrollsDAO: FindEnrollsOrderedBySurnameDesc(exam_date_id)
+end
+end
+space
+alt Sort By IDStud (sort = 4)
+alt mask[3] = '0'OR mask[3] = '2'
+note over GoToSessionEnrolls:secretsortcode 40\nmaskget ###0###
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByEmailAsc(exam_date_id)
+end
+alt mask[3] = '1'
+note over GoToSessionEnrolls:secretsortcode 41\nmaskget ###1###
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByEmailDesc(exam_date_id)
+end
+end
+space
+alt Sort By IDStud (sort = 5)
+alt mask[4] = '0'OR mask[4] = '2'
+note over GoToSessionEnrolls:secretsortcode 50\nmaskget ####0##
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByCoursedegAsc(exam_date_id)
+end
+alt mask[4] = '1'
+note over GoToSessionEnrolls:secretsortcode 51\nmaskget ####1##
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByCoursedegDesc(exam_date_id)
+end
+end
+space
+alt Sort By Score (sort = 6)
+alt mask[5] = '0'OR mask[5] = '2'
+note over GoToSessionEnrolls:secretsortcode 60\nmaskget #####0#
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByMarkAsc(exam_date_id)
+end
+alt mask[5] = '1'
+note over GoToSessionEnrolls:secretsortcode 61\nmaskget #####1#
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByMarkDesc(exam_date_id)
+end
+end
+space
+alt Sort By Status (sort = 7)
+alt mask[6] = '0'OR mask[6] = '2'
+note over GoToSessionEnrolls:secretsortcode 70\nmaskget ######0
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByStatusAsc(exam_date_id)
+end
+alt mask[6] = '1'
+note over GoToSessionEnrolls:secretsortcode 71\nmaskget ######1
+GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByStatusDesc(exam_date_id)
+end
+end
+space
