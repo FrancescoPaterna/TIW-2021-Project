@@ -19,8 +19,8 @@ The DB dump is made for MySql, we suggest to use **MySql Workbench 8.0 CE** or h
 https://dev.mysql.com/downloads/workbench/
 
 You need and IDE like **Eclipse IDE for Enterprise Java Developers** (or similar) with **TomCat v9.0** to run this project.    
-https://www.eclipse.org/downloads/pack
-https://tomcat.apache.org/download-90.cgi
+***Eclipse Enterprise:*** https://www.eclipse.org/downloads/packages/ <br>
+***Tomcat:*** https://tomcat.apache.org/download-90.cgi
 
 <br><br>
 
