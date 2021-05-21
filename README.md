@@ -1,3 +1,5 @@
+![NightCity Universiry Banner](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/banner.jpg)
+
 # Final Project of Web Information Technologies 2021 [085879]. 
 
 This project was made between March and June 2021 at Polytechnic University of Milan.
