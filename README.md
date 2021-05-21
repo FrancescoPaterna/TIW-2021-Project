@@ -4,8 +4,8 @@
 
 This project was made between March and June 2021, at Polytechnic University of Milan.<br><br>
  **Francesco Paterna** ([@FrancescoPaterna](https://github.com/FrancescoPaterna)) <br>
- **Andrea Restelli** ([@FrancescoPaterna](https://github.com/andrearestelli)) <br>
- **Andrea Sanchini** ([@FrancescoPaterna](https://github.com/AndreaSanchini)) <br><br>
+ **Andrea Restelli** ([@AndreaRestelli](https://github.com/andrearestelli)) <br>
+ **Andrea Sanchini** ([@AndreaSanchini](https://github.com/AndreaSanchini)) <br><br>
 
 
 The aim of the project is to develop two version of a WebSite (pure HTML version/ Javascript version)<br> following a [specification](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/specs/Specifica.pdf) chosen by the professor.
