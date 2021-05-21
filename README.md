@@ -15,10 +15,10 @@ The purpose of the course is to prove our knowledge of the Web Architecture from
 <br>
 
  ## Requirements
-The DB dump is made for MySql, we suggest to use **MySql Workbench 8.0 CE** or higher version
-https://dev.mysql.com/downloads/workbench/
+The DB dump is made for MySql, we suggest to use **MySql Workbench 8.0 CE** or higher version.<br>
+***MySql Workbench:*** https://dev.mysql.com/downloads/workbench/
 
-You need and IDE like **Eclipse IDE for Enterprise Java Developers** (or similar) with **TomCat v9.0** to run this project.    
+You need and IDE like **Eclipse IDE for Enterprise Java Developers** (or similar) with **TomCat v9.0** to run this project.   
 ***Eclipse Enterprise:*** https://www.eclipse.org/downloads/packages/ <br>
 ***Tomcat:*** https://tomcat.apache.org/download-90.cgi
 
