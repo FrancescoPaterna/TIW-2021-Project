@@ -8,34 +8,40 @@
 <title>Home</title>
 </head>
 <body>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008;</button>
-	</form>
-	<h1>Welcome to the Student Home page</h1>
-	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
-	<p>Courses you have enrolled in regularly</p>
-	
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout &#10008;</button>
+		</form>
+		<h1>Welcome to the Student Home page</h1>
+		<p
+			th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
+		<p>Courses you have enrolled in regularly</p>
 
-	<div>
-		<table>
-			<thead>
-				<tr class=stud>
-					<th>ID</th>
-					<th>Course</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="c : ${courses}">
-					<td th:text="${c.id}"></td>
-					<td>
-						<form action="GoToExamDatesStud" method="get">
-						<input type="hidden" name="coursename" id="coursename" th:value="${c.name}"/>
-						<button class=button3 name="course_id" type="submit" th:value="${c.id}" th:text="${c.name}"></button>
-						</form>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+
+		<div>
+			<table>
+				<thead>
+					<tr class=stud>
+						<th>ID</th>
+						<th>Course</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${courses}">
+						<td th:text="${c.id}"></td>
+						<td>
+							<form action="GoToExamDatesStud" method="get">
+								<input type="hidden" name="coursename" id="coursename"
+									th:value="${c.name}" />
+								<button class=button3 name="course_id" type="submit"
+									th:value="${c.id}" th:text="${c.name}"></button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
+
 </body>
 </html>

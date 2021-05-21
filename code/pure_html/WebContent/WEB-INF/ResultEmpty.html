@@ -2,21 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Result</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008;</button>
-	</form>
-	<form>
-		<input class=returnbutton type="button" value="go back &#11144"
-			onclick="history.back()">
-	</form>
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout &#10008;</button>
+		</form>
+		<form>
+			<input class=returnbutton type="button" value="go back &#11144"
+				onclick="history.back()">
+		</form>
 		<h1>Evaluation not yet defined</h1>
 
+	</div>
 
 </body>
 </html>

@@ -8,39 +8,45 @@
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008;</button>
-	</form>
-	<form action="GoToHomePageStud" method="get">
-		<button class=returnbutton>go back &#11144;</button>
-	</form>
-	<h1>EXAM DATES</h1>
-	<p	th:text="${'All the sessions of the course ' + coursename + ' you have attended'}"></p>
-	
 
-	<div>
-		<table>
-			<thead>
-				<tr class=stud>
-					<th>IdAppello</th>
-					<th>Date</th>
-			</thead>
-			<tbody>
-				<tr th:each="c : ${exams}">
-					<td th:text="${c.id}"></td>
-					<td>
-						<form action="GoToResult" method="get">
-							<input type="hidden" name="coursename" id="coursename" th:value="${coursename}"/>
-							<input type="hidden" name="course_id" id="course_id" th:value="${course_id}"/>
-							<input type="hidden" name="date" id="date" th:value="${c.data}"/>
-							<button class=button3 name="IDExamDate" type="submit"
-								th:value="${c.id}" th:text="${c.data}"></button>
-						</form>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout &#10008;</button>
+		</form>
+		<form action="GoToHomePageStud" method="get">
+			<button class=returnbutton>go back &#11144;</button>
+		</form>
+		<h1>EXAM DATES</h1>
+		<p
+			th:text="${'All the sessions of the course ' + coursename + ' you have attended'}"></p>
+
+
+		<div>
+			<table>
+				<thead>
+					<tr class=stud>
+						<th>IdAppello</th>
+						<th>Date</th>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${exams}">
+						<td th:text="${c.id}"></td>
+						<td>
+							<form action="GoToResult" method="get">
+								<input type="hidden" name="coursename" id="coursename"
+									th:value="${coursename}" /> <input type="hidden"
+									name="course_id" id="course_id" th:value="${course_id}" /> <input
+									type="hidden" name="date" id="date" th:value="${c.data}" />
+								<button class=button3 name="IDExamDate" type="submit"
+									th:value="${c.id}" th:text="${c.data}"></button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
+
 
 </body>
 </html>

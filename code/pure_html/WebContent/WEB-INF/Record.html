@@ -10,50 +10,55 @@
 <title>Record Page</title>
 </head>
 <form action="LogOut" method="get">
-	<button class='logoutbutton no-print' type="submit">logout &#10008;</button>
+	<button class='logoutbutton no-print' type="submit">logout
+		&#10008;</button>
 </form>
 
-<button onclick="window.print();" class='prb no-print'>print  &#9881;</button>
+<button onclick="window.print();" class='prb no-print'>print
+	&#9881;</button>
 
 <form action="GoToSessionEnrolls" method="get">
-	<input type="hidden" name="mask" id="mask" th:value="${mask}" /> 
-	<input type="hidden" name="exam_date_id" id="exam_date_id" th:value="${exam_date_id}" /> 
-	<input type="hidden" name="date" id="date" th:value="${date}" /> 
-	<input type="hidden" name="coursename" id="coursename" th:value="${coursename}" /> 
-	<input type="hidden" name="course_id" th:value="${course_id}" />
-	<input type="hidden" name="sort" id="sort" th:value="${sort}" />
+	<input type="hidden" name="mask" id="mask" th:value="${mask}" /> <input
+		type="hidden" name="exam_date_id" id="exam_date_id"
+		th:value="${exam_date_id}" /> <input type="hidden" name="date"
+		id="date" th:value="${date}" /> <input type="hidden"
+		name="coursename" id="coursename" th:value="${coursename}" /> <input
+		type="hidden" name="course_id" th:value="${course_id}" /> <input
+		type="hidden" name="sort" id="sort" th:value="${sort}" />
 	<button class='returnbutton no-print' type="submit"
 		th:value="${sorturl}">go back &#11144;</button>
 </form>
 
 <body>
-	<h1>University of NightCity Official Record</h1>
-	<p
-		th:utext="${'Document # ' + rec + ' - generated and digitally signed on ' + date + ' at ' + time +  '<br />' +  'Registration of the Session ' + exam_date_id + ' relating to the course of ' + coursename}"></p>
+	<div class=basic>
+		<h1>University of NightCity Official Record</h1>
+		<p
+			th:utext="${'Document # ' + rec + ' - generated and digitally signed on ' + date + ' at ' + time +  '<br />' +  'Registration of the Session ' + exam_date_id + ' relating to the course of ' + coursename}"></p>
 
-	<div>
-		<table>
-			<thead>
-				<tr class=rec>
-					<th>ID</th>
-					<th>Surname</th>
-					<th>Name</th>
-					<th>Mark</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="c : ${recorded}">
-					<td th:text="${c.IDStudent}"></td>
-					<td th:text="${c.surname}"></td>
-					<td th:text="${c.name}"></td>
-					<td th:text="${c.mark}"></td>
-				</tr>
-			</tbody>
-		</table>
+		<div>
+			<table>
+				<thead>
+					<tr class=rec>
+						<th>ID</th>
+						<th>Surname</th>
+						<th>Name</th>
+						<th>Mark</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${recorded}">
+						<td th:text="${c.IDStudent}"></td>
+						<td th:text="${c.surname}"></td>
+						<td th:text="${c.name}"></td>
+						<td th:text="${c.mark}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<br> <br>
+		<p>The document has legal value and must be printed and stored</p>
 	</div>
 
-	<br>
-	<br>
-	<p>The document has legal value and must be printed and stored</p>
 </body>
 </html>

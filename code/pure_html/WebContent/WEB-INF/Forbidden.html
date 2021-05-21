@@ -2,22 +2,25 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <link rel="shortcut icon" href="/ERR_pure_html/resources/forbidden.ico" />
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>Forbidden</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008;</button>
-	</form>
-	<div>
-		<h1 class= forbidden>FORBIDDEN</h1>
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout &#10008;</button>
+		</form>
+		<div>
+			<h1 class=forbidden>FORBIDDEN</h1>
 		</div>
 		<h1 th:text="${error}"></h1>
 		<br>
 		<h2 th:text="${description}"></h2>
-		
+
+	</div>
+
 
 
 

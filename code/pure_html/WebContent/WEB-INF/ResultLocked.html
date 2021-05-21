@@ -8,75 +8,77 @@
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout &#10008;</button>
-	</form>
-	<form action="GoToExamDatesStud" method="post">
-		<input type="hidden" name="coursename" id="coursename"
-			th:value="${coursename}" />
-		<button class=returnbutton name="course_id" type="submit"
-			th:value="${course_id}">go back &#11144;</button>
-	</form>
-	<h1>EXAM RESULT</h1>
-	<p
-		th:text="${'The result of the Session ' + enroll.IDSession + ' you have attended on the ' + date}"></p>
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout &#10008;</button>
+		</form>
+		<form action="GoToExamDatesStud" method="post">
+			<input type="hidden" name="coursename" id="coursename"
+				th:value="${coursename}" />
+			<button class=returnbutton name="course_id" type="submit"
+				th:value="${course_id}">go back &#11144;</button>
+		</form>
+		<h1>EXAM RESULT</h1>
+		<p
+			th:text="${'The result of the Session ' + enroll.IDSession + ' you have attended on the ' + date}"></p>
 
 
-	<div>
-		<table>
-			<thead>
-				<tr class=stud>
-					<th>Id Student</th>
-					<th>Name</th>
-					<th>Surname</th>
-					<th>CourseDeg</th>
-					<th>Date</th>
-					<th>Course ID</th>
-					<th>Course</th>
-					<th>Score</th>
-					<th>State</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td th:text="${enroll.IDStudent}"></td>
-					<td th:text="${enroll.name}"></td>
-					<td th:text="${enroll.surname}"></td>
-					<td th:text="${enroll.courseDeg}"></td>
-					<td th:text="${date}"></td>
-					<td th:text="${course_id}"></td>
-					<td th:text="${coursename}"></td>
-					<td th:text="${enroll.mark}"></td>
-					<td th:text="${enroll.status}"></td>
-				</tr>
+		<div>
+			<table>
+				<thead>
+					<tr class=stud>
+						<th>Id Student</th>
+						<th>Name</th>
+						<th>Surname</th>
+						<th>CourseDeg</th>
+						<th>Date</th>
+						<th>Course ID</th>
+						<th>Course</th>
+						<th>Score</th>
+						<th>State</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${enroll.IDStudent}"></td>
+						<td th:text="${enroll.name}"></td>
+						<td th:text="${enroll.surname}"></td>
+						<td th:text="${enroll.courseDeg}"></td>
+						<td th:text="${date}"></td>
+						<td th:text="${course_id}"></td>
+						<td th:text="${coursename}"></td>
+						<td th:text="${enroll.mark}"></td>
+						<td th:text="${enroll.status}"></td>
+					</tr>
 
-			</tbody>
-		</table>
+				</tbody>
+			</table>
+		</div>
+		<p th:text=" ${rej}"></p>
+		<br> <br>
+		<div>
+			<br> <br> <br>
+			<p>Scores recorded cannot be refused, to arrange an interview
+				with the professor, please contact him by e-mail with your
+				institutional address.</p>
+		</div>
+		<div>
+			<table>
+				<thead>
+					<tr class=stud>
+						<th>Surname</th>
+						<th>Name</th>
+						<th>Email</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="${professor.surname}"></td>
+						<td th:text="${professor.name}"></td>
+						<td th:text="${professor.email}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	<p th:text=" ${rej}"></p>
-	<br>
-	<br>
-	<div>
-		<br> <br> <br>
-		<p>Scores recorded cannot be refused, to arrange an interview with
-			the professor, please contact him by e-mail with your institutional
-			address.</p>
-	</div>
-	<div>
-		<table>
-			<thead>
-				<tr class=stud>
-					<th>Surname</th>
-					<th>Name</th>
-					<th>Email</th>
-			</thead>
-			<tbody>
-				<tr>
-					<td th:text="${professor.surname}"></td>
-					<td th:text="${professor.name}"></td>
-					<td th:text="${professor.email}"></td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+
 
 </body>
