@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
 <meta charset="UTF-8" />
 <title>Exam Enrolls</title>
 <link rel="stylesheet" type="text/css" media="all"
@@ -8,12 +9,12 @@
 </head>
 <body>
 	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout &#10008</button>
+		<button class=logoutbutton type="submit">logout &#10008;</button>
 	</form>
 	<form action="GoToExamDatesPro" method="get">
 		<input type="hidden" name="coursename" th:value="${coursename}" />
 		<button class=returnbutton name="course_id" type="submit"
-			th:value="${course_id}">go back &#11144</button>
+			th:value="${course_id}">go back &#11144;</button>
 	</form>
 	<h1>EXAM ENROLLS</h1>
 	<p
@@ -30,13 +31,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,0,1)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="1">IDStud&nbsp&#8645</button>
+								th:value="1">IDStud&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="1">IDStud&nbsp&#8650</button>
+								th:value="1">IDStud&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="1">IDStud&nbsp&#8648</button>
+								th:value="1">IDStud&nbsp;&#8648;</button>
 						</div>
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
@@ -47,13 +48,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,1,2)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="2">Name&nbsp&#8645</button>
+								th:value="2">Name&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="2">Name&nbsp&#8650</button>
+								th:value="2">Name&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="2">Name&nbsp&#8648</button>
+								th:value="2">Name&nbsp;&#8648;</button>
 						</div>
 					</form></th>
 				<th><form action="GoToSessionEnrolls" method="GET">
@@ -64,13 +65,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,2,3)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="3">Surname&nbsp&#8645</button>
+								th:value="3">Surname&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="3">Surname&nbsp&#8650</button>
+								th:value="3">Surname&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="3">Surname&nbsp&#8648</button>
+								th:value="3">Surname&nbsp;&#8648;</button>
 						</div>
 
 					</form></th>
@@ -82,13 +83,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,3,4)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="4">Email&nbsp&#8645</button>
+								th:value="4">Email&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="4">Email&nbsp&#8650</button>
+								th:value="4">Email&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="4">Email&nbsp&#8648</button>
+								th:value="4">Email&nbsp;&#8648;</button>
 						</div>
 
 					</form></th>
@@ -100,13 +101,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,4,5)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="5">CourseDeg&nbsp&#8645</button>
+								th:value="5">CourseDeg&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="5">CourseDeg&nbsp&#8650</button>
+								th:value="5">CourseDeg&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="5">CourseDeg&nbsp&#8648</button>
+								th:value="5">CourseDeg&nbsp;&#8648;</button>
 						</div>
 
 					</form></th>
@@ -118,13 +119,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,5,6)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="6">Mark&nbsp&#8645</button>
+								th:value="6">Mark&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="6">Mark&nbsp&#8650</button>
+								th:value="6">Mark&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="6">Mark&nbsp&#8648</button>
+								th:value="6">Mark&nbsp;&#8648;</button>
 						</div>
 
 					</form></th>
@@ -136,13 +137,13 @@
 							type="hidden" name="course_id" th:value="${course_id}" />
 						<div th:switch="${#strings.substring(mask,6,7)}">
 							<button th:case="'2'" class="sort" type="submit" name="sort"
-								th:value="7">Status&nbsp&#8645</button>
+								th:value="7">Status&nbsp;&#8645;</button>
 
 							<button th:case="'0'" class="sort" type="submit" name="sort"
-								th:value="7">Status&nbsp&#8650</button>
+								th:value="7">Status&nbsp;&#8650;</button>
 
 							<button th:case="'1'" class="sort" type="submit" name="sort"
-								th:value="7">Status&nbsp&#8648</button>
+								th:value="7">Status&nbsp;&#8648;</button>
 						</div>
 
 					</form></th>

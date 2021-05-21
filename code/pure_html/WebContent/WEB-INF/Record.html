@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
 <meta charset="UTF-8" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
@@ -9,10 +10,10 @@
 <title>Record Page</title>
 </head>
 <form action="LogOut" method="get">
-	<button class='logoutbutton no-print' type="submit">logout &#10008</button>
+	<button class='logoutbutton no-print' type="submit">logout &#10008;</button>
 </form>
 
-<button onclick="window.print();" class='prb no-print'>print  &#9881</button>
+<button onclick="window.print();" class='prb no-print'>print  &#9881;</button>
 
 <form action="GoToSessionEnrolls" method="get">
 	<input type="hidden" name="mask" id="mask" th:value="${mask}" /> 
@@ -22,7 +23,7 @@
 	<input type="hidden" name="course_id" th:value="${course_id}" />
 	<input type="hidden" name="sort" id="sort" th:value="${sort}" />
 	<button class='returnbutton no-print' type="submit"
-		th:value="${sorturl}">go back &#11144</button>
+		th:value="${sorturl}">go back &#11144;</button>
 </form>
 
 <body>

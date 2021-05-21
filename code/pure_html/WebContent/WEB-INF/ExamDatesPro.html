@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
 <meta charset="UTF-8" />
 <title>Exam Enrolls</title>
 <link rel="stylesheet" type="text/css" media="all"
@@ -8,10 +9,10 @@
 </head>
 <body>
 	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008</button>
+		<button class=logoutbutton type="submit">logout  &#10008;</button>
 	</form>
 	<form action="GoToHomePagePro" method="get">
-		<button class=returnbutton>go back &#11144</button>
+		<button class=returnbutton>go back &#11144;</button>
 	</form>
 	<h1>EXAM DATES</h1>
 	<p	th:text="${'All exam dates of the course ' + coursename}"></p>

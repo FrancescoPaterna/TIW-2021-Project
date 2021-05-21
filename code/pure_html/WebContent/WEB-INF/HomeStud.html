@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
 <meta charset="UTF-8" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../CSS/style.css" th:href="@{/css/style.css}" />
@@ -8,7 +9,7 @@
 </head>
 <body>
 	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008</button>
+		<button class=logoutbutton type="submit">logout  &#10008;</button>
 	</form>
 	<h1>Welcome to the Student Home page</h1>
 	<p th:text="${'Nice to see you again ' + session.user.name + ' ' + session.user.surname}"></p>
