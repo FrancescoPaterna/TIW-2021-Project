@@ -1,0 +1,26 @@
+title ProfessorChecker
+
+participant Browser
+participant ProfessorChecker
+participant Session
+participant TemplateEngine
+
+
+Browser->ProfessorChecker: GET || POST
+ProfessorChecker->Session: getSession()
+Session-->ProfessorChecker: Session
+
+
+
+alt user.getRole() != professor
+
+ProfessorChecker->TemplateEngine: Forbidden.html, "UNAUTHORIZED ACCESS", description
+ProfessorChecker->Session: invalidate()
+
+end 
+alt user.getRole() == professor 
+ProfessorChecker->ProfessorChecker: doFilter(req,res)              
+end 
+
+ 
+

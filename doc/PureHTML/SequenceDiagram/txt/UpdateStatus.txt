@@ -1,0 +1,48 @@
+title UpdateStatus
+
+participant Browser
+participant UpdateStatus
+participant ExamDateDAO
+participant EnrollsDAO
+participant Session
+participant TemplateEngine
+participant Rebuilder
+participant Response
+
+note left of Browser:coursename\ndate\nmask\nsecretsortcode\ncourse_id\nexam_date_id
+
+
+Browser->UpdateStatus:POST
+
+UpdateStatus->Session: getSession()
+
+
+
+alt user.getRole() == professor
+UpdateStatus->ExamDateDAO: CheckExamDateByProf(user.getId(), Exam_date_id)
+
+alt false [Attack = attempted attack]
+UpdateStatus->TemplateEngine: Forbidden.html, "UNAUTHORIZED ACCESS", description
+end
+
+alt true [Session Belongs To Current User]
+UpdateStatus->EnrollsDAO: assertion_published(exam_date_id)
+alt Count INSERTED Scores > 0
+UpdateStatus->EnrollsDAO:PublishScore(exam_date_id)
+end 
+alt Count INSETED Scores = 0
+UpdateStatus->TemplateEngine: Warning.html, "Impossible To Publish Any Score", description
+end
+end
+UpdateStatus ->Rebuilder: resetMask(mask,secretsortcode)
+Rebuilder-->UpdateStatus: recovered_mask
+UpdateStatus ->Rebuilder: resetSecretSortCode
+Rebuilder ->UpdateStatus:sort
+UpdateStatus->Response: sendRedirect(getServletContext().getContextPath() + "/GoToSessionEnrolls" + all GET attributes recovered)
+end
+
+
+alt user.getRole() != professor
+note right of UpdateStatus: Another Check if filter fails 
+UpdateStatus->Response: sendError(SC_INTERNAL_SERVER_ERROR, "Not Allowed User")
+end

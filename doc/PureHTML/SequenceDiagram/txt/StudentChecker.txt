@@ -1,0 +1,26 @@
+title StudentChecker
+
+participant Browser
+participant StudentChecker
+participant Session
+participant TemplateEngine
+
+
+Browser->StudentChecker: GET || POST
+StudentChecker->Session: getSession()
+Session-->StudentChecker: Session
+
+
+
+alt user.getRole() != student
+
+StudentChecker->TemplateEngine: Forbidden.html, "UNAUTHORIZED ACCESS", description
+StudentChecker->Session: invalidate()
+
+end 
+alt user.getRole() == student 
+StudentChecker->StudentChecker: doFilter(req,res)              
+end 
+
+ 
+

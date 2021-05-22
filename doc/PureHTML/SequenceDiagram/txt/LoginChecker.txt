@@ -1,0 +1,26 @@
+title LoginChecker
+
+participant Browser
+participant LoginChecker
+participant Session
+participant TemplateEngine
+
+
+Browser->LoginChecker: GET || POST
+LoginChecker->Session: getSession()
+Session-->LoginChecker: Session
+
+alt Session is new
+LoginChecker->TemplateEngine: index.html, "You're not logged in"
+end 
+
+alt Session isn't new
+alt user == null
+LoginChecker->TemplateEngine: index.html, "You're not logged in"
+end 
+alt user != null
+LoginChecker->LoginChecker: dofilter(req,res)
+end 
+
+end 
+
