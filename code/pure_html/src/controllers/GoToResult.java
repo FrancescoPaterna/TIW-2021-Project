@@ -98,6 +98,7 @@ public class GoToResult extends HttpServlet {
 				ctx.setVariable("coursename", coursename);
 				ctx.setVariable("IDExamDate", IDExamDate);
 				ctx.setVariable("professor", professor);
+				//ctx.setVariable("REFUSE", true); Pure Thymeleaf Version
 				templateEngine.process(path, ctx, response.getWriter());
 			} else {
 				String path = "/WEB-INF/ResultLocked.html";
@@ -109,8 +110,7 @@ public class GoToResult extends HttpServlet {
 				ctx.setVariable("IDExamDate", IDExamDate);
 				ctx.setVariable("professor", professor);
 				ctx.setVariable("course_id", course_id);
-
-
+				//ctx.setVariable("REFUSE", false); Pure Thymeleaf Version
 				templateEngine.process(path, ctx, response.getWriter());
 			}
 

@@ -79,10 +79,8 @@ public class UpdateStatus extends HttpServlet {
 			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 			secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
 			course_id = Integer.parseInt(request.getParameter("course_id"));
-
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 			ExamDateDAO examdatedao = new ExamDateDAO(connection);
@@ -123,7 +121,7 @@ public class UpdateStatus extends HttpServlet {
 					}
 					else {
 						 path ="/WEB-INF/Warning.html";
-							ctx.setVariable("error", "Impossible To Record Score");
+							ctx.setVariable("error", "Impossible To Publish Any Score");
 							ctx.setVariable("description", "Cannot Find Any Score in Published State!");
 							templateEngine.process(path, ctx, response.getWriter());
 							return;
