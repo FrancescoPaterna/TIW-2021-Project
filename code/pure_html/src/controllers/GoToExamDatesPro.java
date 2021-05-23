@@ -49,8 +49,7 @@ public class GoToExamDatesPro extends HttpServlet {
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = "/index.html";
+		
 		HttpSession session = request.getSession();
 		
 		String path = null;
@@ -59,7 +58,6 @@ public class GoToExamDatesPro extends HttpServlet {
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		
 		User user = (User) session.getAttribute("user");
-		
 		
 		
 		ServletContext servletContext = getServletContext();
@@ -84,15 +82,15 @@ public class GoToExamDatesPro extends HttpServlet {
 		}
 		
 		if(!course_found) {
-			 path ="/WEB-INF/Forbidden.html";
-				ctx.setVariable("error", "UNAUTHORIZED ACCESS");
-				ctx.setVariable("description", "Attempt to access a resource not owned by you!");
-				templateEngine.process(path, ctx, response.getWriter());
-				session.invalidate();
+			path ="/WEB-INF/Forbidden.html";
+			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+			ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+			templateEngine.process(path, ctx, response.getWriter());
+			session.invalidate();
 			return;
 		}
-		/********************************************************************************************/
 		
+		/********************************************************************************************/
 		
 
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);

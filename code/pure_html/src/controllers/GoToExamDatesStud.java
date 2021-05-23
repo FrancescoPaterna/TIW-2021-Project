@@ -73,13 +73,13 @@ public class GoToExamDatesStud extends HttpServlet {
 		
 		// Redirect to the HomePage and add courses to the parameters*/
 		if(!(exams.isEmpty())) {
-		String path ="/WEB-INF/ExamDatesStud.html";
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("course_id", course_id);
-		ctx.setVariable("exams", exams);
-		ctx.setVariable("coursename", coursename);
-		templateEngine.process(path, ctx, response.getWriter());
+			String path ="/WEB-INF/ExamDatesStud.html";
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("course_id", course_id);
+			ctx.setVariable("exams", exams);
+			ctx.setVariable("coursename", coursename);
+			templateEngine.process(path, ctx, response.getWriter());
 		}
 		else {
 			String path ="/WEB-INF/ExamDatesStudEmpty.html";

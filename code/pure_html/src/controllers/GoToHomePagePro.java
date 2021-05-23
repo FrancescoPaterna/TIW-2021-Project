@@ -47,11 +47,11 @@ public class GoToHomePagePro extends HttpServlet {
 	}
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = "/index.html";
+		
 		HttpSession session = request.getSession();
 		
 		User user = (User) session.getAttribute("user");
+		
 		CourseDAO courseDAO = new CourseDAO(connection);
 		List<Course> courses = new ArrayList<>();
 		
