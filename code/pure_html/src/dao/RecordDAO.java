@@ -16,7 +16,7 @@ public class RecordDAO {
 
 	
 
-	public void WriteRecordOnDb(int id_exam) throws SQLException {
+	public void writeRecordOnDb(int id_exam) throws SQLException {
 		String query = "INSERT INTO projectdb.record (IDExamDate) VALUES ( ? )";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, id_exam);

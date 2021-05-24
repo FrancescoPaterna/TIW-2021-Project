@@ -476,7 +476,7 @@ public class EnrollsDAO {
 
 	}
 
-	public void RecordScore(int examDateId, int recordID) throws SQLException {
+	public void recordScore(int examDateId, int recordID) throws SQLException {
 
 		String query = "UPDATE projectdb.enroll SET status='RECORDED' WHERE IDExamDate = ? AND status = 'PUBLISHED'";
 		String query2 = "UPDATE projectdb.enroll SET IDRecord= ? WHERE IDRecord is null AND IDExamDate = ? AND status='RECORDED'";
@@ -494,7 +494,7 @@ public class EnrollsDAO {
 		}
 	}
 
-	public List<Enroll> FindRecordedStudents(int record_id) throws SQLException {
+	public List<Enroll> findRecordedStudents(int record_id) throws SQLException {
 		List<Enroll> enrolls = new ArrayList<>();
 
 		String query = "SELECT user.ID, user.name, user.surname, enroll.mark \r\n"

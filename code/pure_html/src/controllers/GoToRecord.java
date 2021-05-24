@@ -76,19 +76,11 @@ public class GoToRecord extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// If the user is not logged in (not present in session) redirect to the login
-		String loginpath = "/index.html";
 		HttpSession session = request.getSession();
-		if (session.isNew() || session.getAttribute("user") == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "You're not logged in");
-			templateEngine.process(loginpath, ctx, response.getWriter());
-			return;
-		}
 
 		int sort = 1;
 		int rec, secretsortcode, exam_date_id, course_id;
-		String mask, recovered_mask, coursename, date, time, path, sorturl;
+		String mask, recovered_mask, coursename, date, time, path;
 		Timestamp timestamp;
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
@@ -99,54 +91,46 @@ public class GoToRecord extends HttpServlet {
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
 		secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
-		//target = "/GoToSessionEnrolls";
+		// target = "/GoToSessionEnrolls";
 
 		path = "/WEB-INF/Record.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-		
 		recovered_mask = Rebuilder.resetMask(mask, secretsortcode);
 		sort = Rebuilder.resetSecretSortCode(secretsortcode);
-		
+
 		ctx.setVariable("mask", recovered_mask);
 		ctx.setVariable("sort", sort);
 
 		List<Enroll> recorded;
 
 		try {
-			if(!examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {
-					 path ="/WEB-INF/Forbidden.html";
-						ctx.setVariable("error", "UNAUTHORIZED ACCESS");
-						ctx.setVariable("description", "Attempt to access a resource not owned by you!");
-						templateEngine.process(path, ctx, response.getWriter());
-						session.invalidate();
-						return;
-				}
-		}
-			catch (SQLException s) {
-			 path ="/WEB-INF/Forbidden.html";
+			if (!examdatedao.CheckExamDateByProf(user.getId(), exam_date_id)) {
+				path = "/WEB-INF/Forbidden.html";
 				ctx.setVariable("error", "UNAUTHORIZED ACCESS");
 				ctx.setVariable("description", "Attempt to access a resource not owned by you!");
 				templateEngine.process(path, ctx, response.getWriter());
 				session.invalidate();
 				return;
+			}
+		} catch (SQLException s) {
+			path = "/WEB-INF/Forbidden.html";
+			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+			ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+			templateEngine.process(path, ctx, response.getWriter());
+			session.invalidate();
+			return;
 		}
-		
-		
-		
-		
-		
-		
+
 		try {
 			if (enrollsDAO.assertion_record(exam_date_id)) {
 
 				try {
-					recordDAO.WriteRecordOnDb(exam_date_id);
+					recordDAO.writeRecordOnDb(exam_date_id);
 				} catch (SQLException e) {
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot generate new RECORD");
 					return;
@@ -160,14 +144,14 @@ public class GoToRecord extends HttpServlet {
 				}
 
 				try {
-					enrollsDAO.RecordScore(exam_date_id, rec);
+					enrollsDAO.recordScore(exam_date_id, rec);
 				} catch (SQLException e) {
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot record any Score");
 					return;
 				}
 
 				try {
-					recorded = enrollsDAO.FindRecordedStudents(rec);
+					recorded = enrollsDAO.findRecordedStudents(rec);
 				} catch (SQLException e) {
 					response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 							"Cannot Find any Recorded Student");
@@ -185,7 +169,6 @@ public class GoToRecord extends HttpServlet {
 					return;
 				}
 
-
 				// Redirect to the HomePage and add courses to the parameters*/
 
 				ctx.setVariable("recorded", recorded);
@@ -197,13 +180,12 @@ public class GoToRecord extends HttpServlet {
 				ctx.setVariable("course_id", course_id);
 
 				templateEngine.process(path, ctx, response.getWriter());
-			}
-			else {
-				 path ="/WEB-INF/Warning.html";
-					ctx.setVariable("error", "Impossible To Record Score");
-					ctx.setVariable("description", "Cannot Find Any Score in Published State!");
-					templateEngine.process(path, ctx, response.getWriter());
-					return;
+			} else {
+				path = "/WEB-INF/Warning.html";
+				ctx.setVariable("error", "Impossible To Record Score");
+				ctx.setVariable("description", "Cannot Find Any Score in Published State!");
+				templateEngine.process(path, ctx, response.getWriter());
+				return;
 
 			}
 
