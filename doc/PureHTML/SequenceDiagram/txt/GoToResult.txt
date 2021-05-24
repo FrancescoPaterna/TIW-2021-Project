@@ -1,0 +1,42 @@
+title GoToResult
+
+participant Browser
+participant GoToResult
+participant Session
+participant UserDAO
+participant EnrollsDAO
+participant GoodScore
+participant TemplateEngine
+
+note left of Browser:IDExamDate\ncoursename\ndate \ncourse_id
+
+Browser->GoToResult:GET
+
+
+activate GoToResult
+GoToResult->Session:getAttribute("user")
+activate Session
+Session-->>GoToResult:user
+
+deactivate Session
+GoToResult->EnrollsDAO:FindStudentScore(IDExamDate, user)
+activate EnrollsDAO
+EnrollsDAO-->GoToResult:enroll
+
+deactivate EnrollsDAO
+GoToResult->UserDAO:findProfessorByIdCourse(course_id)
+activate UserDAO
+UserDAO-->>GoToResult:professor
+
+deactivate UserDAO
+alt !(enroll.getStatus()==NOT_INSERTED || enroll.getStatus()==INSERTED)
+alt enroll.getStatus()==PUBLISHED && GoodScore.CheckGoodScore(enroll.getMark())
+
+GoToResult->TemplateEngine:Result.html, course_id, enroll, date, coursename, IDExamDate, professor
+else otherwise
+GoToResult->TemplateEngine:ResultLocked.html, course_id, enroll, date, coursename, IDExamDate, professor
+end
+else otherwise
+GoToResult->TemplateEngine:ResultEmpty.html, course_id, enroll, date, coursename, IDExamDate, professor
+end
+

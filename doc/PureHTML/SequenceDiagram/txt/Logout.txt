@@ -1,0 +1,17 @@
+title Logout
+
+participant Browser
+participant Logout
+participant Session
+participant CheckLogin
+
+Browser->Logout:GET
+
+activate Logout
+Logout->Session:Invalidate
+
+activate Session
+deactivateafter Session
+Logout->CheckLogin:Redirect
+
+activate CheckLogin
