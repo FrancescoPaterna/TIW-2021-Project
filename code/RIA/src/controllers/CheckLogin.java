@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,14 +23,16 @@ import dao.UserDAO;
 import utils.ConnectionHandler;
 import utils.HexString;
 
+import com.google.gson.Gson;
+
 @WebServlet("/CheckLogin")
+@MultipartConfig
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
 
 	public void init() throws ServletException {
 		connection = ConnectionHandler.getConnection(getServletContext());
-		ServletContext servletContext = getServletContext();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -90,10 +93,11 @@ public class CheckLogin extends HttpServlet {
 			response.getWriter().println("Incorrect credentials");
 		} else {
 			request.getSession().setAttribute("user", user);
+			String Serialized_User = new Gson().toJson(user);
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().println(user.getRole());
+			response.getWriter().println(Serialized_User);
 		}
 	}
 
