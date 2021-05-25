@@ -49,15 +49,16 @@ public class CheckLogin extends HttpServlet {
 		id = request.getParameter("id");
 		pwd = request.getParameter("pwd");
 		
-		if(id == null || id == "") {
-			ServletContext servletContext = getServletContext();
-
-			
+		if(id == null || id.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("ID must be not null");
+			return;
 		}
 		
-		if(pwd == null || pwd == "") {
-			ServletContext servletContext = getServletContext();
-
+		if(pwd == null || pwd.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("Password must be not null");
+			return;
 		}
 
 
@@ -88,22 +89,14 @@ public class CheckLogin extends HttpServlet {
 
 		String path;
 		if (user == null) {
-			ServletContext servletContext = getServletContext();
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.getWriter().println("Incorrect credentials");
 		} else {
 			request.getSession().setAttribute("user", user);
-			String target;
-			if (user.getRole().equals("student")) {
-				target = "/GoToHomePageStud";
-			} else if (user.getRole().equals("professor")) {
-				target = "/GoToHomePagePro";
-			} else {
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"Undefined User, Please Contact Registrar's office");
-				return;
-			}
-
-			path = getServletContext().getContextPath();
-			response.sendRedirect(path + target);
+			response.setStatus(HttpServletResponse.SC_OK);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().println(id);
 		}
 	}
 

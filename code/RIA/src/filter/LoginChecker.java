@@ -51,11 +51,12 @@ public class LoginChecker implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String loginpath = "/index.html";
+		String loginpath = req.getServletContext().getContextPath() + "/index.html";
 
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("user") == null) {
 			ServletContext servletContext = req.getServletContext();
+			res.sendRedirect(loginpath);
 			return;
 		}
 		// pass the request along the filter chain
