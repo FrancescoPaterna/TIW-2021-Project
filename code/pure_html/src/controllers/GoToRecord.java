@@ -118,11 +118,7 @@ public class GoToRecord extends HttpServlet {
 				return;
 			}
 		} catch (SQLException s) {
-			path = "/WEB-INF/Forbidden.html";
-			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
-			ctx.setVariable("description", "Attempt to access a resource not owned by you!");
-			templateEngine.process(path, ctx, response.getWriter());
-			session.invalidate();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot connect to the database");
 			return;
 		}
 
