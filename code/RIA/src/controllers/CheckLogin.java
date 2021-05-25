@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import beans.User;
 import dao.UserDAO;
 import utils.ConnectionHandler;
@@ -32,11 +34,6 @@ public class CheckLogin extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String path;
-
-		ServletContext servletContext = getServletContext();
-
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,8 +43,8 @@ public class CheckLogin extends HttpServlet {
 		String pwd = null;
 		String secure_pwd = null;
 		
-		id = request.getParameter("id");
-		pwd = request.getParameter("pwd");
+		id = StringEscapeUtils.escapeJava(request.getParameter("id"));
+		pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
 		
 		if(id == null || id.isEmpty()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -96,7 +93,7 @@ public class CheckLogin extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().println(id);
+			response.getWriter().println(user.getRole());
 		}
 	}
 
