@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" media="all" href="/css/style.css"/>
+<title>Login page</title>
+<script src="utils.js" charset="utf-8" defer></script>
+<script src="loginManagement.js" charset="utf-8" defer></script>
+</head>
+
+
+
+<body class=start>
+
+<img class=logo src="/ERR_pure_html/resources/logo.png" alt="logo">
+
+
+<div class=basic>
+	<div class=welcome>
+		<h1>Welcome to the University of NightCity</h1>
+	</div>
+
+
+
+	<div class=divlogin>
+		<form action="CheckLogin" method="POST">
+			<input type="text" name="id" placeholder="Your ID" required>
+			<input type="password" name="pwd" placeholder="Your Password"
+				required> <input type="submit" value="login">
+			<p id="errormessage"></p>
+		</form>
+	</div>
+
+
+	<div class=credits>
+		<h2>
+			v 0.42 <br> Powered By Team 25&reg;
+		</h2>
+	</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" media="all" href="CSS/mystyle.css" />
+<script src="utils.js" charset="utf-8" defer></script>
+<script src="expenseManagement.js" charset="utf-8" defer></script>
+<script src="sort.js" charset="utf-8" defer></script>
+</head>
+<body>
+	<div align="right">
+		<a href="Logout">Logout</a>
+	</div>
+	<h1>Welcome to the Client-Server Mission Management Home Page</h1>
+	<p>Nice to see you again <span id="id_username"></span></p>
+	<div id="id_alert" class="alertmessage"></div>	
+	<table>
+		<tr>
+			<td><table id="id_listcontainer" class="boxed">
+					<thead>
+						<tr>
+							<th class="sortable">Destination</th>
+							<th class="sortable">Date</th>
+							<th>Details</th>
+						</tr>
+					</thead>
+					<tbody id="id_listcontainerbody">
+					</tbody>
+				</table></td>
+			<td><table id="id_detailcontainer" class="boxed">
+					<thead>
+						<tr>
+							<th>Date</th>
+							<th>Destination</th>
+							<th>Status</th>
+							<th>Description</th>
+							<th>Country</th>
+							<th>Province</th>
+							<th>City</th>
+							<th>Fund</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td id="id_date"></td>
+							<td id="id_destination"></td>
+							<td id="id_status"></td>
+							<td id="id_description"></td>
+							<td id="id_country"></td>
+							<td id="id_province"></td>
+							<td id="id_city"></td>
+							<td id="id_fund"></td>
+						</tr>
+					</tbody>
+				</table>
+				<table id="id_expensecontainer" class="boxed">
+					<thead>
+						<th>Food</th>
+						<th>Accommodation</th>
+						<th>Transportation</th>
+					</thead>
+					<tbody>
+						<td id="id_food"></td>
+						<td id="id_accomodation"></td>
+						<td id="id_transportation"></td>
+					</tbody>
+				</table>
+				<form id="id_expenseform" action="#">
+					<fieldset>
+						<p>
+							Food expenses: <input type="number" step="0.0001" name="food"
+								min=0 required />
+						</p>
+						<p>
+							Accomodation expenses: <input type="number" step="0.0001"
+								name="accomodation" min=0 required />
+						</p>
+						<p>
+							Transportation expenses: <input type="number" step="0.0001"
+								name="transportation" min=0 required />
+						</p>
+						<input type="hidden" name="missionid"> 
+						<input type="button" name="Save Expenses" value="Save">
+					</fieldset>
+				</form>
+				<form id="id_closeform" action="#">
+					<input type="hidden" name="missionid">
+					<input type="button" type="button" name="Close mission" value="Close"> 
+				</form></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<p>Use the wizard to create a mission</p>
+				<form id="id_createmissionform" action="#">
+					<fieldset>
+						Destination: <input type="text" name="destination" required> <br> 
+						Date: <input type="date" name="date" required><br>
+						Days: <input type="number" name="days" min="1" required><br>
+						<input type="button" name="next" value="next" class="next">
+					</fieldset>
+					<fieldset>
+						Country : <input type="text" name="country" required><br>
+						Province: <input type="text" name="province" required>
+						<br> City : <input type="text" name="city" required><br>
+						<input type="button" value="prev" name="prev" class="prev">
+						<input type="button" value="next" name="next" class="next">
+					</fieldset>
+					<fieldset>
+						Fund: <input  type="text" name="fund" required> <br>
+						Description: <input type="text"
+							name="description" required><br> 
+							<input type="button" value="prev" name="3-prev" class="prev"> 
+							<input type="button" value="cancel" name="cancel" class="cancel">
+						    <input type="button" value="submit" name="submit" class="submit">
+					</fieldset>
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

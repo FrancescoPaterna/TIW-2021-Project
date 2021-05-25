@@ -1,0 +1,378 @@
+@import url(https://fonts.googleapis.com/css?family=Orbitron);
+
+
+.start {
+	background-image: url("../resources/demo.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.logo{
+	position: absolute;
+	width: 100px;
+	left: 50%;
+	top: 10px;
+	margin-left: -50px;
+	margin-right: -50px;
+}
+
+.logo2{
+	width: 100px;
+	margin-left: -50px;
+	margin-right: -50px;
+	margin-top: 70px;
+}
+.welcome {
+	width: max-content;
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	opacity: 0.9;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+
+h1 {
+	text-align: center;
+	font-family: 'Orbitron', courier, sans-serif;
+	font-size: 350%;
+	font-weight: 600;	
+	letter-spacing: 0.010 em;
+	padding: 5px 10px;
+	
+}
+
+
+.basic{
+ 	margin-top: 150px;
+}
+
+
+
+
+form {
+	text-align: center;
+	font-family: 'Orbitron', courier, sans-serif;
+}
+
+body {
+	text-align: center;
+	font-family: 'Orbitron', courier, sans-serif;
+}
+
+input[type=text] {
+	width: 90%;
+	padding: 12px 15px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-family: 'Orbitron', courier, sans-serif;
+	font-size: 20px;
+}
+
+input[type=password] {
+	width: 90%;
+	padding: 12px 15px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-family: 'Orbitron', courier, sans-serif;
+	font-size: 20px;
+}
+
+input[type=submit] {
+	width: 90%;
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+input[type=submit]:hover {
+	background-color: #45a049;
+}
+
+.divlogin {
+	width: 30%;
+	border-radius: 5px;
+	background-color: #f2f2f2;
+	opacity: 0.9;
+	padding: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	margin-top: 5%;
+}
+
+/*Generic Table Border*/
+
+table{
+	width: 55%;
+}
+
+th{
+	width: 50%;
+}
+table, th, td {
+	text-align: center;
+	padding: 12px 15px;
+	margin: 8px 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+th, td {
+	border: 1px solid black;
+	font-size: 16px;
+}
+
+/*Professor Table*/
+.pro {
+	background-color: #FF0000;
+}
+
+/*Student Table*/
+.stud {
+	background-color: #3465a4;
+}
+
+/*Record table*/
+.rec {
+	background-color: #888a85;
+}
+
+/*Button to reject the evaluation*/
+.button2 {
+	background-color: #ff0000;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.button2:hover {
+	background-color: #a40000;
+}
+
+/*Button for tables choice*/
+.button3 {
+	background-color: white;
+	border: none;
+	color: blue;
+	cursor: pointer;
+	font-size: 20px;
+}
+
+.button3:hover {
+	text-decoration: underline;
+}
+
+.divbutton {
+	position: absolute;
+	top: 10px;
+}
+
+.logoutbutton {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	width: 155px;
+	height: 42px;
+	font-size: 27px;
+	font-weight: bold;
+	background-color: #ff0000;
+	border-radius: 6px;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.returnbutton {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	font-weight: bold;
+	left: 50px;
+	width: 155px;
+	height: 42px;
+	font-size: 27px;
+	background-color: #3465a4;
+	border-radius: 6px;
+	border: none;
+	color: white;
+	cursor: pointer;
+}
+
+.logoutbutton:hover {
+	background-color: #f85f5f;
+}
+
+.returnbutton:hover {
+	background-color: #729fcf;
+}
+
+.credits {
+	bottom: 0;
+	text-align: center;
+	margin-top: 12%;
+}
+
+.modify {
+	background-color: #3465a4;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+}
+
+.modify:hover {
+	background-color: #5893d1;
+}
+
+.modifylo {
+	background-color: #b4c9e1;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+}
+
+.record {
+	background-color: #4e9a06;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+}
+
+.record:hover {
+	background-color: #80dd25;
+}
+
+/* RECORDLO OLD COLOR #8ae234;  #8c8768*  #cab928/
+/* PUBLISHLO OLD COLOR #fde946 */
+
+.recordlo {
+	background-color:#8c8768;   
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+}
+
+.publish {
+	background-color: #edd400;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+}
+
+.publish:hover {
+	background-color: #fce94f;
+}
+
+.publishlo {
+	background-color: #8c8768;
+	width: 25%;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+}
+
+.sort {
+	font-size: 20px;
+	color: black;
+	cursor: pointer;
+	text-align: center;
+	font-family: 'Orbitron', courier, sans-serif;
+	background-color: transparent;
+	border: 0px;
+}
+
+.sort:hover {
+	color: blue;
+}
+
+.sort:active {
+	color: yellow;
+}
+
+.sortstatic {
+	color: black;
+	font-size: 20px;
+	text-align: center;
+	font-family: 'Orbitron', courier, sans-serif;
+	background-color: transparent;
+	font-weight: normal;
+}
+
+.proenrollform {
+	display: inline;
+	width: inherit;
+	height: inherit;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.score {
+	border-color: #000000 white white white;
+	font-family: 'Orbitron', courier, sans-serif;
+	text-align: center;
+	background-color: white;
+	color: black;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.warning {
+	background-color: #e7c517;
+	font-size: 142px;
+	color: white;
+}
+
+.forbidden {
+	background-color: red;
+	font-size: 142px;
+	color: white;
+}
+
+.even{
+	background-color: #dbe6db;
+}
+
+.prb{
+	background-color:grey;
+	color: white;
+	position: absolute;
+	top: 16px;
+	left: 262px;
+	font-weight: bold;
+	width: 155px;
+	height: 42px;
+	font-size: 27px;
+	border-radius:6px;
+	border: none;
+	cursor: pointer;
+}
+
+.prb:hover{
+	background-color: #888a85;
+}
