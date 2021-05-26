@@ -1,17 +1,38 @@
 <!DOCTYPE html>
+
+
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Homepage Professor</title>
-<link rel="stylesheet" type="text/css" media="all" href="CSS/mystyle.css" />
+<meta charset="utf-8">
+<title>HomePage Professor</title>
+<link rel="stylesheet" type="text/css" media="all"
+	href="css/style.css" />
+<script src="professor.js" charset="utf-8" defer></script>
 <script src="utils.js" charset="utf-8" defer></script>
 </head>
 <body>
-	<div align="right">
-		<a href="Logout">Logout</a>
+<div class=basic>
+	<form action="LogOut" method="get">
+		<button class=logoutbutton type="submit">logout  &#10008;</button>
+	</form>
+	<h1>Welcome to the Professor Home page</h1>
+	<p>
+		Nice to see you again <span id="id_username"></span>
+	</p>
+
+</div>
+	<div>
+		<table>
+			<thead>
+				<tr class=pro>
+					<th>ID</th>
+					<th>Course</th>
+				</tr>
+			</thead>
+			</tbody>
+		</table>
 	</div>
-	<h1>Welcome to the Client-Server Mission Management Home Page</h1>
-	<p>Nice to see you again <span id="id_username"></span></p>
+
 
 </body>
 </html>

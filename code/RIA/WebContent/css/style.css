@@ -86,7 +86,7 @@ input[type=password] {
 	font-size: 20px;
 }
 
-input[type=submit] {
+#loginbutton {
 	width: 90%;
 	background-color: #4CAF50;
 	color: white;
@@ -97,7 +97,7 @@ input[type=submit] {
 	cursor: pointer;
 }
 
-input[type=submit]:hover {
+#loginbutton:hover {
 	background-color: #45a049;
 }
 

@@ -11,10 +11,14 @@
 				function(req) {
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = JSON.parse(req.responseText);
-						
+
 						switch (req.status) {
 							case 200:
-								sessionStorage.setItem('user', message);
+								sessionStorage.setItem('id', message.id);
+								sessionStorage.setItem('name', message.name);
+								sessionStorage.setItem('surname', message.surname);
+								sessionStorage.setItem('role', message.role);
+
 								if (message.role == "professor") {
 									window.location.href = "HomePro.html";
 
