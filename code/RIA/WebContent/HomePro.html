@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-
-
 <html>
 <head>
-<meta charset="utf-8">
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png"/>
+<meta charset="UTF-8" />
 <title>HomePage Professor</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
 <script src="professor.js" charset="utf-8" defer></script>
 <script src="utils.js" charset="utf-8" defer></script>
 </head>
 <body>
-<div class=basic>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008;</button>
-	</form>
-	<h1>Welcome to the Professor Home page</h1>
-	<p>
-		Nice to see you again <span id="id_username"></span>
-	</p>
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout &#10008;</button>
+		</form>
+		<h1>Welcome to the Professor Home page</h1>
+		<p>
+			Nice to see you again <span id="id_username"></span>
+		</p>
+		<div id="id_alert" class="alertmessage"></div>
 
-</div>
+	</div>
+
 	<div>
-		<table>
-			<thead>
-				<tr class=pro>
+		<table id="id_coursePro">
+			<thead class=pro>
+				<tr>
 					<th>ID</th>
 					<th>Course</th>
 				</tr>
 			</thead>
-			</tbody>
-		</table>
+			<tbody id="id_courseProBody">			
+			</table>
 	</div>
 
 

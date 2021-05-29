@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.String;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,39 +14,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import com.google.gson.Gson;
 
 import beans.Course;
 import beans.User;
 import dao.CourseDAO;
 import utils.ConnectionHandler;
 
-
-@WebServlet("/GoToHomePagePro")
-public class GoToHomePagePro extends HttpServlet {
+@WebServlet("/GetCoursePro")
+public class GetCoursePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private TemplateEngine templateEngine;
 	private Connection connection = null;
-	
-    public GoToHomePagePro() {
-        super();
-    }
+
+	public GetCoursePro() {
+		super();
+	}
 
 	public void init() throws ServletException {
-		ServletContext servletContext = getServletContext();
-		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-		templateResolver.setTemplateMode(TemplateMode.HTML);
-		this.templateEngine = new TemplateEngine();
-		this.templateEngine.setTemplateResolver(templateResolver);
-		templateResolver.setSuffix(".html");
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
 		User user = (User) session.getAttribute("user");
@@ -60,17 +49,23 @@ public class GoToHomePagePro extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
 			return;
 		}
+
+		// Redirect to the Home page and add missions to the parameters
 		
-		// Redirect to the HomePage and add courses to the parameters
-		String path ="/WEB-INF/HomePro.html";
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("courses", courses);
-		templateEngine.process(path, ctx, response.getWriter());
+		String serialized_courses = new Gson().toJson(courses);
+
+		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(serialized_courses);
+		System.out.println("WEILA");
 	}
 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
-	
 	public void destroy() {
 		try {
 			ConnectionHandler.closeConnection(connection);
