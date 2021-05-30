@@ -67,7 +67,7 @@ public class GoToExamDatesStud extends HttpServlet {
 			exams = ExamDateDAO.FindExameDateBYCourseForStudent(user.getId(), course_id);
 
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses dates");
 			return;
 		}
 		

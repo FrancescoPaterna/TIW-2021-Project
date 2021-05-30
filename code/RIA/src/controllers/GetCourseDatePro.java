@@ -14,11 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+
+import com.google.gson.Gson;
 
 import beans.Course;
 import beans.ExamDate;
@@ -27,24 +24,18 @@ import dao.CourseDAO;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
 
-@WebServlet("/GoToExamDatesPro")
-public class GoToExamDatesPro extends HttpServlet {
+@WebServlet("/GetCourseDatePro")
+public class GetCourseDatePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private TemplateEngine templateEngine;
 	private Connection connection = null;
 	
-   public GoToExamDatesPro() {
+   public GetCourseDatePro() {
         super();
     }
    
    
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
-		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-		templateResolver.setTemplateMode(TemplateMode.HTML);
-		this.templateEngine = new TemplateEngine();
-		this.templateEngine.setTemplateResolver(templateResolver);
-		templateResolver.setSuffix(".html");
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
        
@@ -52,16 +43,12 @@ public class GoToExamDatesPro extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		String path = null;
 		Integer course_id; 
-		String coursename = null;
 		course_id = Integer.parseInt(request.getParameter("course_id"));
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));		
 		User user = (User) session.getAttribute("user");
 		
 		
 		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		/*Verifichiamo che il corso inserito appartenga al professore (Protezione Attacco SQL)*/
 		CourseDAO courseDAO = new CourseDAO(connection);
@@ -70,7 +57,8 @@ public class GoToExamDatesPro extends HttpServlet {
 		try {
 			courses = courseDAO.findCoursesByIdProf(user.getId());
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Not possible to recover courses");
 			return;
 		}
 		
@@ -82,10 +70,8 @@ public class GoToExamDatesPro extends HttpServlet {
 		}
 		
 		if(!course_found) {
-			path ="/WEB-INF/Forbidden.html";
-			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
-			ctx.setVariable("description", "Attempt to access a resource not owned by you!");
-			templateEngine.process(path, ctx, response.getWriter());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("unauthorized access");
 			session.invalidate();
 			return;
 		}
@@ -99,16 +85,16 @@ public class GoToExamDatesPro extends HttpServlet {
 		try {
 			exams = ExamDateDAO.FindExameDateBYCourseForProfessor(course_id);
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses dates");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Not possible to recover courses dates");
 			return;
 		}
 		
 		// Redirect to the HomePage and add courses to the parameters*/
-		path = "/WEB-INF/ExamDatesPro.html";
-		ctx.setVariable("coursename", coursename);
-		ctx.setVariable("course_id", course_id);
-		ctx.setVariable("exams", exams);
-		templateEngine.process(path, ctx, response.getWriter());
+		String serialized_coursesDate = new Gson().toJson(exams);		
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(serialized_coursesDate);
 	}
 	
 	public void destroy() {

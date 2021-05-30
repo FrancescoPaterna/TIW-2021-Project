@@ -7,7 +7,7 @@ public class ExamDate {
 	
 	private int ID;
 	private String data; 
-	private DateFormat data2 = new SimpleDateFormat("dd-MM-yyyy");
+	private transient DateFormat data2 = new SimpleDateFormat("dd-MM-yyyy");
 	private int IDcourse;
 	
 	

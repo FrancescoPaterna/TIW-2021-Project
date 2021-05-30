@@ -46,7 +46,8 @@ public class GetCoursePro extends HttpServlet {
 		try {
 			courses = courseDAO.findCoursesByIdProf(user.getId());
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to recover courses");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			response.getWriter().println("Not possible to recover courses");
 			return;
 		}
 
@@ -58,7 +59,6 @@ public class GetCoursePro extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		response.getWriter().write(serialized_courses);
-		System.out.println("WEILA");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
