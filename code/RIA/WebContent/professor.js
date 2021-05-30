@@ -5,7 +5,7 @@
 (function() { // avoid variables ending up in the global scope
 
 	// page components
-	var courseList, courseDate, pageOrchestrator = new PageOrchestrator(); // main controller
+	var courseList, courseDate, sessionEnrolls, pageOrchestrator = new PageOrchestrator(); // main controller
 
 	window.addEventListener("load", () => {
 		if (sessionStorage.getItem("id") == null) {
@@ -67,12 +67,6 @@
 				destcell = document.createElement("td");
 				destcell.textContent = course.id;
 				row.appendChild(destcell);
-				/*destcell = document.createElement("td");
-				destcell.textContent = course.name;
-				row.appendChild(destcell);
-				self.coursePro.appendChild(row);*/
-
-
 				linkcell = document.createElement("td");
 				anchor = document.createElement("a");
 				linkcell.appendChild(anchor);
@@ -92,8 +86,8 @@
 			this.coursePro.style.visibility = "visible";
 		}
 	}
-	
-		function CourseDate(_alert, _id_courseDatePro, _id_courseDateProBody) {
+
+	function CourseDate(_alert, _id_courseDatePro, _id_courseDateProBody) {
 		this.alert = _alert;
 		this.courseDatePro = _id_courseDatePro;
 		this.courseDateProBody = _id_courseDateProBody;
@@ -104,13 +98,12 @@
 
 		this.show = function(course_id) {
 			var self = this;
-			makeCall("GET", "GetCourseDatePro?course_id="+ course_id, null,
+			makeCall("GET", "GetCourseDatePro?course_id=" + course_id, null,
 				function(req) {
 					if (req.readyState == 4) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesDates = JSON.parse(req.responseText);
-							console.log('OI');
 							if (CoursesDates.length == 0) {
 								self.alert.textContent = "no exam dates available";
 								return;
@@ -130,21 +123,104 @@
 			this.courseDateProBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this;
-			courlist.forEach(function(session) { // self visible here, not this
+			courlist.forEach(function(examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
-				destcell.textContent = session.ID;
+				destcell.textContent = examdates.ID;
 				row.appendChild(destcell);
-				destcell = document.createElement("td");
+				/*destcell = document.createElement("td");
 				destcell.textContent = session.data;
 				row.appendChild(destcell);
+				self.courseDateProBody.appendChild(row);*/
+				linkcell = document.createElement("td");
+				anchor = document.createElement("a");
+				linkcell.appendChild(anchor);
+				linkText = document.createTextNode(examdates.data);
+				anchor.appendChild(linkText);
+				//anchor.missionid = mission.id; // make list item clickable
+				anchor.setAttribute('exam_date_id', examdates.ID); // set a custom HTML attribute
+				anchor.addEventListener("click", (e) => {
+					// dependency via module parameter
+					sessionEnrolls.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
+				}, false); //TODO Repeat bubbling? 
+				anchor.href = "#";
+				row.appendChild(linkcell);
 				self.courseDateProBody.appendChild(row);
 
 			});
 			this.courseDatePro.style.visibility = "visible";
 		}
 	}
-	
+
+	function SessionEnrolls(_alert, _id_sessionEnrolls, _id_sessionEnrollsBody) {
+		this.alert = _alert;
+		this.sessionEnrolls = _id_sessionEnrolls;
+		this.sessionEnrollsBody = _id_sessionEnrollsBody;
+
+		this.reset = function() {
+			this.sessionEnrolls.style.visibility = "hidden";
+		}
+
+		this.show = function(exam_date_id) {
+			var self = this;
+			makeCall("GET", "GetSessionEnrolls?exam_date_id=" + exam_date_id, null,
+				function(req) {
+					if (req.readyState == 4) {
+						var message = req.responseText;
+						if (req.status == 200) {
+							var enrolls = JSON.parse(req.responseText);
+							console.log('OI');
+							if (enrolls.length == 0) {
+								self.alert.textContent = "no student enrolled";
+								return;
+							}
+							self.update(enrolls); // self visible by closure
+						}
+					} else {
+						self.alert.textContent = message;
+					}
+				}
+			);
+
+		};
+
+		this.update = function(courlist) {
+			var elem, i, row, destcell, linkcell, anchor;
+			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
+			// build updated list
+			var self = this;
+			courlist.forEach(function(examdates) { // self visible here, not this
+				row = document.createElement("tr");
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.IDstudent;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.name;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.surname;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.mail;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.courseDeg;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.mark;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = examdates.status;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = ("Modify");
+				row.appendChild(destcell);
+				self.sessionEnrollsBody.appendChild(row);
+
+			});
+			this.sessionEnrolls.style.visibility = "visible";
+		}
+	}
 
 
 	function PageOrchestrator() {
@@ -159,12 +235,19 @@
 				document.getElementById("id_coursePro"),
 				document.getElementById("id_courseProBody"));
 		}
-		
-			courseDate = new CourseDate(
-				alertContainer,
-				document.getElementById("id_courseDatePro"),
-				document.getElementById("id_courseDateProBody")
-			)
+
+		courseDate = new CourseDate(
+			alertContainer,
+			document.getElementById("id_courseDatePro"),
+			document.getElementById("id_courseDateProBody")
+		)
+
+		sessionEnrolls = new SessionEnrolls(
+			alertContainer,
+			document.getElementById("id_sessionEnrolls"),
+			document.getElementById("id_sessionEnrollsBody")
+
+		)
 
 		this.refresh = function(currentCourse) {
 			alertContainer.textContent = "";
