@@ -126,7 +126,13 @@ public class UpdateScore extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot connect to the database");
 			return;
 		}
-
+		
+		path = getServletContext().getContextPath();
+		response.sendRedirect(path + "/GoToModify?secret_code=" + secret_code + "&course_id=" + course_id + "&id_stud=" + 
+				id_stud + "&exam_date_id=" + exam_date_id + "&mark=" +  score + "&sort=" + sort + "&coursename=" + coursename + "&mask=" + 
+				mask + "&date=" + date + "&name=" + name + "&surname=" + surname + "&email=" + email + "&coursedeg=" + 
+				coursedeg + "&status=" + "INSERTED");
+		/*
 		path = "/WEB-INF/Modify.html";
 
 		ctx.setVariable("secret_code", secret_code);
@@ -146,7 +152,7 @@ public class UpdateScore extends HttpServlet {
 		ctx.setVariable("status", "INSERTED");
 
 		templateEngine.process(path, ctx, response.getWriter());
-
+		*/
 	}
 
 }
