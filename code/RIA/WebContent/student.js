@@ -5,7 +5,7 @@
 (function() { // avoid variables ending up in the global scope
 
 	// page components
-	var courseList, pageOrchestrator = new PageOrchestrator(); // main controller
+	var courseList, courseDate, resultDetails, pageOrchestrator = new PageOrchestrator(); // main controller
 
 	window.addEventListener("load", () => {
 		if (sessionStorage.getItem("id") == null) {
@@ -76,10 +76,12 @@
 				linkText = document.createTextNode(course.name);
 				anchor.appendChild(linkText);
 				//anchor.missionid = mission.id; // make list item clickable
-				anchor.setAttribute('course_id', course.id); // set a custom HTML attribute
+				anchor.setAttribute('course_id', course.id);
+				anchor.setAttribute('coursename', course.name); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
-					courseDate.show(e.target.getAttribute("course_id")); // the list must know the details container
+					courseDate.show(e.target.getAttribute("course_id"),
+						e.target.getAttribute("coursename")); // the list must know the details container
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
 				row.appendChild(linkcell);
@@ -94,12 +96,16 @@
 		this.alert = _alert;
 		this.courseDateStud = _id_courseDateStud;
 		this.courseDateStudBody = _id_courseDateStudBody;
+		this.course_id;
+		this.coursename;
 
 		this.reset = function() {
 			this.courseDateStud.style.visibility = "hidden";
 		}
 
-		this.show = function(course_id) {
+		this.show = function(course_id, coursename) {
+			this.course_id = course_id;
+			this.coursename = coursename;
 			var self = this;
 			makeCall("GET", "GetCourseDateStud?course_id=" + course_id, null,
 				function(req) {
@@ -141,10 +147,16 @@
 				linkText = document.createTextNode(examdates.data);
 				anchor.appendChild(linkText);
 				//anchor.missionid = mission.id; // make list item clickable
-				anchor.setAttribute('exam_date_id', examdates.ID); // set a custom HTML attribute
+				anchor.setAttribute('exam_date_id', examdates.ID);
+				anchor.setAttribute('exam_date', examdates.data);
+				anchor.setAttribute('course_id', self.course_id);
+				anchor.setAttribute('coursename', self.coursename); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
-					resultDetails.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
+					resultDetails.show(e.target.getAttribute("exam_date_id"),
+						e.target.getAttribute("exam_date"), 
+						e.target.getAttribute("course_id"),
+						e.target.getAttribute("coursename")); // the list must know the details container
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
 				row.appendChild(linkcell);
@@ -159,12 +171,18 @@
 		this.alert = _alert;
 		this.resultDetails = _id_resultDetails;
 		this.resultDetailsBody = _id_resultDetailsBody;
+		this.date;
+		this.course_id;
+		this.coursename;
 		
 		this.reset = function() {
 			this.resultDetails.style.visibility = "hidden";
 		}
 		
-		this.show = function(exam_date_id) {
+		this.show = function(exam_date_id, exam_date, course_id, coursename) {
+			this.date = exam_date;
+			this.course_id = course_id;
+			this.coursename = coursename;
 			var self = this;
 			makeCall("GET", "GetResultDetails?IDExamDate=" + exam_date_id, null,
 				function(req) {
@@ -205,13 +223,13 @@
 			destcell.textContent = resultDetails.courseDeg;
 			row.appendChild(destcell);
 			destcell = document.createElement("td");
-			destcell.textContent = resultDetails.date;
+			destcell.textContent = this.date;
 			row.appendChild(destcell);
 			destcell = document.createElement("td");
-			destcell.textContent = resultDetails.course_id;
+			destcell.textContent = this.course_id;
 			row.appendChild(destcell);
 			destcell = document.createElement("td");
-			destcell.textContent = resultDetails.coursename;
+			destcell.textContent = this.coursename;
 			row.appendChild(destcell);
 			destcell = document.createElement("td");
 			destcell.textContent = resultDetails.mark;
