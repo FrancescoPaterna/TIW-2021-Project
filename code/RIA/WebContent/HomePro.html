@@ -10,19 +10,18 @@
 <script src="utils.js" charset="utf-8" defer></script>
 </head>
 <body class=proback>
-<div class=main>
-	<div class="userdata">
-			Prof. <span id="id_username"></span><br>
-			ID: <span id="id"></span><br>
-	</div>
-	<div>
-		<form action="LogOut" method="get">
-			<button class=logoutbutton type="submit">logout &#10008;</button>
-		</form>
-		<h1>NCU Professor Home page</h1>
-		<div id="id_alert" class="alertmessage"></div>
+	<div class=main>
+		<div class="userdata">
+			Prof. <span id="id_username"></span><br> ID: <span id="id"></span><br>
+		</div>
+		<div>
+			<form action="LogOut" method="get">
+				<button class=logoutbutton type="submit">logout &#10008;</button>
+			</form>
+			<h1>NCU Professor Home page</h1>
+			<div id="id_alert" class="alertmessage"></div>
 
-	</div>
+		</div>
 	</div>
 
 	<div class=wrapper>
@@ -45,24 +44,45 @@
 			</thead>
 			<tbody id="id_courseDateProBody">
 		</table>
-
 	</div>
-	<table id="id_sessionEnrolls" class=table>
-		<thead>
-			<tr class='row header'>
-				<th>IDStud</th>
-				<th>Name</th>
-				<th>Surname</th>
-				<th>Email</th>
-				<th>CourseDeg</th>
-				<th>Mark</th>
-				<th>Status</th>
-				<th>Option</th>
-			</tr>
-		</thead>
-		<tbody id="id_sessionEnrollsBody">
-	</table>
-	<div></div>
 
+	<div class=showbar>
+		<form class=show>
+			<input id="showcourse" type="button" value="show &#128065;" />
+		</form>
+		<form class=show>
+			<input id="showdate" type="button" value="show &#128065;" />
+		</form>
+	</div>
+
+
+	<div class=wrapper>
+		<table id="id_sessionEnrolls" class=tablefull>
+			<thead>
+				<tr class='row header'>
+					<th>IDStud</th>
+					<th>Name</th>
+					<th>Surname</th>
+					<th>Email</th>
+					<th>CourseDeg</th>
+					<th>Mark</th>
+					<th>Status</th>
+					<th>Option</th>
+				</tr>
+			</thead>
+			<tbody id="id_sessionEnrollsBody">
+		</table>
+	</div>
+	<div style=display:inline-flex>
+	<form class=long_button >
+		<input id="modify" id="modify" type="button" value="SELECT" />
+	</form>
+	<form class=long_button>
+		<input id="publish" type="button" value="PUBLISH" />
+	</form>
+	<form class=long_button>
+		<input id="record" type="button" value="RECORD" />
+	</form>
+	</div>
 </body>
 </html>

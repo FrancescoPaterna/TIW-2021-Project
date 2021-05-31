@@ -32,13 +32,24 @@
 
 .wrapper {
   margin: 0 auto;
-  padding: 40px;
-  max-width: 80%;
+  padding: 20px 0px 0px 0px;
+  width: 80%;
+  font-size: 22px;
 }
 
 .table {
   margin: 0 0 40px 0;
   width: 40%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  display: inline-table;
+  border-collapse: collapse;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.tablefull {
+  margin: 0 0 40px 0;
+  width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   display: inline-table;
   border-collapse: collapse;
@@ -83,7 +94,6 @@ tr:nth-of-type(odd) {
     margin-bottom: 3px;
     content: attr(data-title);
     min-width: 98px;
-    font-size: 10px;
     line-height: 10px;
     font-weight: bold;
     text-transform: uppercase;
@@ -96,6 +106,15 @@ td {
   padding: 6px 12px;
   display: table-cell;
 }
+
+a{
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
 @media screen and (max-width: 580px) {
   td {
     padding: 2px 16px;
@@ -121,4 +140,92 @@ td {
 
 .logoutbutton:hover {
 	background-color: #f85f5f;
+}
+
+
+.showbar{
+	display: inline-flex;
+}
+
+.show{
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline-table;
+  visibility: hidden;
+}
+
+#modify {
+	background-color: #3465a4;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+	width: 250px;
+}
+
+#modify:hover {
+	background-color: #5893d1;
+}
+
+#modifylo {
+	background-color: #b4c9e1;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+	width: 250px;
+}
+
+#record {
+	background-color: #4e9a06;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+	width: 250px;
+}
+
+#record:hover {
+	background-color: #80dd25;
+}
+
+/* RECORDLO OLD COLOR #8ae234;  #8c8768*  #cab928/
+/* PUBLISHLO OLD COLOR #fde946 */
+#recordlo {
+	background-color: #8c8768;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+	width: 250px;
+}
+
+#publish {
+	width: 250px;
+	background-color: #edd400;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+}
+
+#publish:hover {
+	background-color: #fce94f;
+}
+
+#publishlo {
+	width: 250px;
+	background-color: #8c8768;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+}
+
+#long_button{
+	width: 250px;
 }
