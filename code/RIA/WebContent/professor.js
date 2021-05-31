@@ -19,10 +19,12 @@
 
 	// Constructors of view components
 
-	function PersonalMessage(_username, messagecontainer) {
+	function PersonalMessage(_username, _id, idcontainer, messagecontainer) {
 		this.username = _username;
+		this.id = _id;
 		this.show = function() {
 			messagecontainer.textContent = this.username;
+			idcontainer.textContent = this.id;
 		}
 	}
 
@@ -227,7 +229,8 @@
 		var alertContainer = document.getElementById("id_alert");
 		this.start = function() {
 			var user = sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
-			personalMessage = new PersonalMessage(user, document.getElementById("id_username"));
+			var id = sessionStorage.getItem('id')
+			personalMessage = new PersonalMessage(user,id,document.getElementById("id"), document.getElementById("id_username"));
 			personalMessage.show();
 
 			courseList = new CourseList(

@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron);
 
-
 .start {
 	background-image: url("../resources/demo.jpg");
 	background-repeat: no-repeat;
@@ -8,7 +7,7 @@
 	background-attachment: fixed;
 }
 
-.logo{
+.logo {
 	position: absolute;
 	width: 100px;
 	left: 50%;
@@ -17,12 +16,13 @@
 	margin-right: -50px;
 }
 
-.logo2{
+.logo2 {
 	width: 100px;
 	margin-left: -50px;
 	margin-right: -50px;
 	margin-top: 70px;
 }
+
 .welcome {
 	width: max-content;
 	border-radius: 5px;
@@ -33,24 +33,18 @@
 	text-align: center;
 }
 
-
 h1 {
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
 	font-size: 350%;
-	font-weight: 600;	
+	font-weight: 600;
 	letter-spacing: 0.010 em;
 	padding: 5px 10px;
-	
 }
 
-
-.basic{
- 	margin-top: 150px;
+.basic {
+	margin-top: 150px;
 }
-
-
-
 
 form {
 	text-align: center;
@@ -113,26 +107,6 @@ input[type=password] {
 	margin-top: 5%;
 }
 
-/*Generic Table Border*/
-
-table{
-	width: 30%;
-}
-
-th{
-	width: 50%;
-}
-table, th, td {
-	text-align: center;
-	padding: 12px 15px;
-	margin: 8px 0;
-}
-
-th, td {
-	border: 1px solid black;
-	font-size: 16px;
-}
-
 /*Professor Table*/
 .pro {
 	background-color: #FF0000;
@@ -186,35 +160,17 @@ th, td {
 	height: 42px;
 	font-size: 27px;
 	font-weight: bold;
-	background-color: #ff0000;
+	background-color: #da3030;
 	border-radius: 6px;
 	border: none;
 	color: white;
 	cursor: pointer;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.returnbutton {
-	position: absolute;
-	top: 16px;
-	left: 16px;
-	font-weight: bold;
-	left: 50px;
-	width: 155px;
-	height: 42px;
-	font-size: 27px;
-	background-color: #3465a4;
-	border-radius: 6px;
-	border: none;
-	color: white;
-	cursor: pointer;
-}
 
 .logoutbutton:hover {
 	background-color: #f85f5f;
-}
-
-.returnbutton:hover {
-	background-color: #729fcf;
 }
 
 .credits {
@@ -261,9 +217,8 @@ th, td {
 
 /* RECORDLO OLD COLOR #8ae234;  #8c8768*  #cab928/
 /* PUBLISHLO OLD COLOR #fde946 */
-
 .recordlo {
-	background-color:#8c8768;   
+	background-color: #8c8768;
 	width: 25%;
 	padding: 12px 15px;
 	border-radius: 6px;
@@ -352,12 +307,12 @@ th, td {
 	color: white;
 }
 
-.even{
+.even {
 	background-color: #dbe6db;
 }
 
-.prb{
-	background-color:grey;
+.prb {
+	background-color: grey;
 	color: white;
 	position: absolute;
 	top: 16px;
@@ -366,11 +321,11 @@ th, td {
 	width: 155px;
 	height: 42px;
 	font-size: 27px;
-	border-radius:6px;
+	border-radius: 6px;
 	border: none;
 	cursor: pointer;
 }
 
-.prb:hover{
+.prb:hover {
 	background-color: #888a85;
 }
