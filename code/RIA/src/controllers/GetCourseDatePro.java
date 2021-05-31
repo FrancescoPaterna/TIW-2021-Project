@@ -41,9 +41,6 @@ public class GetCourseDatePro extends HttpServlet {
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		User user = (User) session.getAttribute("user");
 		
-		
-		ServletContext servletContext = getServletContext();
-		
 		/*Verifichiamo che il corso inserito appartenga al professore (Protezione Attacco SQL)*/
 		CourseDAO courseDAO = new CourseDAO(connection);
 		List<Course> courses = new ArrayList<>();
@@ -84,7 +81,7 @@ public class GetCourseDatePro extends HttpServlet {
 			return;
 		}
 		
-		// Redirect to the HomePage and add courses to the parameters*/
+		// Send exams back to the client as JSON string
 		String serialized_coursesDate = new Gson().toJson(exams);		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

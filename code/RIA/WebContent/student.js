@@ -144,7 +144,7 @@
 				anchor.setAttribute('exam_date_id', examdates.ID); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
-					sessionEnrolls.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
+					resultDetails.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
 				row.appendChild(linkcell);
@@ -153,6 +153,80 @@
 			});
 			this.courseDateStud.style.visibility = "visible";
 		}
+	}
+	
+	function ResultDetails(_alert, _id_resultDetails, _id_resultDetailsBody) {
+		this.alert = _alert;
+		this.resultDetails = _id_resultDetails;
+		this.resultDetailsBody = _id_resultDetailsBody;
+		
+		this.reset = function() {
+			this.resultDetails.style.visibility = "hidden";
+		}
+		
+		this.show = function(exam_date_id) {
+			var self = this;
+			makeCall("GET", "GetResultDetails?IDExamDate=" + exam_date_id, null,
+				function(req) {
+					if (req.readyState == 4) {
+						var message = req.responseText;
+						if (req.status == 200) {
+							var resultDetails = JSON.parse(req.responseText);
+							/*if (enrolls.length == 0) {
+								self.alert.textContent = "no student enrolled";
+								return;
+							}*/
+							self.update(resultDetails); // self visible by closure
+						} else if(req.status == 204) {
+							self.alert.textContent = message;
+							return;
+						}
+					} else {
+						self.alert.textContent = message;
+					}
+				}
+			);
+		}
+		
+		this.update = function(resultDetails) {
+			var row, destcell, linkcell, anchor;
+			this.resultDetailsBody.innerHTML = "";
+			row = document.createElement("tr");
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.IDstudent;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.name;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.surname;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.courseDeg;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.date;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.course_id;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.coursename;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.mark;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = resultDetails.status;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = ("Refuse");
+			row.appendChild(destcell);
+			this.resultDetailsBody.appendChild(row);
+			//make details visible
+			this.resultDetails.style.visibility = "visible";
+		}
+		
 	}
 
 	function PageOrchestrator() {
@@ -173,6 +247,12 @@
 			alertContainer,
 			document.getElementById("id_courseDateStud"),
 			document.getElementById("id_courseDateStudBody")
+		)
+		
+		resultDetails = new ResultDetails(
+			alertContainer,
+			document.getElementById("id_resultDetails"),
+			document.getElementById("id_resultDetailsBody")
 		)
 		
 		this.refresh = function(currentCourse) {
