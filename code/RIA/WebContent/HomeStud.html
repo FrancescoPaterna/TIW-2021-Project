@@ -7,29 +7,31 @@
 <title>HomePage Student</title>
 <link rel="stylesheet" type="text/css" media="all"
 	href="css/style.css" />
-<script src="professor.js" charset="utf-8" defer></script>
+<script src="student.js" charset="utf-8" defer></script>
 <script src="utils.js" charset="utf-8" defer></script>
 </head>
 <body>
-<div class=basic>
-	<form action="LogOut" method="get">
-		<button class=logoutbutton type="submit">logout  &#10008;</button>
-	</form>
-	<h1>Welcome to the Student Home page</h1>
-	<p>
-		Nice to see you again <span id="id_username"></span>
-	</p>
+	<div class=basic>
+		<form action="LogOut" method="get">
+			<button class=logoutbutton type="submit">logout  &#10008;</button>
+		</form>
+		<h1>Welcome to the Student Home page</h1>
+		<p>
+			Nice to see you again <span id="id_username"></span>
+		</p>
+		<div id="id_alert" class="alertmessage"></div>
+	
+	</div>
 
-</div>
 	<div>
-		<table>
-			<thead>
-				<tr class=stud>
+		<table id="id_courseStud" style="margin-left: 0px">
+			<thead class=stud>
+				<tr>
 					<th>ID</th>
 					<th>Course</th>
 				</tr>
 			</thead>
-			</tbody>
+			<tbody id="id_courseStudBody">
 		</table>
 	</div>
 
