@@ -230,7 +230,7 @@
 		this.start = function() {
 			var user = sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			var id = sessionStorage.getItem('id')
-			personalMessage = new PersonalMessage(user,id,document.getElementById("id"), document.getElementById("id_username"));
+			personalMessage = new PersonalMessage(user, id, document.getElementById("id"), document.getElementById("id_username"));
 			personalMessage.show();
 
 			courseList = new CourseList(

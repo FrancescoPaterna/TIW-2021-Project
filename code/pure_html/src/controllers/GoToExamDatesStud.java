@@ -71,7 +71,7 @@ public class GoToExamDatesStud extends HttpServlet {
 			return;
 		}
 		
-		// Redirect to the HomePage and add courses to the parameters*/
+		// Redirect to the HomePage and add courses to the parameters
 		if(!(exams.isEmpty())) {
 			String path ="/WEB-INF/ExamDatesStud.html";
 			ServletContext servletContext = getServletContext();

@@ -29,13 +29,7 @@ public class GetCourseDatePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
 	
-   public GetCourseDatePro() {
-        super();
-    }
-   
-   
 	public void init() throws ServletException {
-		ServletContext servletContext = getServletContext();
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
        

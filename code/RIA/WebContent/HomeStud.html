@@ -1,40 +1,52 @@
 <!DOCTYPE html>
-
-
 <html>
 <head>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
 <meta charset="utf-8">
 <title>HomePage Student</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
 <script src="student.js" charset="utf-8" defer></script>
 <script src="utils.js" charset="utf-8" defer></script>
 </head>
-<body>
-	<div class=basic>
+<body class=proback>
+<div class=main>
+	<div class="userdata">
+			Stud. <span id="id_username"></span><br>
+			ID: <span id="id"></span><br>
+	</div>
+	<div>
 		<form action="LogOut" method="get">
-			<button class=logoutbutton type="submit">logout  &#10008;</button>
+			<button class=logoutbutton type="submit">logout &#10008;</button>
 		</form>
-		<h1>Welcome to the Student Home page</h1>
-		<p>
-			Nice to see you again <span id="id_username"></span>
-		</p>
+		<h1>NCU Student Home page</h1>
 		<div id="id_alert" class="alertmessage"></div>
-	
+
+	</div>
 	</div>
 
-	<div>
-		<table id="id_courseStud" style="margin-left: 0px">
-			<thead class=stud>
-				<tr>
+	<div class=wrapper>
+		<table id="id_courseStud" class=table>
+			<thead>
+				<tr class='row header'>
 					<th>ID</th>
 					<th>Course</th>
 				</tr>
 			</thead>
 			<tbody id="id_courseStudBody">
 		</table>
-	</div>
 
+		<table id="id_courseDateStud" class=table>
+			<thead>
+				<tr class='row header'>
+					<th>ID_ExamDate</th>
+					<th>Date</th>
+				</tr>
+			</thead>
+			<tbody id="id_courseDateStudBody">
+		</table>
+
+	</div>
 
 </body>
 </html>
