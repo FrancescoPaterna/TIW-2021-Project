@@ -152,25 +152,6 @@ input[type=password] {
 	top: 10px;
 }
 
-.logoutbutton {
-	position: absolute;
-	top: 50px;
-	right: 16px;
-	width: 155px;
-	height: 60px;
-	font-size: 27px;
-	font-weight: bold;
-	background-color: #da3030;
-	border-radius: 6px;
-	color: white;
-	cursor: pointer;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
-
-.logoutbutton:hover {
-	background-color: #f85f5f;
-}
 
 .credits {
 	bottom: 0;
