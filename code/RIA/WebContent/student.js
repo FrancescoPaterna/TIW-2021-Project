@@ -207,7 +207,7 @@
 		}
 		
 		this.update = function(resultDetails) {
-			var row, destcell, linkcell, anchor;
+			var elem, row, destcell, linkcell, anchor;
 			this.resultDetailsBody.innerHTML = "";
 			row = document.createElement("tr");
 			destcell = document.createElement("td");
@@ -239,7 +239,10 @@
 			row.appendChild(destcell);
 			destcell = document.createElement("td");
 			if(this.isRefusable(resultDetails.mark)){
-				destcell.textContent = ("Refuse");
+				elem = document.createElement("button");
+				elem.classList.add("button2");
+				elem.textContent = "Refuse";
+				destcell.appendChild(elem);
 			}
 			row.appendChild(destcell);
 			this.resultDetailsBody.appendChild(row);
