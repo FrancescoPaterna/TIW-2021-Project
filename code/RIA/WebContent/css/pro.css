@@ -5,9 +5,13 @@
 	background-attachment: fixed;
 }
 
+.main{
+	background-color: #da3030;
+	color: white
+}
 .userdata {
 	position: absolute;
-	top: 16px;
+	top: 50px;
 	left: 16px;
 	font-weight: bold;
 	border-radius: 3px;
