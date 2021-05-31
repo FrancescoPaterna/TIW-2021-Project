@@ -1,7 +1,8 @@
 /*main_color_page*/
 :root {
-  --pro: #da3030;
+  --stud: #3b5998
 }
+
 
 .proback {
 	background-image: url("../resources/professor.jpg");
@@ -11,7 +12,7 @@
 }
 
 .main{
-	background-color: var(--pro);
+	background-color:  var(--stud);
 	color: white
 }
 .userdata {
@@ -23,7 +24,7 @@
 	border-style: none;
 	color: white;
 	cursor: default;
-	background-color: var(--pro);
+	background-color: var(--stud);
 	width: max-content;
 	padding: 5px 10px 5px 10px;
 	text-align: left;
@@ -61,7 +62,7 @@ tr:nth-of-type(odd) {
 .row.header {
   font-weight: 900;
   color: #ffffff;
-  background: var(--pro);
+  background: var(--stud);
 }
 
 @media screen and (max-width: 580px) {
@@ -103,6 +104,7 @@ td {
   }
 }
 
+
 .logoutbutton {
 	position: absolute;
 	top: 50px;
@@ -111,7 +113,7 @@ td {
 	height: 60px;
 	font-size: 27px;
 	font-weight: bold;
-	background-color: var(--pro);
+	background-color: var(--stud);
 	border-radius: 6px;
 	color: white;
 	cursor: pointer;
@@ -120,5 +122,5 @@ td {
 
 
 .logoutbutton:hover {
-	background-color: #f85f5f;
+	background-color: #4b68ff;
 }
