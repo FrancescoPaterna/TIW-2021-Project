@@ -238,11 +238,19 @@
 			destcell.textContent = resultDetails.status;
 			row.appendChild(destcell);
 			destcell = document.createElement("td");
-			destcell.textContent = ("Refuse");
+			if(this.isRefusable(resultDetails.mark)){
+				destcell.textContent = ("Refuse");
+			}
 			row.appendChild(destcell);
 			this.resultDetailsBody.appendChild(row);
 			//make details visible
 			this.resultDetails.style.visibility = "visible";
+		}
+		
+		this.isRefusable = function(mark) {
+			if((mark >= 18 && mark <= 30) || (mark == '30L')){
+				return true;
+			} else return false;
 		}
 		
 	}
