@@ -215,12 +215,23 @@
 				destcell.textContent = examdates.status;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				elem = document.createElement("button");
-				elem.classList.add("button2");
-				elem.textContent = "Modify";
-				destcell.appendChild(elem);
+	
+
+
+				if(isModifible(examdates.status.trim())) {
+					elem = document.createElement("button");
+					elem.classList.add("smodify");
+					elem.textContent = "Modify";
+					destcell.appendChild(elem);
+				}
+				else {
+					elem = document.createElement("button");
+					elem.classList.add("smodifylo");
+					elem.textContent = "Modify";
+					destcell.appendChild(elem);
+				}
 				row.appendChild(destcell);
-				
+
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
@@ -230,7 +241,7 @@
 	}
 
 	function isModifible(status) {
-		if (status == "NOT_INSERETED" || status == "INSERTED" || status == "PUBLISHED")
+		if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
 			return true
 	}
 

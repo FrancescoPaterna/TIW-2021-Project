@@ -55,11 +55,7 @@
   margin-left: 10px;
   margin-right: 10px;
 }
-@media screen and (max-width: 580px) {
-  .table {
-    display: block;
-  }
-}
+
 
 tr {
   display: table-row;
@@ -74,36 +70,8 @@ tr:nth-of-type(odd) {
   background: var(--pro);
 }
 
-@media screen and (max-width: 580px) {
-  tr {
-    padding: 14px 0 7px;
-    display: block;
-  }
-  .row.header {
-    padding: 0;
-    height: 6px;
-  }
-  td, .row.header {
-    display: none;
-  }
-  tr, td {
-    margin-bottom: 10px;
-    padding: 0px 30px 0px 30px;
-  }
-  tr, td:before {
-    margin-bottom: 3px;
-    content: attr(data-title);
-    min-width: 98px;
-    line-height: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #969696;
-    display: block;
-  }
-}
-
 td {
-  padding: 6px 12px;
+  padding: 12px 10px;
   display: table-cell;
 }
 
@@ -115,12 +83,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-@media screen and (max-width: 580px) {
-  td {
-    padding: 2px 16px;
-    display: block;
-  }
-}
 
 .logoutbutton {
 	position: absolute;
@@ -259,4 +221,26 @@ th.sortable:active {
 	color: white;
 	font-weight: bold;
 	letter-spacing: -0.2em;
+}
+
+.smodify {
+	background-color: #3465a4;
+	padding: 5px 12px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+}
+
+.smodify:hover {
+	background-color: #5893d1;
+}
+
+.smodifylo {
+	background-color: #b4c9e1;
+	padding: 5px 12px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
 }
