@@ -1,5 +1,6 @@
 // Returns the text content of a cell.
 var asc = true;
+var old;
 
 function getCellValue(tr, idx) {
 	return tr.children[idx].textContent; // idx indexes the columns of the tr row
@@ -39,6 +40,9 @@ function createComparer(idx, asc) {
 
 // For all table headers f class sortable
 function sortTable(clicked_id) {
+	if (clicked_id != old) {
+		asc = true;
+	}
 	var th = document.getElementById(clicked_id);
 	var table = th.closest('table'); // get the closest table tag
 	var rowHeaders = table.querySelectorAll('th');
@@ -54,6 +58,7 @@ function sortTable(clicked_id) {
 	resetArrows(rowHeaders);
 	changeArrow(th);
 	//  Toggle the criterion
+	old = clicked_id;
 	asc = !asc;
 	// Append the sorted rows in the table body
 	for (var i = 0; i < rowsArray.length; i++) {
@@ -63,6 +68,9 @@ function sortTable(clicked_id) {
 
 // For all table headers f class sortable
 function sortCustom(clicked_id) {
+	if (clicked_id != old) {
+		asc = true;
+	}
 	var th = document.getElementById(clicked_id);
 	var table = th.closest('table'); // get the closest table tag
 	var rowHeaders = table.querySelectorAll('th');
@@ -78,6 +86,7 @@ function sortCustom(clicked_id) {
 	resetArrows(rowHeaders);
 	changeArrow(th);
 	//  Toggle the criterion
+	old = clicked_id;
 	asc = !asc;
 
 	// Append the sorted rows in the table body
