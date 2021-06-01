@@ -235,3 +235,11 @@ th.sortable {
 	cursor: pointer;
 	padding: 0px 30px 0px 30px;
 }
+
+th.sortable:hover {
+	color:blue;
+}
+
+th.sortable:active {
+	color:yellow;
+}
