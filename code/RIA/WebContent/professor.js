@@ -171,7 +171,6 @@
 						var message = req.responseText;
 						if (req.status == 200) {
 							var enrolls = JSON.parse(req.responseText);
-							console.log('OI');
 							if (enrolls.length == 0) {
 								self.alert.textContent = "no student enrolled";
 								return;

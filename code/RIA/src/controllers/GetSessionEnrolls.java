@@ -90,7 +90,6 @@ public class GetSessionEnrolls extends HttpServlet {
 			return;
 		}
 		
-		System.out.print("ECCOMI");
 		// Redirect to the HomePage and add courses to the parameters*/
 		String serialized_enrolls = new Gson().toJson(enrolls);		
 		response.setContentType("application/json");
