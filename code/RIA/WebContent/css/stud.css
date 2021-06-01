@@ -89,6 +89,7 @@ tr:nth-of-type(odd) {
   }
   tr, td {
     margin-bottom: 10px;
+    padding: 0px 30px 0px 30px;
   }
   tr, td:before {
     margin-bottom: 3px;

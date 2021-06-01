@@ -215,13 +215,23 @@
 				destcell.textContent = examdates.status;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = ("Modify");
+				elem = document.createElement("button");
+				elem.classList.add("button2");
+				elem.textContent = "Modify";
+				destcell.appendChild(elem);
 				row.appendChild(destcell);
+				
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
 			this.sessionEnrolls.style.visibility = "visible";
 		}
+
+	}
+
+	function isModifible(status) {
+		if (status == "NOT_INSERETED" || status == "INSERTED" || status == "PUBLISHED")
+			return true
 	}
 
 
