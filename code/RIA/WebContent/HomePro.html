@@ -61,6 +61,30 @@
 		<table id="id_sessionEnrolls" class=tablefull>
 			<thead>
 				<tr class='row header'>
+
+					<th id="IDstud" onclick="sortTable(this.id, true)" class="sortable">IDStud
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					<th id="Name" onclick="sortTable(this.id, true)" class="sortable">Name
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					<th id="Surname" onclick="sortTable(this.id, true)" class="sortable">Surname
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					<th id="Email" onclick="sortTable(this.id, true)" class="sortable">Email
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					<th id="CourseDeg" onclick="sortTable(this.id, true)" class="sortable">CourseDeg
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					<th id="Mark" onclick="sortCustom(this.id, true)" class="sortable">Mark
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					<th id="Status" onclick="sortTable(this.id, true)" class="sortable">Status
+						<span>&uarr;</span><span>&darr;</span>
+					</th>
+					
+					<!--    OLD CODE
 					<th class="sortable">IDStud&nbsp;&#8645;</th>
 					<th class="sortable">Name&nbsp;&#8645;</th>
 					<th class="sortable">Surname&nbsp;&#8645;</th>
@@ -68,22 +92,25 @@
 					<th class="sortable">CourseDeg&nbsp;&#8645;</th>
 					<th class="sortable">Mark&nbsp;&#8645;</th>
 					<th class="sortable">Status&nbsp;&#8645;</th>
+					-->
+
+
 					<th>Option</th>
 				</tr>
 			</thead>
 			<tbody id="id_sessionEnrollsBody">
 		</table>
 	</div>
-	<div style=display:inline-flex>
-	<form class=long_button >
-		<input id="modify" id="modify" type="button" value="SELECT" />
-	</form>
-	<form class=long_button>
-		<input id="publish" type="button" value="PUBLISH" />
-	</form>
-	<form class=long_button>
-		<input id="record" type="button" value="RECORD" />
-	</form>
+	<div>
+		<form class=long_button>
+			<input id="modify" id="modify" type="button" value="MODIFY &#8801;"/>
+		</form>
+		<form class=long_button>
+			<input id="publish" type="button" value="PUBLISH"/>
+		</form>
+		<form class=long_button>
+			<input id="record" type="button" value="RECORD"/>
+		</form>
 	</div>
 </body>
 </html>
