@@ -132,12 +132,18 @@ function createCustomComparer(idx, asc) {
 
 			// NULL COMPARE
 			/*********************************************************** */
-			if (v1 === ' ' || v2 === '') {
+			if (v1 === '' || v2 === '') {
 
 				if (v1 === '' && isNaN(v2)) {
 					return false;
 				}
 				if (v2 === '' && isNaN(v1)) {
+					return true;
+				}
+				if (v1 === '' && !isNaN(v2)) {
+					return false;
+				}
+				if (v2 === '' && !isNaN(v1)) {
 					return true;
 				}
 
