@@ -113,19 +113,19 @@ function createCustomComparer(idx, asc) {
 			/*********************************************************** */
 			if (v1 == "30L" || v2 == "30L") {
 				if (v1 == "30L" && v2 == "30L") {
-					return false;
+					return 0;
 				}
 				if (v1 == "30L" && isNaN(v2)) {
-					return true;
+					return 1;
 				}
 				if (v2 == "30L" && isNaN(v1)) {
-					return false;
+					return -1;
 				}
 				if (v1 == "30L" && !isNaN(v2)) {
-					return true;
+					return 1;
 				}
 				if (v2 == "30L" && !isNaN(v1)) {
-					return false;
+					return -1;
 				}
 			}
 
@@ -134,17 +134,20 @@ function createCustomComparer(idx, asc) {
 			/*********************************************************** */
 			if (v1 === '' || v2 === '') {
 
+				if (v1 === '' && v2 === '') {
+					return 0;
+				}
 				if (v1 === '' && isNaN(v2)) {
-					return false;
+					return -1;
 				}
 				if (v2 === '' && isNaN(v1)) {
-					return true;
+					return 1;
 				}
 				if (v1 === '' && !isNaN(v2)) {
-					return false;
+					return -1;
 				}
 				if (v2 === '' && !isNaN(v1)) {
-					return true;
+					return 1;
 				}
 
 			}
@@ -159,10 +162,10 @@ function createCustomComparer(idx, asc) {
 			// MIX COMPARE
 			/************************************************************ */
 			if (!isNaN(v1) && isNaN(v2)) {
-				return true;
+				return 1;
 			}
 			if (!isNaN(v2) && isNaN(v1)) {
-				return false;
+				return -1;
 			}
 
 		}
