@@ -158,6 +158,8 @@
 		this.alert = _alert;
 		this.sessionEnrolls = _id_sessionEnrolls;
 		this.sessionEnrollsBody = _id_sessionEnrollsBody;
+		this.modal = document.getElementById("myModal");
+		this.span = document.getElementsByClassName("close")[0];
 
 		this.reset = function() {
 			this.sessionEnrolls.style.visibility = "hidden";
@@ -189,7 +191,7 @@
 			var elem, i, row, destcell, linkcell, anchor;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
 			// build updated list
-			var self = this;
+			var self = this;     //FIRST 
 			courlist.forEach(function(examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
@@ -214,14 +216,25 @@
 				destcell.textContent = examdates.status;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-	
 
 
-				if(isModifible(examdates.status.trim())) {
+				
+				if (isModifible(examdates.status.trim())) {
 					elem = document.createElement("button");
 					elem.classList.add("smodify");
 					elem.textContent = "Modify";
 					destcell.appendChild(elem);
+					elem.addEventListener("click", (e) => {
+						// dependency via module parameter
+						self.modal.style.display = "block";
+						var self2 = self;   // due to povero linguaggio
+						self.span.addEventListener("click", (c) => {
+							// dependency close button
+							self2.modal.style.display = "none";
+						}, false);
+					}, false);
+					elem.href = "#";
+					row.appendChild(destcell);
 				}
 				else {
 					elem = document.createElement("button");
@@ -230,20 +243,31 @@
 					destcell.appendChild(elem);
 				}
 				row.appendChild(destcell);
-
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
 			this.sessionEnrolls.style.visibility = "visible";
 		}
 
-	}
 
-	function isModifible(status) {
-		if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
-			return true
-	}
 
+		function isModifible(status) {
+			if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
+				return true
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		this.CloseButton = function() {
+			this.modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		/*this.window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}*/
+	}
 
 	function PageOrchestrator() {
 		var alertContainer = document.getElementById("id_alert");
