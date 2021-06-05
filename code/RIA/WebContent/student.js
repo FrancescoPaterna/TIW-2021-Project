@@ -82,6 +82,7 @@
 					// dependency via module parameter
 					courseDate.show(e.target.getAttribute("course_id"),
 						e.target.getAttribute("coursename")); // the list must know the details container
+					resultDetails.reset();
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
 				row.appendChild(linkcell);
@@ -251,6 +252,7 @@
 			}
 			//make details visible
 			this.resultDetails.style.visibility = "visible";
+			this.resultDetailsBody.style.visibility = "visible";
 		}
 		
 		this.isRefusable = function(mark, status) {
@@ -264,19 +266,24 @@
 		
 		this.refuseScore = function(form) {
 			var self = this; // used to refer to the current function from inner functions
-			makeCall("POST", 'UpdateResultStud', form,
-				function(req) {
-	              if (req.readyState == XMLHttpRequest.DONE) {
-	                var message = req.responseText; 
-	                if (req.status == 200) {
-	                  pageOrchestrator.refresh(); 
-	                } else {
-	                  self.alert.textContent = message;
-	                  self.reset();
-	                }
-	              }
-	            }
-			);
+			if(form.checkValidity()) {
+				makeCall("POST", 'UpdateResultStud', form,
+					function(req) {
+		              if (req.readyState == XMLHttpRequest.DONE) {
+		                var message = req.responseText; 
+		                if (req.status == 200) {
+		                  pageOrchestrator.refresh(); 
+		                } else {
+		                  self.alert.textContent = message;
+		                  self.reset();
+		                }
+		              }
+		            }
+				);
+			} else {
+				form.reportValidity();
+			}
+			
 		}
 		
 	}
