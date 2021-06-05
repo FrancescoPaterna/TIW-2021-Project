@@ -53,17 +53,13 @@
 						<td th:text="${enroll.status}"></td>
 						<td>
 							<form action="UpdateResultStud" method="post">
-								<input type="hidden" name="coursename" id="coursename"
-									th:value="${coursename}" /> <input type="hidden" name="date"
-									id="date" th:value="${date}" /> <input type="hidden"
-									name="professorn" id="professorn" th:value="${professor.name}" />
-								<input type="hidden" name="professors" id="professors"
-									th:value="${professor.surname}" /> <input type="hidden"
-									name="professore" id="professore" th:value="${professor.email}" />
-								<input type="hidden" name="course_id" id="course_id"
-									th:value="${course_id}" />
-								<button class=button2 name="IDExamDate" type="submit"
-									th:value="${enroll.IDSession}" th:text="REFUSE"></button>
+								<input type="hidden" name="coursename" id="coursename" th:value="${coursename}" /> 
+								<input type="hidden" name="date" id="date" th:value="${date}" />
+								<input type="hidden" name="professorn" id="professorn" th:value="${professor.name}" />
+								<input type="hidden" name="professors" id="professors" th:value="${professor.surname}" /> 
+								<input type="hidden" name="professore" id="professore" th:value="${professor.email}" />
+								<input type="hidden" name="course_id" id="course_id" th:value="${course_id}" />
+								<button class=button2 name="IDExamDate" type="submit" th:value="${enroll.IDSession}" th:text="REFUSE"></button>
 							</form>
 						</td>
 					</tr>

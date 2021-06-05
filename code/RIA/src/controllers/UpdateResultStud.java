@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import utils.ConnectionHandler;
  * Servlet implementation class UpdateResultStud
  */
 @WebServlet("/UpdateResultStud")
+@MultipartConfig
 public class UpdateResultStud extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
@@ -46,8 +48,6 @@ public class UpdateResultStud extends HttpServlet {
 		Integer IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
 		
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
-		
-		Enroll enroll;
 
 		try {
 			enrollsDAO.RefuseScore(IDExamDate, user.getId());
@@ -58,22 +58,7 @@ public class UpdateResultStud extends HttpServlet {
 			return;
 		}
 		
-		try {
-
-			enroll = enrollsDAO.FindStudentScore(IDExamDate, user.getId());
-				
-		} catch (SQLException e) {
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			response.getWriter().println("Error in DB connection");
-			return;
-		}
-		
-		String serialized_result = new Gson().toJson(enroll);
-
-		response.setStatus(HttpServletResponse.SC_OK);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(serialized_result);
+		response.sendRedirect(session.getServletContext() + "/GetResultDetails");
 		
 	}
 

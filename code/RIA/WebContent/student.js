@@ -171,15 +171,18 @@
 		this.alert = _alert;
 		this.resultDetails = _id_resultDetails;
 		this.resultDetailsBody = _id_resultDetailsBody;
+		this.exam_date_id;
 		this.date;
 		this.course_id;
 		this.coursename;
 		
 		this.reset = function() {
 			this.resultDetails.style.visibility = "hidden";
+			this.resultDetailsBody.style.visibility = "hidden";
 		}
 		
 		this.show = function(exam_date_id, exam_date, course_id, coursename) {
+			this.exam_date_id = exam_date_id;
 			this.date = exam_date;
 			this.course_id = course_id;
 			this.coursename = coursename;
@@ -207,53 +210,73 @@
 		}
 		
 		this.update = function(resultDetails) {
-			var elem, row, destcell, linkcell, anchor;
-			this.resultDetailsBody.innerHTML = "";
-			row = document.createElement("tr");
-			destcell = document.createElement("td");
+			var elem, row, destcell, input, form;
+			destcell = document.getElementById("IDStudent");
 			destcell.textContent = resultDetails.IDstudent;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("name");
 			destcell.textContent = resultDetails.name;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("surname");
 			destcell.textContent = resultDetails.surname;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("coursedeg");
 			destcell.textContent = resultDetails.courseDeg;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("date");
 			destcell.textContent = this.date;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("course_id");
 			destcell.textContent = this.course_id;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("coursename");
 			destcell.textContent = this.coursename;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("score");
 			destcell.textContent = resultDetails.mark;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
+			destcell = document.getElementById("state");
 			destcell.textContent = resultDetails.status;
-			row.appendChild(destcell);
-			destcell = document.createElement("td");
-			if(this.isRefusable(resultDetails.mark)){
+			destcell = document.getElementById("option");
+			
+			if(this.isRefusable(resultDetails.mark, resultDetails.status)){
+				form = document.getElementById("refuseScoreForm");
+				
+				input = document.getElementById("refuseScoreInput");
+				input.setAttribute("value", this.exam_date_id);
+				
 				elem = document.createElement("button");
-				elem.classList.add("button2");
+				elem.setAttribute("class", "button2");
 				elem.textContent = "Refuse";
-				destcell.appendChild(elem);
+				elem.setAttribute("type", "submit");
+				elem.setAttribute("value", this.exam_date_id);
+				elem.setAttribute("name", "IDExamDate");
+				elem.addEventListener("click", (e) => {
+					this.refuseScore(e.target.closest("form"));
+				}, false);
+				form.appendChild(elem);
+				destcell.appendChild(form);
 			}
-			row.appendChild(destcell);
-			this.resultDetailsBody.appendChild(row);
 			//make details visible
 			this.resultDetails.style.visibility = "visible";
 		}
 		
-		this.isRefusable = function(mark) {
-			if((mark >= 18 && mark <= 30) || (mark == '30L')){
-				return true;
+		this.isRefusable = function(mark, status) {
+			if(status == "PUBLISHED") {
+				if(isNaN(mark)) return false;
+				if((mark >= 18 && mark <= 30) || (mark == '30L')){
+					return true;
+				} else return false;
 			} else return false;
+		}
+		
+		this.refuseScore = function(form) {
+			var self = this; // used to refer to the current function from inner functions
+			makeCall("POST", 'UpdateResultStud', form,
+				function(req) {
+	              if (req.readyState == XMLHttpRequest.DONE) {
+	                var message = req.responseText; 
+	                if (req.status == 200) {
+	                  pageOrchestrator.refresh(); 
+	                } else {
+	                  self.alert.textContent = message;
+	                  self.reset();
+	                }
+	              }
+	            }
+			);
 		}
 		
 	}
@@ -284,7 +307,7 @@
 			document.getElementById("id_resultDetailsBody")
 		)
 		
-		this.refresh = function(currentCourse) {
+		this.refresh = function() {
 			alertContainer.textContent = "";
 			courseList.reset();
 			courseList.show(); // closure preserves visibility of this
