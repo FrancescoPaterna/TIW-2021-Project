@@ -162,6 +162,7 @@
 		this.modalt = document.getElementById("modal");
 		this.modalBody = document.getElementById("modalBody");
 		this.modal = document.getElementById("myModal");
+		this.multipleModalForm = document.getElementById("multipleModifyForm");
 		this.span = document.getElementsByClassName("close")[0];
 		var current_exam;
 
@@ -193,8 +194,9 @@
 		};
 
 		this.update = function (courlist) {
-			var elem, i, row, destcell;
+			var elem, i, row, destcell, input, select, option, label, button;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
+			this.multipleModalForm.innerHTML = "";
 			// build updated list
 			var self = this;     //FIRST 
 			courlist.forEach(function (examdates) { // self visible here, not this
@@ -221,6 +223,9 @@
 				destcell.textContent = examdates.status;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
+				if(examdates.status == "NOT_INSERTED") {
+					this.appendIfNotInserted(examdates);
+				}
 
 				/*In the Modify form Insert the hidden value, exam_date and student */
 				var modify_handler = this.document.getElementById("id_stud");
@@ -228,6 +233,22 @@
 
 				var modify_handler = this.document.getElementById("exam_date_id");
 				modify_handler.setAttribute("value", self.current_exam);
+				
+				var selfInModal = self;
+				
+				this.appendIfNotInserted = function(examdate){
+					rowModal = document.createElement("input");
+					rowModal.setAttribute("type", "checkbox");
+					rowModal.setAttribute("name", "IDStudent");
+					rowModal.setAttribute("value", examdate.IDstudent);
+					label = document.createElement("label");
+					label.setAttribute("for", examdate.IDstudent);
+					label.textContent = examdate.IDstudent;
+					selfInModal.multipleModalForm.appendChild(label);
+					
+					selfInModal.multipleModalForm.appendChild(rowModal);
+					selfInModal.multipleModalForm.appendChild(document.createElement("br"));
+				}
 
 
 
@@ -240,7 +261,7 @@
 						// dependency via module parameter
 						self.modal.style.display = "block";
 						single_modifier(examdates.IDstudent, examdates.name, examdates.surname, examdates.mail, examdates.mark, examdates.courseDeg, examdates.status)
-						var self2 = self;   // due to povero linguaggio
+						var self2 = self;
 						self.span.addEventListener("click", (c) => {
 							// dependency close button
 							self2.modal.style.display = "none";
@@ -259,6 +280,54 @@
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
+			
+			self.multipleModalForm.appendChild(document.createElement("br"));
+			
+			select = document.createElement("select");			
+			select.setAttribute("name", "score");
+			option = document.createElement("option");
+			option.setAttribute("selected", "selected");
+			option.setAttribute("value", "");
+			option.textContent = "";
+			select.appendChild(option);
+			self.multipleModalForm.appendChild(select);
+			
+			button = document.createElement("input");
+			button.setAttribute("type", "button");
+			
+			button.addEventListener("click", (e) => {
+				var form = e.target.closest("form");
+	        	if (form.checkValidity()) {
+					var self = this;
+					makeCall("POST", 'UpdateMultipleScore', form,
+			            function(req) {
+			              if (req.readyState == 4) {
+			                var message = req.responseText;
+			                if (req.status == 200) {
+			                  orchestrator.refresh(missionToReport);
+			                } else {
+			                  self.alert.textContent = message;
+							  console.log("oi");
+			                }
+			              }
+			            }
+					);
+		        } else {
+		          form.reportValidity();
+		        }
+			}, false);
+			
+			self.multipleModalForm.appendChild(button);
+			
+			var multipleModifyButton = document.getElementById("multiple_modify");
+			multipleModifyButton.addEventListener("click", (e) => {
+				self.modal.style.display = "block";
+				var self2 = self;
+				self.span.addEventListener("click", (c) => {
+							// dependency close button
+							self2.modal.style.display = "none";
+						}, false);
+			}, false);
 		}
 
 
