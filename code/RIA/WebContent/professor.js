@@ -2,10 +2,11 @@
 * Professor Managment
 */
 
-(function() { // avoid variables ending up in the global scope
+(function () { // avoid variables ending up in the global scope
 
 	// page components
-	var courseList, courseDate, sessionEnrolls, pageOrchestrator = new PageOrchestrator(); // main controller
+	var currentExamDate, courseList, courseDate, sessionEnrolls,
+		pageOrchestrator = new PageOrchestrator(); // main controller
 
 	window.addEventListener("load", () => {
 		if (sessionStorage.getItem("id") == null) {
@@ -22,7 +23,7 @@
 	function PersonalMessage(_username, _id, idcontainer, messagecontainer) {
 		this.username = _username;
 		this.id = _id;
-		this.show = function() {
+		this.show = function () {
 			messagecontainer.textContent = this.username;
 			idcontainer.textContent = this.id;
 		}
@@ -33,14 +34,14 @@
 		this.coursePro = _id_coursePro;
 		this.courseProBody = _id_courseProBody;
 
-		this.reset = function() {
+		this.reset = function () {
 			this.coursePro.style.visibility = "hidden";
 		}
 
-		this.show = function() {
+		this.show = function () {
 			var self = this;
 			makeCall("GET", "GetCoursePro", null,
-				function(req) {
+				function (req) {
 					if (req.readyState == 4) {
 						var message = req.responseText;
 						if (req.status == 200) {
@@ -59,12 +60,12 @@
 
 		};
 
-		this.update = function(courlist) {
+		this.update = function (courlist) {
 			var elem, i, row, destcell, linkcell, anchor;
 			this.courseProBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this;
-			courlist.forEach(function(course) { // self visible here, not this
+			courlist.forEach(function (course) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = course.id;
@@ -94,14 +95,14 @@
 		this.courseDatePro = _id_courseDatePro;
 		this.courseDateProBody = _id_courseDateProBody;
 
-		this.reset = function() {
+		this.reset = function () {
 			this.courseDatePro.style.visibility = "hidden";
 		}
 
-		this.show = function(course_id) {
+		this.show = function (course_id) {
 			var self = this;
 			makeCall("GET", "GetCourseDatePro?course_id=" + course_id, null,
-				function(req) {
+				function (req) {
 					if (req.readyState == 4) {
 						var message = req.responseText;
 						if (req.status == 200) {
@@ -120,12 +121,12 @@
 
 		};
 
-		this.update = function(courlist) {
+		this.update = function (courlist) {
 			var elem, i, row, destcell, linkcell, anchor;
 			this.courseDateProBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this;
-			courlist.forEach(function(examdates) { // self visible here, not this
+			courlist.forEach(function (examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = examdates.ID;
@@ -158,17 +159,21 @@
 		this.alert = _alert;
 		this.sessionEnrolls = _id_sessionEnrolls;
 		this.sessionEnrollsBody = _id_sessionEnrollsBody;
+		this.modalt = document.getElementById("modal");
+		this.modalBody = document.getElementById("modalBody");
 		this.modal = document.getElementById("myModal");
 		this.span = document.getElementsByClassName("close")[0];
+		var current_exam;
 
-		this.reset = function() {
+		this.reset = function () {
 			this.sessionEnrolls.style.visibility = "hidden";
 		}
 
-		this.show = function(exam_date_id) {
+		this.show = function (exam_date_id) {
+			this.current_exam = exam_date_id;
 			var self = this;
 			makeCall("GET", "GetSessionEnrolls?exam_date_id=" + exam_date_id, null,
-				function(req) {
+				function (req) {
 					if (req.readyState == 4) {
 						var message = req.responseText;
 						if (req.status == 200) {
@@ -187,12 +192,12 @@
 
 		};
 
-		this.update = function(courlist) {
-			var elem, i, row, destcell, linkcell, anchor;
+		this.update = function (courlist) {
+			var elem, i, row, destcell;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this;     //FIRST 
-			courlist.forEach(function(examdates) { // self visible here, not this
+			courlist.forEach(function (examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = examdates.IDstudent;
@@ -217,8 +222,15 @@
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
 
+				/*In the Modify form Insert the hidden value, exam_date and student */
+				var modify_handler = this.document.getElementById("id_stud");
+				modify_handler.setAttribute("value", examdates.IDstudent);
 
-				
+				var modify_handler = this.document.getElementById("exam_date_id");
+				modify_handler.setAttribute("value", self.current_exam);
+
+
+
 				if (isModifible(examdates.status.trim())) {
 					elem = document.createElement("button");
 					elem.classList.add("smodify");
@@ -227,6 +239,7 @@
 					elem.addEventListener("click", (e) => {
 						// dependency via module parameter
 						self.modal.style.display = "block";
+						single_modifier(examdates.IDstudent, examdates.name, examdates.surname, examdates.mail, examdates.mark, examdates.courseDeg, examdates.status)
 						var self2 = self;   // due to povero linguaggio
 						self.span.addEventListener("click", (c) => {
 							// dependency close button
@@ -246,7 +259,6 @@
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
-			this.sessionEnrolls.style.visibility = "visible";
 		}
 
 
@@ -257,7 +269,7 @@
 		}
 
 		// When the user clicks on <span> (x), close the modal
-		this.CloseButton = function() {
+		this.CloseButton = function () {
 			this.modal.style.display = "none";
 		}
 
@@ -267,22 +279,97 @@
 				modal.style.display = "none";
 			}
 		}*/
+
+		function single_modifier(id, name, surname, email, score, coursedeg, status) {
+
+			/*Insert the value in the first table in the Modal Window MODIFY*/
+
+			// INSERT TITLE
+			document.getElementById("modal_title").textContent = "MODIFY SCORE";
+
+			// INSERT MESSAGE
+			document.getElementById("modify_message").textContent = "Insert The Score";
+
+			// INSERT THE VALUE IN THE FIRST TABLE
+
+			document.getElementById("f_modify_idstud").textContent = id;
+			document.getElementById("f_modify_name").textContent = name;
+			document.getElementById("f_modify_surname").textContent = surname;
+			document.getElementById("f_modify_email").textContent = email;
+			document.getElementById("f_modify_coursedeg").textContent = coursedeg;
+			document.getElementById("f_modify_score").textContent = score;
+			document.getElementById("f_modify_status").textContent = status;
+
+
+
+			/*Insert the value in the second table in modal form*/
+			this.document.getElementById("modify_id").textContent = id;
+			this.document.getElementById("modify_name").textContent = name;
+			this.document.getElementById("modify_surname").textContent = surname;
+
+		}
+
+		/*Function That Support the UPDATE Button in Modal Windows MODIFY*/
+		document.getElementById("sendNewScore").querySelector("input[type='button']").addEventListener('click', (event) => {
+			makeCall("POST", "UpdateScore", event.target.closest("form"),
+				function (req) {
+					if (req.readyState == 4) {
+						var score_confirm = req.responseText;
+						switch (req.status) {
+							case 200:
+								document.getElementById("f_modify_score").textContent = score_confirm.trim();
+								console.log("UPDATE SCORE!");
+								break;
+							case 400: // bad request
+								break;
+							case 401: // unauthorized
+								break;
+							case 500: // server error
+								break;
+						}
+					}
+				}
+			);
+		});
+
+
+		/*Function That Support the PUBLISH button*/
+		document.getElementById("publish").addEventListener('click', (event) => {
+			makeCall("POST", "UpdateStatus", event.target.closest("form"),
+				function (req) {
+					if (req.readyState == 4) {
+						switch (req.status) {
+							case 200:
+								console.log("SCORE PUBLISHED!");
+								break;
+							case 400: // bad request
+								break;
+							case 401: // unauthorized
+								break;
+							case 500: // server error
+								break;
+						}
+					}
+				}
+			);
+		});
+
 	}
 
 	function PageOrchestrator() {
 		var alertContainer = document.getElementById("id_alert");
-		this.start = function() {
+		this.start = function () {
 			var user = sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			var id = sessionStorage.getItem('id')
 			personalMessage = new PersonalMessage(user, id, document.getElementById("id"), document.getElementById("id_username"));
 			personalMessage.show();
+			
 
 			courseList = new CourseList(
 				alertContainer,
 				document.getElementById("id_coursePro"),
 				document.getElementById("id_courseProBody"));
 		}
-
 		courseDate = new CourseDate(
 			alertContainer,
 			document.getElementById("id_courseDatePro"),
@@ -296,7 +383,7 @@
 
 		)
 
-		this.refresh = function(currentCourse) {
+		this.refresh = function (currentCourse) {
 			alertContainer.textContent = "";
 			courseList.reset();
 			courseList.show(); // closure preserves visibility of this

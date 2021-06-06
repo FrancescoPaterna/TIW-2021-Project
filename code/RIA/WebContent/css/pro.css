@@ -273,7 +273,7 @@ th.sortable:active {
 .close {
   color: #aaaaaa;
   float: right;
-  font-size: 28px;
+  font-size: 35px;
   font-weight: bold;
 }
 
@@ -282,4 +282,18 @@ th.sortable:active {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.update {
+	background-color: #3465a4;
+	padding: 12px 15px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+	width: 125px;
+}
+
+.update:hover {
+	background-color: #5893d1;
 }

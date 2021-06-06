@@ -1,34 +1,116 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
-<meta charset="UTF-8" />
-<title>HomePage Professor</title>
-<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
-<script src="professor.js" charset="utf-8" defer></script>
-<script src="sort.js" charset="utf-8" defer></script>
-<script src="utils.js" charset="utf-8" defer></script>
+	<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
+	<meta charset="UTF-8" />
+	<title>HomePage Professor</title>
+	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
+	<script src="professor.js" charset="utf-8" defer></script>
+	<script src="sort.js" charset="utf-8" defer></script>
+	<script src="utils.js" charset="utf-8" defer></script>
 </head>
-<body class=proback>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
+<body class="proback">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
-  </div>
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
 
-</div>
-	<div class=main>
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h1 id="modal_title"></h1>
+			<table id="first_single_modify" class="table">
+				<thead>
+					<tr class="row header">
+						<th>IdStud</th>
+						<th>name</th>
+						<th>surname</th>
+						<th>email</th>
+						<th>coursedeg</th>
+						<th>score</th>
+						<th>status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="f_modify_idstud"></td>
+						<td id="f_modify_name"></td>
+						<td id="f_modify_surname"></td>
+						<td id="f_modify_email"></td>
+						<td id="f_modify_coursedeg"></td>
+						<td id="f_modify_score"></td>
+						<td id="f_modify_status"></td>
+					</tr>
+				</tbody>
+			</table>
+			<h2 id="modify_message"></h2>
+			<table id="second_class_modify" class="table">
+				<thead>
+					<tr class="row header">
+						<th>id_stud</th>
+						<th>Surname</th>
+						<th>Name</th>
+						<th>New Score</th>
+						<th>Option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><span id="modify_id"></span></td>
+						<td><span id="modify_name"></span></td>
+						<td><span id="modify_surname"></span></td>
+						<td>
+							<form id="sendNewScorex" action="#">
+
+								<input id="id_stud" type="hidden" name="id_stud">
+								<input id="exam_date_id" type="hidden" name="exam_date_id">
+								<select class="score" name="score" id="score" required>
+									<option value="" selected="selected"></option>
+									<option value="ABSENT">ABSENT</option>
+									<option value="RIMANDATO">RIMANDATO</option>
+									<option value="RIPROVATO">RIROVATO</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="30L">30L</option>
+								</select>
+								<input id="update" type="button" value="update">
+							</form>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<form id="sendNewScore" action="#">
+				<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+				<label for="vehicle1"> I have a bike</label><br>
+				<input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+				<label for="vehicle2"> I have a car</label><br>
+				<input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+				<label for="vehicle3"> I have a boat</label><br><br>
+				<input id="update" type="button" value="update">
+			</form>
+		</div>
+
+	</div>
+	<div class="main">
 		<div class="userdata">
 			Prof. <span id="id_username"></span><br> ID: <span id="id"></span><br>
 		</div>
 		<div>
 			<form action="LogOut" method="get">
-				<button class=logoutbutton type="submit">logout &#10008;</button>
+				<button class="logoutbutton" type="submit">logout &#10008;</button>
 			</form>
 			<h1>NCU Professor Home page</h1>
 			<div id="id_alert" class="alertmessage"></div>
@@ -36,65 +118,65 @@
 		</div>
 	</div>
 
-	<div class=wrapper>
-		<table id="id_coursePro" class=table>
+	<div class="wrapper">
+		<table id="id_coursePro" class="table">
 			<thead>
-				<tr class='row header'>
+				<tr class="row header">
 					<th>ID</th>
 					<th>Course</th>
 				</tr>
 			</thead>
-			<tbody id="id_courseProBody">
+			<tbody id="id_courseProBody"></tbody>
 		</table>
 
-		<table id="id_courseDatePro" class=table>
+		<table id="id_courseDatePro" class="table">
 			<thead>
-				<tr class='row header'>
+				<tr class="row header">
 					<th>ID_ExamDate</th>
 					<th>Date</th>
 				</tr>
 			</thead>
-			<tbody id="id_courseDateProBody">
+			<tbody id="id_courseDateProBody"></tbody>
 		</table>
 	</div>
 
-	<div class=showbar>
-		<form class=show>
+	<div class="showbar">
+		<form class="show">
 			<input id="showcourse" type="button" value="show &#128065;" />
 		</form>
-		<form class=show>
+		<form class="show">
 			<input id="showdate" type="button" value="show &#128065;" />
 		</form>
 	</div>
 
 
-	<div class=wrapper>
-		<table id="id_sessionEnrolls" class=tablefull>
+	<div class="wrapper">
+		<table id="id_sessionEnrolls" class="tablefull">
 			<thead>
-				<tr class='row header'>
+				<tr class="row header">
 
 					<th id="IDstud" onclick="sortTable(this.id, true)" class="sortable">IDStud
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Name" onclick="sortTable(this.id, true)" class="sortable">Name
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="Surname" onclick="sortTable(this.id, true)" class="sortable">Surname
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+					<th id="Surname" onclick="sortTable(this.id, true)" class="sortable">Surname <span
+							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Email" onclick="sortTable(this.id, true)" class="sortable">Email
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="CourseDeg" onclick="sortTable(this.id, true)" class="sortable">CourseDeg
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+					<th id="CourseDeg" onclick="sortTable(this.id, true)" class="sortable">CourseDeg <span
+							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Mark" onclick="sortCustom(this.id, true)" class="sortable">Mark
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Status" onclick="sortTable(this.id, true)" class="sortable">Status
-						<span class=normalarrow>&uarr;</span><span class=normalarrow>&darr;</span>
+						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					
+
 					<!--    OLD CODE
 					<th class="sortable">IDStud&nbsp;&#8645;</th>
 					<th class="sortable">Name&nbsp;&#8645;</th>
@@ -109,19 +191,20 @@
 					<th>Option</th>
 				</tr>
 			</thead>
-			<tbody id="id_sessionEnrollsBody">
+			<tbody id="id_sessionEnrollsBody"></tbody>
 		</table>
 	</div>
 	<div>
-		<form class=long_button>
-			<input id="modify" id="modify" type="button" value="MODIFY &#8801;"/>
+		<form class="long_button">
+			<input id="modify" type="button" value="MODIFY &#8801;" />
 		</form>
-		<form class=long_button>
-			<input id="publish" type="button" value="PUBLISH"/>
+		<form class="long_button">
+			<input id="publish" type="button" value="PUBLISH" />
 		</form>
-		<form class=long_button>
-			<input id="record" type="button" value="RECORD"/>
+		<form class="long_button">
+			<input id="record" type="button" value="RECORD" />
 		</form>
 	</div>
 </body>
+
 </html>
