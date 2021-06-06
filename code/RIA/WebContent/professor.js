@@ -290,28 +290,59 @@
 			option.setAttribute("value", "");
 			option.textContent = "";
 			select.appendChild(option);
+			option = document.createElement("option");
+			option.setAttribute("value", "30L");
+			option.textContent = "30L";
+			select.appendChild(option);
+			option = document.createElement("option");
+			option.setAttribute("value", "30");
+			option.textContent = "30";
+			select.appendChild(option);
+			option = document.createElement("option");
+			option.setAttribute("value", "RIMANDATO");
+			option.textContent = "RIMANDATO";
+			select.appendChild(option);
 			self.multipleModalForm.appendChild(select);
 			
 			button = document.createElement("input");
 			button.setAttribute("type", "button");
 			
-			button.addEventListener("click", (e) => {
+			selfInButton = self; 
+			
+			button.addEventListener("click", (e) => {			
+				
 				var form = e.target.closest("form");
-	        	if (form.checkValidity()) {
-					var self = this;
-					makeCall("POST", 'UpdateMultipleScore', form,
-			            function(req) {
-			              if (req.readyState == 4) {
-			                var message = req.responseText;
-			                if (req.status == 200) {
-			                  orchestrator.refresh(missionToReport);
-			                } else {
-			                  self.alert.textContent = message;
-							  console.log("oi");
-			                }
-			              }
-			            }
-					);
+				
+				if (form.checkValidity()) {
+				
+					var array =  $("input[name='IDStudent']:checked").map(function(){
+		    			return this.value;
+					}).get();
+					
+					var score = form.querySelector("select[name = 'score']").value;
+					
+					form = {
+						"id_stud" : array,
+						"score" : score,
+						"exam_date_id" : selfInButton.current_exam
+					}
+					
+					form = JSON.stringify(form);
+					
+		        	
+						var self = this;
+						makeCallJSON("POST", 'UpdateMultipleScore', form,
+				            function(req) {
+				              if (req.readyState == 4) {
+				                var message = req.responseText;
+				                if (req.status == 200) {
+				                  // TODO pageOrchestrator.refresh();
+				                } else {
+				                  self.alert.textContent = message;
+				                }
+				              }
+				            }
+						);
 		        } else {
 		          form.reportValidity();
 		        }

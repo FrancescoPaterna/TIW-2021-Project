@@ -17,3 +17,14 @@
 	      formElement.reset();
 	    }
 	  }
+
+	function makeCallJSON(method, url, JSONObject, cback, reset = true) {
+		var req = new XMLHttpRequest(); // visible by closure
+		req.onreadystatechange = function() {
+	      cback(req)
+	    }; // closure
+		req.open(method, url);
+		req.setRequestHeader("Content-Type", "application/json");
+		req.send(JSONObject);
+	}
+	
