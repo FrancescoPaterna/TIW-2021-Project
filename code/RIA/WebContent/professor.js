@@ -42,7 +42,7 @@
 			var self = this;
 			makeCall("GET", "GetCoursePro", null,
 				function (req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesToShow = JSON.parse(req.responseText);
@@ -103,7 +103,7 @@
 			var self = this;
 			makeCall("GET", "GetCourseDatePro?course_id=" + course_id, null,
 				function (req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesDates = JSON.parse(req.responseText);
@@ -175,7 +175,7 @@
 			var self = this;
 			makeCall("GET", "GetSessionEnrolls?exam_date_id=" + exam_date_id, null,
 				function (req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var enrolls = JSON.parse(req.responseText);
@@ -333,7 +333,7 @@
 						var self = this;
 						makeCallJSON("POST", 'UpdateMultipleScore', form,
 				            function(req) {
-				              if (req.readyState == 4) {
+				              if (req.readyState == XMLHttpRequest.DONE) {
 				                var message = req.responseText;
 				                if (req.status == 200) {
 				                  // TODO pageOrchestrator.refresh();
