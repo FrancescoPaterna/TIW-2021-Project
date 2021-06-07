@@ -147,18 +147,18 @@
 				linkcell.appendChild(anchor);
 				linkText = document.createTextNode(examdates.data);
 				anchor.appendChild(linkText);
-				//anchor.missionid = mission.id; // make list item clickable
 				anchor.setAttribute('exam_date_id', examdates.ID);
 				anchor.setAttribute('exam_date', examdates.data);
 				anchor.setAttribute('course_id', self.course_id);
 				anchor.setAttribute('coursename', self.coursename); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
+					resultDetails.reset();
 					resultDetails.show(e.target.getAttribute("exam_date_id"),
 						e.target.getAttribute("exam_date"), 
 						e.target.getAttribute("course_id"),
 						e.target.getAttribute("coursename")); // the list must know the details container
-				}, false); //TODO Repeat bubbling? 
+				}, false);
 				anchor.href = "#";
 				row.appendChild(linkcell);
 				self.courseDateStudBody.appendChild(row);
@@ -170,6 +170,7 @@
 	
 	function ResultDetails(_alert, _id_resultDetails, _id_resultDetailsBody) {
 		this.alert = _alert;
+		this.alertNoResults = document.getElementById("id_alertNoResults");
 		this.resultDetails = _id_resultDetails;
 		this.resultDetailsBody = _id_resultDetailsBody;
 		this.exam_date_id;
@@ -179,6 +180,7 @@
 		this.refuseButtonCreated = false;
 		
 		this.reset = function() {
+			this.alertNoResults.textContent = "";
 			this.resultDetails.style.visibility = "hidden";
 			this.resultDetailsBody.style.visibility = "hidden";
 		}
@@ -195,13 +197,9 @@
 						var message = req.responseText;
 						if (req.status == 200) {
 							var resultDetails = JSON.parse(req.responseText);
-							/*if (enrolls.length == 0) {
-								self.alert.textContent = "no student enrolled";
-								return;
-							}*/
 							self.update(resultDetails); // self visible by closure
 						} else if(req.status == 204) {
-							self.alert.textContent = message;
+							self.alertNoResults.textContent = "The result has not been published yet!";
 							return;
 						}
 					} else {
@@ -324,6 +322,8 @@
 		this.refresh = function() {
 			alertContainer.textContent = "";
 			courseList.reset();
+			courseDate.reset();
+			resultDetails.reset();
 			courseList.show(); // closure preserves visibility of this
 		};
 	}

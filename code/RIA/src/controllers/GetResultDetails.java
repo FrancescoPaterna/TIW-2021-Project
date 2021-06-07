@@ -59,7 +59,6 @@ public class GetResultDetails extends HttpServlet {
 			response.getWriter().write(serialized_resultDetails);
 		} else {
 			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-			response.getWriter().println("The result has not been published yet");
 		}
 	}
 
