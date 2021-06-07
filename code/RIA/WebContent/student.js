@@ -41,7 +41,7 @@
 			var self = this; // used to refer to the current function from inner functions
 			makeCall("GET", "GetCourseStud", null,
 				function(req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesToShow = JSON.parse(req.responseText);
@@ -110,7 +110,7 @@
 			var self = this;
 			makeCall("GET", "GetCourseDateStud?course_id=" + course_id, null,
 				function(req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var courseDates = JSON.parse(req.responseText);
@@ -193,7 +193,7 @@
 			var self = this;
 			makeCall("GET", "GetResultDetails?IDExamDate=" + exam_date_id, null,
 				function(req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var resultDetails = JSON.parse(req.responseText);

@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -45,7 +46,18 @@ public class UpdateResultStud extends HttpServlet {
 		
 		User user = (User) session.getAttribute("user");
 		
-		Integer IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+		Integer IDExamDate;
+		try {
+			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+			// If the argument of Integer.parseInt is null or is a string of length zero, a
+			// NumberFormatException is thrown
+			// @see https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String)
+		} catch (NumberFormatException | NullPointerException e) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("Incorrect or missing param values");
+			return;
+		}
+		
 		
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 

@@ -38,7 +38,15 @@ public class GetResultDetails extends HttpServlet {
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		
-		Integer IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+		Integer IDExamDate;
+		try {
+			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+		} catch (NumberFormatException | NullPointerException e) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("Incorrect param values");
+			return;
+		}
+		
 		
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		Enroll enroll;
