@@ -41,6 +41,9 @@ public class GetResultDetails extends HttpServlet {
 		Integer IDExamDate;
 		try {
 			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+			// If the argument of Integer.parseInt is null or is a string of length zero, a
+			// NumberFormatException is thrown
+			// @see https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String)
 		} catch (NumberFormatException | NullPointerException e) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("Incorrect param values");
