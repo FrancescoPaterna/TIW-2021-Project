@@ -176,6 +176,7 @@
 		this.date;
 		this.course_id;
 		this.coursename;
+		this.refuseButtonCreated = false;
 		
 		this.reset = function() {
 			this.resultDetails.style.visibility = "hidden";
@@ -233,22 +234,28 @@
 			destcell = document.getElementById("option");
 			
 			if(this.isRefusable(resultDetails.mark, resultDetails.status)){
-				form = document.getElementById("refuseScoreForm");
 				
-				input = document.getElementById("refuseScoreInput");
-				input.setAttribute("value", this.exam_date_id);
+				// If the button "Refuse" has not been created yet, create it and append to the form
 				
-				elem = document.createElement("button");
-				elem.setAttribute("class", "button2");
-				elem.textContent = "Refuse";
-				elem.setAttribute("type", "submit");
-				elem.setAttribute("value", this.exam_date_id);
-				elem.setAttribute("name", "IDExamDate");
-				elem.addEventListener("click", (e) => {
-					this.refuseScore(e.target.closest("form"));
-				}, false);
-				form.appendChild(elem);
-				destcell.appendChild(form);
+				if(!this.refuseButtonCreated) {
+					form = document.getElementById("refuseScoreForm");
+				
+					input = document.getElementById("refuseScoreInput");
+					input.setAttribute("value", this.exam_date_id);
+					
+					elem = document.createElement("button");
+					elem.setAttribute("class", "button2");
+					elem.textContent = "Refuse";
+					elem.setAttribute("type", "submit");
+					elem.setAttribute("value", this.exam_date_id);
+					elem.setAttribute("name", "IDExamDate");
+					elem.addEventListener("click", (e) => {
+						this.refuseScore(e.target.closest("form"));
+					}, false);
+					form.appendChild(elem);
+					destcell.appendChild(form);
+					this.refuseButtonCreated = true;
+				}
 			}
 			//make details visible
 			this.resultDetails.style.visibility = "visible";
