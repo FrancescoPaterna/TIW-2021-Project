@@ -3,7 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -81,7 +80,7 @@ public class RecordScores extends HttpServlet {
 				// Redirect to another servlet to get just recorded enrolls
 				// results are not sent immediately by this servlet in order to avoid problems with
 				// user refreshing the page after having done a POST to this servlet
-				response.sendRedirect(session.getServletContext() + "/GetRecordedEnrolls?recordID=" + rec);
+				response.sendRedirect(session.getServletContext().getContextPath() + "/GetRecordedEnrolls?recordID=" + rec);
 			}
 		} catch (SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

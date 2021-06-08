@@ -13,7 +13,7 @@
 			window.location.href = "index.html";
 		} else {
 			pageOrchestrator.start(); // initialize the components
-			pageOrchestrator.refresh();
+			pageOrchestrator.refresh(1);
 		} // display initial content
 	}, false);
 
@@ -195,9 +195,11 @@
 		this.multipleModalForm = document.getElementById("multipleModifyForm");
 		/**********************************************************************************************************/
 
+		//+++++++++++++++++++++++++++++++++++++++++++++RECORD++++++++++++++++++++++++++++++++++++++++++++++++//
+		this.recordForm = document.getElementById("record_form");
 
 		//BUTTONS
-		this.record_button = document.getElementById("record");
+		this.record_button = document.getElementById("record_button");
 		this.multiple_modify_button = document.getElementById("multiple_modify");
 		this.publish_button = document.getElementById("publish");
 		//VAR
@@ -254,6 +256,22 @@
 			var self = this;     //FIRST 
 			flag = 0;
 			courlist.forEach(function (examdates) { // self visible here, not this
+			
+				var selfInModal = self;
+
+				this.appendIfNotInserted = function (examdate) {
+					rowModal = document.createElement("input");
+					rowModal.setAttribute("type", "checkbox");
+					rowModal.setAttribute("name", "IDStudent");
+					rowModal.setAttribute("value", examdate.IDstudent);
+					label = document.createElement("label");
+					label.setAttribute("for", examdate.IDstudent);
+					label.textContent = examdate.IDstudent;
+					selfInModal.multipleModalForm.appendChild(label);
+					selfInModal.multipleModalForm.appendChild(rowModal);
+					selfInModal.multipleModalForm.appendChild(document.createElement("br"));
+				}
+			
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = examdates.IDstudent;
@@ -278,25 +296,8 @@
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
 				if (examdates.status == "NOT_INSERTED") {
-					self.appendIfNotInserted(examdates);
+					this.appendIfNotInserted(examdates);
 				}
-
-
-				var selfInModal = self;
-
-				this.appendIfNotInserted = function (examdate) {
-					rowModal = document.createElement("input");
-					rowModal.setAttribute("type", "checkbox");
-					rowModal.setAttribute("name", "IDStudent");
-					rowModal.setAttribute("value", examdate.IDstudent);
-					label = document.createElement("label");
-					label.setAttribute("for", examdate.IDstudent);
-					label.textContent = examdate.IDstudent;
-					selfInModal.multipleModalForm.appendChild(label);
-					selfInModal.multipleModalForm.appendChild(rowModal);
-					selfInModal.multipleModalForm.appendChild(document.createElement("br"));
-				}
-
 
 				/*If a score == INSERTED OR NOT_INSERTED OR PUBLISH, Enable the Single Modify Button */
 				if (self.isModifible(examdates.status.trim())) {
@@ -484,6 +485,38 @@
 					self2.modal.style.display = "none";
 				}, false);
 			}, false);
+			
+			// Register event to record button
+			var selfInRecordButton = self;
+			self.record_button.addEventListener("click", (e) => {
+				// create an input field where to put the exam_date_id to be sent to the servlet
+				input = document.createElement("input");
+				input.setAttribute("type", "hidden");
+				input.setAttribute("name", "exam_date_id");
+				input.setAttribute("value", selfInRecordButton.current_exam);
+				selfInRecordButton.recordForm.appendChild(input);
+				
+				// send the form if valid
+				var form = e.target.closest("form");
+				if(form.checkValidity()){
+					var self = this;
+					makeCall("POST", 'RecordScores', form,
+						function (req) {
+							if (req.readyState == XMLHttpRequest.DONE) {
+								var message = req.responseText;
+								if (req.status == 200) {
+									console.log("Results recorded!")
+									// TODO pageOrchestrator.refresh();
+								} else {
+									self.alert.textContent = message;
+								}
+							}
+						}
+					);
+				} else {
+					form.reportValidity();
+				}
+			})
 
 		}
 
@@ -620,21 +653,21 @@
 		this.refresh = function (code) {
 			var self = this;
 			alertContainer.textContent = "";
-			if (code = 1) {
+			if (code == 1) {
 				courseList.reset();
 				courseDate.reset();
 				sessionEnrolls.resetMain();
 				sessionEnrolls.resetModal();
 				courseList.show();
 			}
-			else if (code = 2) {
+			else if (code == 2) {
 				courseDate.reset();
 				sessionEnrolls.resetMain();
 				sessionEnrolls.resetModal();
 				courseDate.show();
 
 			}
-			else if (code = 3) {
+			else if (code == 3) {
 				sessionEnrolls.resetMain();
 				sessionEnrolls.resetModal();
 				sessionEnrolls.show(self.current_exam);
