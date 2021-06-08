@@ -203,20 +203,15 @@
 		//VAR
 		var current_exam;
 
-		this.reset = function () {
+		this.resetMain = function () {
 			this.sessionEnrolls.style.visibility = "hidden";
 			this.record_button.style.visibility = "hidden";
 			this.publish_button.style.visibility = "hidden";
 			this.multiple_modify_button.style.visibility = "hidden";
-			this.modal_title.textContent = "";
-			this.modal_message.textContent = "";
-			this.first_single_modify.style.visibility = "hidden";
-			this.second_single_modify.style.visibility = "hidden";
-			this.multipleModalForm.style.visibility = "hidden";
-
 		}
 
-		this.resetModalOnly = function () {
+
+		this.resetModal = function () {
 			//this.modal.style.visibility = "hidden";
 			this.modal_title.textContent = "";
 			this.modal_message.textContent = "";
@@ -311,7 +306,7 @@
 
 					//SINGLE MODIFY EVENT LISTNER
 					elem.addEventListener("click", (e) => {
-						self.resetModalOnly;
+						self.resetModal;
 						self.modal.style.display = "block";
 						self.first_single_modify.style.visibility = "visible";
 						self.second_single_modify.style.visibility = "visible";
@@ -440,27 +435,19 @@
 
 
 			var selfInButton = self;
-
 			button.addEventListener("click", (e) => {
-
 				var form = e.target.closest("form");
-
 				if (form.checkValidity()) {
-
 					var array = $("input[name='IDStudent']:checked").map(function () {
 						return this.value;
 					}).get();
-
 					var score = form.querySelector("select[name = 'score']").value;
-
 					form = {
 						"id_stud": array,
 						"score": score,
 						"exam_date_id": selfInButton.current_exam
 					}
-
 					form = JSON.stringify(form);
-
 
 					var self = this;
 					makeCallJSON("POST", 'UpdateMultipleScore', form,
@@ -478,16 +465,12 @@
 				} else {
 					form.reportValidity();
 				}
-
-
-
-
+			});
 
 				self.multipleModalForm.appendChild(button);
-
-				self.multipleModifyButton.classList.add("modify");
-				self.multipleModifyButton.addEventListener("click", (e) => {
-					self.resetModalOnly;
+				self.multiple_modify_button.classList.add("modify");
+				self.multiple_modify_button.addEventListener("click", (e) => {
+					self.resetModal;
 					self.modal_title = "MULTIPLE MODIFY";
 					self.modal.style.display = "block";
 					self.multipleModalForm.style.visibility = "visible";
@@ -498,7 +481,6 @@
 					}, false);
 				}, false);
 
-			});
 		}
 
 		this.isModifible = function (status) {
@@ -536,7 +518,7 @@
 			this.s_surname.textContent = surname;
 
 			/*Insert the value in the first table in the Modal Window MODIFY*/
-			this.resetModalOnly;
+			this.resetModal;
 
 			// INSERT TITLE
 			this.modal_title.textContent = "MODIFY SCORE";
@@ -557,7 +539,7 @@
 								case 200:
 									self3.f_score.textContent = score_confirm;
 									self3.f_status = "INSERTED";
-									self3.reset();
+									self3.resetMain();
 									self3.show();
 									console.log(score_confirm + " --> SCORE UPDATED!");
 									break;
@@ -636,17 +618,20 @@
 			if (code = 1) {
 				courseList.reset();
 				courseDate.reset();
-				sessionEnrolls.reset();
+				sessionEnrolls.resetMain();
+				sessionEnrolls.resetModal();
 				courseList.show();
 			}
 			else if (code = 2) {
 				courseDate.reset();
-				sessionEnrolls.reset();
+				sessionEnrolls.resetMain();
+				sessionEnrolls.resetModal();
 				courseDate.show();
 
 			}
 			else if (code = 3) {
-				sessionEnrolls.reset();
+				sessionEnrolls.resetMain();
+				sessionEnrolls.resetModal();
 				sessionEnrolls.show(self.current_exam);
 
 			}
