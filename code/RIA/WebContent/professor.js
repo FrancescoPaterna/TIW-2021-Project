@@ -5,7 +5,7 @@
 (function () { // avoid variables ending up in the global scope
 
 	// page components
-	var currentExamDate, courseList, courseDate, sessionEnrolls,
+	var courseList, courseDate, sessionEnrolls,
 		pageOrchestrator = new PageOrchestrator(); // main controller
 
 	window.addEventListener("load", () => {
@@ -144,6 +144,7 @@
 				anchor.setAttribute('exam_date_id', examdates.ID); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
+					sessionEnrolls.save(e.target.getAttribute("exam_date_id")); // save the selected exam_date_id in the current_exam VAR
 					sessionEnrolls.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
@@ -183,7 +184,7 @@
 		/**************/this.f_score = document.getElementById("f_modify_score");
 		/**************/this.f_status = document.getElementById("f_modify_status");
 
-		/*****************************************modi**********************************SECOND TABLE SIGNLE MODIFY******/
+		/****************************************i**********************************SECOND TABLE SIGNLE MODIFY******/
 		/**************/this.second_single_modify = document.getElementById("second_single_modify");  //Table
 		/**************/this.s_id = document.getElementById("modify_id");
 		/**************/this.s_name = document.getElementById("modify_name");
@@ -220,8 +221,11 @@
 			this.multipleModalForm.style.visibility = "hidden";
 		}
 
-		this.show = function (exam_date_id) {
+		this.save = function (exam_date_id) {
 			this.current_exam = exam_date_id;
+		}
+
+		this.show = function (exam_date_id) {
 			var self = this;
 			makeCall("GET", "GetSessionEnrolls?exam_date_id=" + exam_date_id, null,
 				function (req) {
@@ -278,24 +282,12 @@
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
 				if (examdates.status == "NOT_INSERTED") {
-					self.appendIfNotInserted(examdates);
+					self.AppendIfNOTINSERTED(examdates);
 				}
 
 
-				var selfInModal = self;
 
-				this.appendIfNotInserted = function (examdate) {
-					rowModal = document.createElement("input");
-					rowModal.setAttribute("type", "checkbox");
-					rowModal.setAttribute("name", "IDStudent");
-					rowModal.setAttribute("value", examdate.IDstudent);
-					label = document.createElement("label");
-					label.setAttribute("for", examdate.IDstudent);
-					label.textContent = examdate.IDstudent;
-					selfInModal.multipleModalForm.appendChild(label);
-					selfInModal.multipleModalForm.appendChild(rowModal);
-					selfInModal.multipleModalForm.appendChild(document.createElement("br"));
-				}
+
 
 
 				/*If a score == INSERTED OR NOT_INSERTED OR PUBLISH, Enable the Single Modify Button */
@@ -316,11 +308,11 @@
 						//UPDATE THE MODAL WINDOW WITH UPDATE_SINGLE_MODIFIER FUNCTION
 						self.update_single_modifier(examdates.IDstudent, examdates.name, examdates.surname,
 							examdates.mail, examdates.mark, examdates.courseDeg, examdates.status);
+						self.resetMain();
+						self.show()
 						var self2 = self;
 						//ENABLE THE CLOSE MODAL WINDOW BUTTON
 						self.span.addEventListener("click", (c) => {
-							//self2.resetMain();
-							//self2.show();
 							self2.modal.style.display = "none";
 
 						}, false);
@@ -342,7 +334,7 @@
 			self.multipleModalForm.appendChild(document.createElement("br"));
 
 			select = document.createElement("select");
-			select.required;
+			select.required = true;
 			select.setAttribute("name", "score");
 			option = document.createElement("option");
 			option.setAttribute("selected", "selected");
@@ -492,6 +484,21 @@
 				return true;
 		}
 
+		this.AppendIfNOTINSERTED = function(ed) {
+
+			var rowModal, label;
+			rowModal = document.createElement("input");
+			rowModal.setAttribute("type", "checkbox");
+			rowModal.setAttribute("name", "IDStudent");
+			rowModal.setAttribute("value", ed.IDstudent);
+			label = document.createElement("label");
+			label.setAttribute("for", ed.IDstudent);
+			label.textContent = ed.IDstudent;
+			this.multipleModalForm.appendChild(label);
+			this.multipleModalForm.appendChild(rowModal);
+			this.multipleModalForm.appendChild(document.createElement("br"));
+		}
+
 		// When the user clicks on <span> (x), close the modal
 		this.CloseButton = function () {
 			this.modal.style.display = "none";
@@ -533,31 +540,34 @@
 			var self = this;
 			/*Function That Support the UPDATE Button in Modal Windows SINGLE MODIFY*/
 			this.sm_update.addEventListener('click', (event) => {
-				makeCall("POST", "UpdateScore", event.target.closest("form"),
-					function (req) {
-						var self2 = self;
-						if (req.readyState == 4) {
-							var score_confirm = JSON.parse(req.responseText);
-							var self3 = self2;
-							switch (req.status) {
-								case 200:
-									self3.f_score.textContent = "";
-									self3.f_score.textContent = score_confirm;
-									self3.f_status = "INSERTED";
-									self3.resetMain();
-									self3.show();
-									console.log(score_confirm + " --> SCORE UPDATED!");
-									break;
-								case 400: // bad request
-									break;
-								case 401: // unauthorized
-									break;
-								case 500: // server error
-									break;
+				var form = event.target.closest("form")
+				if (form.checkValidity()) {
+					makeCall("POST", "UpdateScore", event.target.closest("form"),
+						function (req) {
+							var self2 = self;
+							if (req.readyState == 4) {
+								var self3 = self2;
+								switch (req.status) {
+									case 200:
+										self3.f_score.textContent = "";
+										self3.f_score.textContent = event.target.closest("form").querySelector("select[name = 'score']").value;
+										self3.f_status = "INSERTED";
+										self3.reset();
+										self3.show(self3.current_exam);
+										break;
+									case 400: // bad request
+										break;
+									case 401: // unauthorized
+										break;
+									case 500: // server error
+										break;
+								}
 							}
 						}
-					}
-				);
+					);
+				} else {
+					form.reportValidity();
+				}
 			});
 
 		}
@@ -617,29 +627,15 @@
 
 
 
-		this.refresh = function (code) {
-			var self = this;
+		this.refresh = function () {
 			alertContainer.textContent = "";
-			if (code = 1) {
-				courseList.reset();
-				courseDate.reset();
-				sessionEnrolls.resetMain();
-				sessionEnrolls.resetModal();
-				courseList.show();
-			}
-			else if (code = 2) {
-				courseDate.reset();
-				sessionEnrolls.resetMain();
-				sessionEnrolls.resetModal();
-				courseDate.show();
+			courseList.reset();
+			courseDate.reset();
+			sessionEnrolls.resetMain();
+			sessionEnrolls.resetModal();
+			courseList.show();
 
-			}
-			else if (code = 3) {
-				sessionEnrolls.resetMain();
-				sessionEnrolls.resetModal();
-				sessionEnrolls.show(self.current_exam);
 
-			}
 		};
 	}
 })();

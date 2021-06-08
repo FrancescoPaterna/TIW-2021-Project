@@ -78,7 +78,8 @@ public class UpdateScore extends HttpServlet {
 				try {
 					if (enrollsdao.insertMark(exam_date_id, id_stud, score) == 0) {
 						response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-						response.getWriter().println("UNAUTHORIZED MODIFY,Attempt to modify a score recorded or refused!");
+						response.getWriter()
+								.println("UNAUTHORIZED MODIFY,Attempt to modify a score recorded or refused!");
 						session.invalidate();
 						return;
 					}
@@ -99,12 +100,16 @@ public class UpdateScore extends HttpServlet {
 			return;
 		}
 
-		String serialized_score = new Gson().toJson(score);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(serialized_score);
-		response.setStatus(HttpServletResponse.SC_OK);
+		//String serialized_score = new Gson().toJson(score);
+		//response.setContentType("application/json");
+		//response.setCharacterEncoding("UTF-8");
+		//response.getWriter().write(serialized_score);
+		//response.setStatus(HttpServletResponse.SC_OK);
 
+		// redirect
+
+		String path = getServletContext().getContextPath();
+		response.sendRedirect(path + "/GetSessionEnrolls?exam_date_id=" + exam_date_id);
 	}
 
 }
