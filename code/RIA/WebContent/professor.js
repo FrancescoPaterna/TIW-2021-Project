@@ -552,7 +552,7 @@
 										self3.f_score.textContent = "";
 										self3.f_score.textContent = event.target.closest("form").querySelector("select[name = 'score']").value;
 										self3.f_status = "INSERTED";
-										self3.reset();
+										self3.resetMain();
 										self3.show(self3.current_exam);
 										break;
 									case 400: // bad request
