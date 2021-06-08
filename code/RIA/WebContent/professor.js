@@ -241,6 +241,7 @@
 						}
 					} else {
 						self.alert.textContent = message;
+						return;
 					}
 				}
 			);
@@ -299,7 +300,7 @@
 
 					//SINGLE MODIFY EVENT LISTNER
 					elem.addEventListener("click", (e) => {
-						self.resetModal;
+						self.resetModal();
 						self.modal.style.display = "block";
 						self.first_single_modify.style.visibility = "visible";
 						self.second_single_modify.style.visibility = "visible";
@@ -464,7 +465,7 @@
 			self.multipleModalForm.appendChild(button);
 			self.multiple_modify_button.classList.add("modify");
 			self.multiple_modify_button.addEventListener("click", (e) => {
-				self.resetModal;
+				self.resetModal();
 				self.modal_title = "MULTIPLE MODIFY";
 				self.modal.style.display = "block";
 				self.multipleModalForm.style.visibility = "visible";
@@ -482,7 +483,7 @@
 				return true;
 		}
 
-		this.AppendIfNOTINSERTED = function(ed) {
+		this.AppendIfNOTINSERTED = function (ed) {
 
 			var rowModal, label;
 			rowModal = document.createElement("input");
@@ -598,6 +599,7 @@
 
 	function PageOrchestrator() {
 		var alertContainer = document.getElementById("id_alert");
+
 		this.start = function () {
 			var user = sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			var id = sessionStorage.getItem('id')
