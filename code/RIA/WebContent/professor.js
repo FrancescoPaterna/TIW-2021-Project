@@ -308,8 +308,6 @@
 						//UPDATE THE MODAL WINDOW WITH UPDATE_SINGLE_MODIFIER FUNCTION
 						self.update_single_modifier(examdates.IDstudent, examdates.name, examdates.surname,
 							examdates.mail, examdates.mark, examdates.courseDeg, examdates.status);
-						self.resetMain();
-						self.show()
 						var self2 = self;
 						//ENABLE THE CLOSE MODAL WINDOW BUTTON
 						self.span.addEventListener("click", (c) => {
@@ -541,8 +539,9 @@
 			/*Function That Support the UPDATE Button in Modal Windows SINGLE MODIFY*/
 			this.sm_update.addEventListener('click', (event) => {
 				var form = event.target.closest("form")
+				var new_score = form.querySelector("select[name = 'score']").value;
 				if (form.checkValidity()) {
-					makeCall("POST", "UpdateScore", event.target.closest("form"),
+					makeCall("POST", "UpdateScore", form,
 						function (req) {
 							var self2 = self;
 							if (req.readyState == 4) {
@@ -550,8 +549,8 @@
 								switch (req.status) {
 									case 200:
 										self3.f_score.textContent = "";
-										self3.f_score.textContent = event.target.closest("form").querySelector("select[name = 'score']").value;
-										self3.f_status = "INSERTED";
+										self3.f_score.textContent = new_score;
+										self3.f_status.textContent = "INSERTED";
 										self3.resetMain();
 										self3.show(self3.current_exam);
 										break;

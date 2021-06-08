@@ -105,7 +105,6 @@ public class UpdateScore extends HttpServlet {
 		//response.setCharacterEncoding("UTF-8");
 		//response.getWriter().write(serialized_score);
 		//response.setStatus(HttpServletResponse.SC_OK);
-
 		// redirect
 
 		String path = getServletContext().getContextPath();
