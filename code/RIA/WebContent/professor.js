@@ -189,8 +189,14 @@
 		/**************/this.s_id = document.getElementById("modify_id");
 		/**************/this.s_name = document.getElementById("modify_name");
 		/**************/this.s_surname = document.getElementById("modify_surname");
-		//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 
+		//+++++++++++++++++++++++++++++++++++++++++++++RECORD++++++++++++++++++++++++++++++++++++++++++++++++//
+		this.recordDiv = document.getElementById("recordDiv");
+		this.recordTable = document.getElementById("recordTable");
+		this.recordTableBody = document.getElementById("recordTableBody");
+		this.recordForm = document.getElementById("record_form");
+		this.recordLogo = document.getElementById("recordLogo");
+		this.recordLegalValue = document.getElementById("recordLegalValue");
 
 		//+++++++++MULTIPLE MODIFY+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 		this.multipleModalForm = document.getElementById("multipleModifyForm");
@@ -198,7 +204,7 @@
 
 
 		//BUTTONS
-		this.record_button = document.getElementById("record");
+		this.record_button = document.getElementById("record_button");
 		this.multiple_modify_button = document.getElementById("multiple_modify");
 		this.publish_button = document.getElementById("publish");
 		//VAR
@@ -219,6 +225,11 @@
 			this.first_single_modify.style.visibility = "hidden";
 			this.second_single_modify.style.visibility = "hidden";
 			this.multipleModalForm.style.visibility = "hidden";
+			this.recordDiv.style.display = "none";
+			this.recordTable.style.visibility = "hidden";
+			this.recordTableBody.style.visibility = "hidden";
+			this.recordLogo.style.visibility = "hidden";
+			this.recordLegalValue.style.visibility = "hidden";
 		}
 
 		this.save = function (exam_date_id) {
@@ -595,6 +606,79 @@
 			);
 		});
 
+
+
+		// Register event to record button
+		this.record_button.addEventListener("click", (e) => {
+			// create an input field where to put the exam_date_id to be sent to the servlet
+			input = document.createElement("input");
+			input.setAttribute("type", "hidden");
+			input.setAttribute("name", "exam_date_id");
+			input.setAttribute("value", this.current_exam);
+			this.recordForm.appendChild(input);
+
+			// send the form if valid
+			var form = e.target.closest("form");
+			if (form.checkValidity()) {
+				var self = this;
+				makeCall("POST", 'RecordScores', form,
+					function (req) {
+						if (req.readyState == XMLHttpRequest.DONE) {
+							var message = req.responseText;
+							if (req.status == 200) {
+								var record = JSON.parse(req.responseText);
+								self.showRecordedEnrolls(record); // self visible by closure
+							} else {
+								self.alert.textContent = message;
+							}
+						}
+					}
+				);
+			} else {
+				form.reportValidity();
+			}
+		})
+
+
+
+		this.showRecordedEnrolls = function (record) {
+			var row, destcell;
+			this.resetModal();
+			this.modal_title = "Record generated";
+			this.modal.style.display = "block";
+			this.modal_title.textContent = "University of NightCity Official Record";
+			this.modal_message.textContent = 'Document #' + record.IDRecord + ' - generated and digitally signed on ' + record.date +
+				' at ' + record.time;
+			this.recordDiv.style.display = "block";
+
+			var self = this;
+			record.recordedEnrolls.forEach(function (recordedEnroll) {
+				row = document.createElement("tr");
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.IDstudent;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.surname;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.name;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.mark;
+				self.recordTableBody.appendChild(row);
+			});
+
+			this.span.addEventListener("click", (c) => {
+				// dependency close button
+				self.modal.style.display = "none";
+			}, false);
+
+			this.recordTable.style.visibility = "visible";
+			this.recordTableBody.style.visibility = "visible";
+			this.recordLogo.style.visibility = "visible";
+			this.recordLegalValue.style.visibility = "visible";
+		}
+
 	}
 
 	function PageOrchestrator() {
@@ -635,8 +719,6 @@
 			sessionEnrolls.resetMain();
 			sessionEnrolls.resetModal();
 			courseList.show();
-
-
 		};
 	}
 })();
