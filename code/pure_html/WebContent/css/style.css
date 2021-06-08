@@ -1,4 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Orbitron);
+/*@import url(https://fonts.googleapis.com/css?family=Orbitron);*/
+@font-face {
+    font-family: 'Orbitron';
+    src: url("../resources/Orbitron.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
 
 
 .start {
@@ -39,7 +45,7 @@ h1 {
 	font-family: 'Orbitron', courier, sans-serif;
 	font-size: 350%;
 	font-weight: 600;	
-	letter-spacing: 0.010 em;
+	/*letter-spacing: 0.010 em;*/
 	padding: 5px 10px;
 	
 }
@@ -60,6 +66,7 @@ form {
 body {
 	text-align: center;
 	font-family: 'Orbitron', courier, sans-serif;
+	background: white;
 }
 
 input[type=text] {

@@ -116,7 +116,7 @@ a:hover {
   visibility: hidden;
 }
 
-#modify {
+.modify {
 	background-color: #3465a4;
 	padding: 12px 15px;
 	border-radius: 6px;
@@ -126,11 +126,11 @@ a:hover {
 	width: 250px;
 }
 
-#modify:hover {
+.modify:hover {
 	background-color: #5893d1;
 }
 
-#modifylo {
+.modifylo {
 	background-color: #b4c9e1;
 	padding: 12px 15px;
 	border-radius: 6px;

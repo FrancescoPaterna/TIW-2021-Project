@@ -2,15 +2,15 @@
 <html>
 
 <head>
-<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
-<meta charset="UTF-8" />
-<title>HomePage Professor</title>
-<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
-<script src="professor.js" charset="utf-8" defer></script>
-<script src="sort.js" charset="utf-8" defer></script>
-<script src="utils.js" charset="utf-8" defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
+	<meta charset="UTF-8" />
+	<title>HomePage Professor</title>
+	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
+	<script src="professor.js" charset="utf-8" defer></script>
+	<script src="sort.js" charset="utf-8" defer></script>
+	<script src="utils.js" charset="utf-8" defer></script>
+	<script src="jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="proback">
@@ -35,6 +35,8 @@
 					</tr>
 				</thead>
 				<tbody>
+
+
 					<tr>
 						<td id="f_modify_idstud"></td>
 						<td id="f_modify_name"></td>
@@ -46,8 +48,8 @@
 					</tr>
 				</tbody>
 			</table>
-			<h2 id="modify_message"></h2>
-			<table id="second_class_modify" class="table">
+			<h2 id="modal_message"></h2>
+			<table id="second_single_modify" class="table">
 				<thead>
 					<tr class="row header">
 						<th>id_stud</th>
@@ -65,9 +67,8 @@
 						<td>
 							<form id="sendNewScore" action="#">
 
-								<input id="id_stud" type="hidden" name="id_stud"> <input
-									id="exam_date_id" type="hidden" name="exam_date_id"> <select
-									class="score" name="score" id="score" required>
+								<input id="id_stud" type="hidden" name="id_stud"> <input id="exam_date_id" type="hidden"
+									name="exam_date_id"> <select class="score" name="score" id="score" required>
 									<option value="" selected="selected"></option>
 									<option value="ABSENT">ABSENT</option>
 									<option value="RIMANDATO">RIMANDATO</option>
@@ -86,19 +87,28 @@
 									<option value="29">29</option>
 									<option value="30">30</option>
 									<option value="30L">30L</option>
-								</select> <input id="update" type="button" value="update">
+								</select>
+								<!--	</td>
+						<td>-->
+								<input id="update" type="button" value="update">
+
 							</form>
 						</td>
+
 					</tr>
 				</tbody>
 			</table>
-				<form id="multipleModifyForm" action="#">
-						
-				</form>
+		</div>
+		<div>
+			<form id="multipleModifyForm" action="#">
+
+			</form>
 		</div>
 
 	</div>
 	<div class="main">
+
+
 		<div class="userdata">
 			Prof. <span id="id_username"></span><br> ID: <span id="id"></span><br>
 		</div>
@@ -107,8 +117,6 @@
 				<button class="logoutbutton" type="submit">logout &#10008;</button>
 			</form>
 			<h1>NCU Professor Home page</h1>
-			<div id="id_alert" class="alertmessage"></div>
-
 		</div>
 	</div>
 
@@ -155,16 +163,14 @@
 					<th id="Name" onclick="sortTable(this.id, true)" class="sortable">Name
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="Surname" onclick="sortTable(this.id, true)"
-						class="sortable">Surname <span class="normalarrow">&uarr;</span><span
-						class="normalarrow">&darr;</span>
+					<th id="Surname" onclick="sortTable(this.id, true)" class="sortable">Surname <span
+							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Email" onclick="sortTable(this.id, true)" class="sortable">Email
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="CourseDeg" onclick="sortTable(this.id, true)"
-						class="sortable">CourseDeg <span class="normalarrow">&uarr;</span><span
-						class="normalarrow">&darr;</span>
+					<th id="CourseDeg" onclick="sortTable(this.id, true)" class="sortable">CourseDeg <span
+							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Mark" onclick="sortCustom(this.id, true)" class="sortable">Mark
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
@@ -190,6 +196,8 @@
 			<tbody id="id_sessionEnrollsBody"></tbody>
 		</table>
 	</div>
+	<div id="id_alert" class="alertmessage"></div>
+
 	<div>
 		<form class="long_button">
 			<input id="multiple_modify" type="button" value="MODIFY &#8801;" />

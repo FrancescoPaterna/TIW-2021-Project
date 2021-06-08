@@ -1,4 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Orbitron);
+/*@import url(https://fonts.googleapis.com/css?family=Orbitron);*/
+@font-face {
+    font-family: 'Orbitron';
+    src: url("../resources/Orbitron.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
 
 .start {
 	background-image: url("../resources/demo.jpg");
@@ -38,7 +44,7 @@ h1 {
 	font-family: 'Orbitron', courier, sans-serif;
 	font-size: 350%;
 	font-weight: 600;
-	letter-spacing: 0.010 em;
+	/*letter-spacing: 0.010 em;*/
 	padding: 5px 10px;
 }
 
@@ -238,4 +244,9 @@ input[type=password] {
 
 .prb:hover {
 	background-color: #888a85;
+}
+
+.alertmessage{
+	font-weight: bold;
+	font-size: 50px;
 }
