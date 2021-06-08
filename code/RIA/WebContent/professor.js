@@ -247,11 +247,12 @@
 		};
 
 		this.update = function (courlist) {
-			var elem, i, row, destcell, input, select, option, label, button;
+			var elem, flag, row, destcell, input, select, option, label, button;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
 			this.multipleModalForm.innerHTML = "";
 			// build updated list
 			var self = this;     //FIRST 
+			flag = 0;
 			courlist.forEach(function (examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
@@ -277,7 +278,7 @@
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
 				if (examdates.status == "NOT_INSERTED") {
-					this.appendIfNotInserted(examdates);
+					self.appendIfNotInserted(examdates);
 				}
 
 
@@ -318,7 +319,10 @@
 						var self2 = self;
 						//ENABLE THE CLOSE MODAL WINDOW BUTTON
 						self.span.addEventListener("click", (c) => {
+							//self2.resetMain();
+							//self2.show();
 							self2.modal.style.display = "none";
+
 						}, false);
 					}, false);
 					elem.href = "#";
@@ -467,19 +471,19 @@
 				}
 			});
 
-				self.multipleModalForm.appendChild(button);
-				self.multiple_modify_button.classList.add("modify");
-				self.multiple_modify_button.addEventListener("click", (e) => {
-					self.resetModal;
-					self.modal_title = "MULTIPLE MODIFY";
-					self.modal.style.display = "block";
-					self.multipleModalForm.style.visibility = "visible";
-					var self2 = self;
-					self.span.addEventListener("click", (c) => {
-						// dependency close button
-						self2.modal.style.display = "none";
-					}, false);
+			self.multipleModalForm.appendChild(button);
+			self.multiple_modify_button.classList.add("modify");
+			self.multiple_modify_button.addEventListener("click", (e) => {
+				self.resetModal;
+				self.modal_title = "MULTIPLE MODIFY";
+				self.modal.style.display = "block";
+				self.multipleModalForm.style.visibility = "visible";
+				var self2 = self;
+				self.span.addEventListener("click", (c) => {
+					// dependency close button
+					self2.modal.style.display = "none";
 				}, false);
+			}, false);
 
 		}
 
@@ -533,10 +537,11 @@
 					function (req) {
 						var self2 = self;
 						if (req.readyState == 4) {
-							var score_confirm = req.responseText;
+							var score_confirm = JSON.parse(req.responseText);
 							var self3 = self2;
 							switch (req.status) {
 								case 200:
+									self3.f_score.textContent = "";
 									self3.f_score.textContent = score_confirm;
 									self3.f_status = "INSERTED";
 									self3.resetMain();

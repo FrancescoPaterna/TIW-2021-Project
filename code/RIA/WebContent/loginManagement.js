@@ -2,13 +2,13 @@
  * Login management
  */
 
-(function() { // avoid variables ending up in the global scope
+(function () { // avoid variables ending up in the global scope
 
 	document.getElementById("loginbutton").addEventListener('click', (e) => {
 		var form = e.target.closest("form");
 		if (form.checkValidity()) {
 			makeCall("POST", 'CheckLogin', e.target.closest("form"),
-				function(req) {
+				function (req) {
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = JSON.parse(req.responseText);
 
@@ -25,6 +25,10 @@
 								}
 								else if (message.role == "student") {
 									window.location.href = "HomeStud.html";
+								}
+								else {
+									document.getElementById("error_message").textContent = "Invalid Role - Contact The Support"
+
 								}
 								break;
 							case 400: // bad request

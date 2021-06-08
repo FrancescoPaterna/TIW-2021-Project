@@ -284,16 +284,20 @@ th.sortable:active {
   cursor: pointer;
 }
 
-.update {
+#update{
 	background-color: #3465a4;
-	padding: 12px 15px;
+	margin-left: 13px;
+	padding: 5px 12px;
 	border-radius: 6px;
 	color: white;
 	cursor: pointer;
 	display: inherit;
-	width: 125px;
 }
 
-.update:hover {
+#update:hover {
 	background-color: #5893d1;
+}
+
+#sendNewScore{
+	display: inline-flex;
 }
