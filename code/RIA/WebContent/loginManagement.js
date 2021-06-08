@@ -10,10 +10,9 @@
 			makeCall("POST", 'CheckLogin', e.target.closest("form"),
 				function (req) {
 					if (req.readyState == XMLHttpRequest.DONE) {
-						var message = JSON.parse(req.responseText);
-
 						switch (req.status) {
 							case 200:
+								var message = JSON.parse(req.responseText);
 								sessionStorage.setItem('id', message.id);
 								sessionStorage.setItem('name', message.name);
 								sessionStorage.setItem('surname', message.surname);
@@ -31,14 +30,20 @@
 
 								}
 								break;
+
 							case 400: // bad request
-								document.getElementById("errormessage").textContent = message;
+								var message = req.responseText;
+								document.getElementById("error_message").textContent = message;
 								break;
+
 							case 401: // unauthorized
-								document.getElementById("errormessage").textContent = message;
+								var message = req.responseText;
+								document.getElementById("error_message").textContent = message;
 								break;
+								
 							case 500: // server error
-								document.getElementById("errormessage").textContent = message;
+								var message = req.responseText;
+								document.getElementById("error_message").textContent = message;
 								break;
 						}
 					}
