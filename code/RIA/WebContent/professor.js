@@ -439,7 +439,7 @@
 
 
 
-			selfInButton = self;
+			var selfInButton = self;
 
 			button.addEventListener("click", (e) => {
 
@@ -460,7 +460,6 @@
 					}
 
 					form = JSON.stringify(form);
-<<<<<<< HEAD
 
 
 					var self = this;
@@ -479,50 +478,32 @@
 				} else {
 					form.reportValidity();
 				}
-=======
-					
-		        	
-						var self = this;
-						makeCallJSON("POST", 'UpdateMultipleScore', form,
-				            function(req) {
-				              if (req.readyState == XMLHttpRequest.DONE) {
-				                var message = req.responseText;
-				                if (req.status == 200) {
-				                  // TODO pageOrchestrator.refresh();
-				                } else {
-				                  self.alert.textContent = message;
-				                }
-				              }
-				            }
-						);
-		        } else {
-		          form.reportValidity();
-		        }
->>>>>>> branch 'master' of https://github.com/FrancescoPaterna/TIW-2021-Project.git
-			}, false);
 
-			self.multipleModalForm.appendChild(button);
 
-			var multipleModifyButton = document.getElementById("multiple_modify");
-			multipleModifyButton.classList.add("modify");
-			multipleModifyButton.addEventListener("click", (e) => {
-				self.resetModalOnly;
-				self.modal_title = "MULTIPLE MODIFY";
-				self.modal.style.display = "block";
-				self.multipleModalForm.style.visibility = "visible";
-				var self2 = self;
-				self.span.addEventListener("click", (c) => {
-					// dependency close button
-					self2.modal.style.display = "none";
+
+
+
+				self.multipleModalForm.appendChild(button);
+
+				self.multipleModifyButton.classList.add("modify");
+				self.multipleModifyButton.addEventListener("click", (e) => {
+					self.resetModalOnly;
+					self.modal_title = "MULTIPLE MODIFY";
+					self.modal.style.display = "block";
+					self.multipleModalForm.style.visibility = "visible";
+					var self2 = self;
+					self.span.addEventListener("click", (c) => {
+						// dependency close button
+						self2.modal.style.display = "none";
+					}, false);
 				}, false);
-			}, false);
+
+			});
 		}
-
-
 
 		this.isModifible = function (status) {
 			if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
-				return true
+				return true;
 		}
 
 		// When the user clicks on <span> (x), close the modal
