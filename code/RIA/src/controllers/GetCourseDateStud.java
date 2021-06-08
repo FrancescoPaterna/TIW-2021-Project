@@ -34,9 +34,20 @@ public class GetCourseDateStud extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		Integer course_id; 
-		course_id = Integer.parseInt(request.getParameter("course_id"));
 		User user = (User) session.getAttribute("user");
+		
+		Integer course_id;
+		try {
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			// If the argument of Integer.parseInt is null or is a string of length zero, a
+			// NumberFormatException is thrown
+			// @see https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String)
+		} catch(NumberFormatException | NullPointerException e) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			response.getWriter().println("Incorrect param values");
+			return;
+		}
+		
 		
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);
 		List<ExamDate> exams = new ArrayList<>();

@@ -75,7 +75,7 @@ public class GoToRecord extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// If the user is not logged in (not present in session) redirect to the login
+		
 		HttpSession session = request.getSession();
 
 		int sort = 1;

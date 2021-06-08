@@ -41,7 +41,7 @@
 			var self = this; // used to refer to the current function from inner functions
 			makeCall("GET", "GetCourseStud", null,
 				function(req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesToShow = JSON.parse(req.responseText);
@@ -110,7 +110,7 @@
 			var self = this;
 			makeCall("GET", "GetCourseDateStud?course_id=" + course_id, null,
 				function(req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var courseDates = JSON.parse(req.responseText);
@@ -147,18 +147,18 @@
 				linkcell.appendChild(anchor);
 				linkText = document.createTextNode(examdates.data);
 				anchor.appendChild(linkText);
-				//anchor.missionid = mission.id; // make list item clickable
 				anchor.setAttribute('exam_date_id', examdates.ID);
 				anchor.setAttribute('exam_date', examdates.data);
 				anchor.setAttribute('course_id', self.course_id);
 				anchor.setAttribute('coursename', self.coursename); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
+					resultDetails.reset();
 					resultDetails.show(e.target.getAttribute("exam_date_id"),
 						e.target.getAttribute("exam_date"), 
 						e.target.getAttribute("course_id"),
 						e.target.getAttribute("coursename")); // the list must know the details container
-				}, false); //TODO Repeat bubbling? 
+				}, false);
 				anchor.href = "#";
 				row.appendChild(linkcell);
 				self.courseDateStudBody.appendChild(row);
@@ -170,14 +170,17 @@
 	
 	function ResultDetails(_alert, _id_resultDetails, _id_resultDetailsBody) {
 		this.alert = _alert;
+		this.alertNoResults = document.getElementById("id_alertNoResults");
 		this.resultDetails = _id_resultDetails;
 		this.resultDetailsBody = _id_resultDetailsBody;
 		this.exam_date_id;
 		this.date;
 		this.course_id;
 		this.coursename;
+		this.refuseButtonCreated = false;
 		
 		this.reset = function() {
+			this.alertNoResults.textContent = "";
 			this.resultDetails.style.visibility = "hidden";
 			this.resultDetailsBody.style.visibility = "hidden";
 		}
@@ -190,17 +193,13 @@
 			var self = this;
 			makeCall("GET", "GetResultDetails?IDExamDate=" + exam_date_id, null,
 				function(req) {
-					if (req.readyState == 4) {
+					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
 							var resultDetails = JSON.parse(req.responseText);
-							/*if (enrolls.length == 0) {
-								self.alert.textContent = "no student enrolled";
-								return;
-							}*/
 							self.update(resultDetails); // self visible by closure
 						} else if(req.status == 204) {
-							self.alert.textContent = message;
+							self.alertNoResults.textContent = "The result has not been published yet!";
 							return;
 						}
 					} else {
@@ -233,22 +232,28 @@
 			destcell = document.getElementById("option");
 			
 			if(this.isRefusable(resultDetails.mark, resultDetails.status)){
-				form = document.getElementById("refuseScoreForm");
 				
-				input = document.getElementById("refuseScoreInput");
-				input.setAttribute("value", this.exam_date_id);
+				// If the button "Refuse" has not been created yet, create it and append to the form
 				
-				elem = document.createElement("button");
-				elem.setAttribute("class", "button2");
-				elem.textContent = "Refuse";
-				elem.setAttribute("type", "submit");
-				elem.setAttribute("value", this.exam_date_id);
-				elem.setAttribute("name", "IDExamDate");
-				elem.addEventListener("click", (e) => {
-					this.refuseScore(e.target.closest("form"));
-				}, false);
-				form.appendChild(elem);
-				destcell.appendChild(form);
+				if(!this.refuseButtonCreated) {
+					form = document.getElementById("refuseScoreForm");
+				
+					input = document.getElementById("refuseScoreInput");
+					input.setAttribute("value", this.exam_date_id);
+					
+					elem = document.createElement("button");
+					elem.setAttribute("class", "button2");
+					elem.textContent = "Refuse";
+					elem.setAttribute("type", "submit");
+					elem.setAttribute("value", this.exam_date_id);
+					elem.setAttribute("name", "IDExamDate");
+					elem.addEventListener("click", (e) => {
+						this.refuseScore(e.target.closest("form"));
+					}, false);
+					form.appendChild(elem);
+					destcell.appendChild(form);
+					this.refuseButtonCreated = true;
+				}
 			}
 			//make details visible
 			this.resultDetails.style.visibility = "visible";
@@ -317,6 +322,8 @@
 		this.refresh = function() {
 			alertContainer.textContent = "";
 			courseList.reset();
+			courseDate.reset();
+			resultDetails.reset();
 			courseList.show(); // closure preserves visibility of this
 		};
 	}

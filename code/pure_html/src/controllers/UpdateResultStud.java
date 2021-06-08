@@ -48,9 +48,6 @@ public class UpdateResultStud extends HttpServlet {
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
@@ -63,13 +60,20 @@ public class UpdateResultStud extends HttpServlet {
 		String coursename;
 		String date;
 		User professor = new User();
-		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
-		course_id = Integer.parseInt(request.getParameter("course_id"));
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-		professor.setEmail(request.getParameter("professore"));
-		professor.setName(request.getParameter("professorn"));
-		professor.setSurname(request.getParameter("professors"));
+		
+		try {
+			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			professor.setEmail(request.getParameter("professore"));
+			professor.setName(request.getParameter("professorn"));
+			professor.setSurname(request.getParameter("professors"));
+		} catch (NumberFormatException | NullPointerException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Incorrect or missing values");
+			return;
+		}
+		
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		
