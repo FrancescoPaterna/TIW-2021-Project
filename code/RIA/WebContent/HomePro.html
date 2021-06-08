@@ -2,15 +2,15 @@
 <html>
 
 <head>
-	<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
-	<meta charset="UTF-8" />
-	<title>HomePage Professor</title>
-	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-	<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
-	<script src="professor.js" charset="utf-8" defer></script>
-	<script src="sort.js" charset="utf-8" defer></script>
-	<script src="utils.js" charset="utf-8" defer></script>
-	<script src="jquery-3.6.0.min.js"></script>
+<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
+<meta charset="UTF-8" />
+<title>HomePage Professor</title>
+<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
+<script src="professor.js" charset="utf-8" defer></script>
+<script src="sort.js" charset="utf-8" defer></script>
+<script src="utils.js" charset="utf-8" defer></script>
+<script src="jquery-3.6.0.min.js"></script>
 </head>
 
 <body class="proback">
@@ -55,7 +55,8 @@
 						<th>IdStud</th>
 						<th>surname</th>
 						<th>name</th>
-						<th>new score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option</th>
+						<th>new
+							score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -66,8 +67,9 @@
 						<td>
 							<form id="sendNewScore" action="#">
 
-								<input id="id_stud" type="hidden" name="id_stud"> <input id="exam_date_id" type="hidden"
-									name="exam_date_id"> <select class="score" name="score" id="score" required>
+								<input id="id_stud" type="hidden" name="id_stud"> <input
+									id="exam_date_id" type="hidden" name="exam_date_id"> <select
+									class="score" name="score" id="score" required>
 									<option value="" selected="selected"></option>
 									<option value="ABSENT">ABSENT</option>
 									<option value="RIMANDATO">RIMANDATO</option>
@@ -86,22 +88,42 @@
 									<option value="29">29</option>
 									<option value="30">30</option>
 									<option value="30L">30L</option>
-								</select>
-								<input id="update" type="button" value="update">
+								</select> <input id="update" type="button" value="update">
 							</form>
 						</td>
 
 					</tr>
 				</tbody>
 			</table>
-		</div>
-		<div>
-			<form id="multipleModifyForm" action="#">
+			
+			<div id="recordDiv" class=basic>
 
-			</form>
+			<div>
+				<table id="recordTable">
+					<thead>
+						<tr class=rec>
+							<th>ID</th>
+							<th>Surname</th>
+							<th>Name</th>
+							<th>Mark</th>
+						</tr>
+					</thead>
+					<tbody id="recordTableBody">
+				</table>
+			</div>
+
+			<img id="recordLogo" class=logo2 src="/ERR_pure_html/resources/logo_dark.png"
+				alt="logo">
+			<p id="recordLegalValue">The document has legal value and must be printed and stored</p>
+			</div>
+		</div>
+		
+		<div>
+			<form id="multipleModifyForm" action="#"></form>
 		</div>
 
 	</div>
+
 	<div class="main">
 
 
@@ -159,14 +181,16 @@
 					<th id="Name" onclick="sortTable(this.id, true)" class="sortable">Name
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="Surname" onclick="sortTable(this.id, true)" class="sortable">Surname <span
-							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
+					<th id="Surname" onclick="sortTable(this.id, true)"
+						class="sortable">Surname <span class="normalarrow">&uarr;</span><span
+						class="normalarrow">&darr;</span>
 					</th>
 					<th id="Email" onclick="sortTable(this.id, true)" class="sortable">Email
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="CourseDeg" onclick="sortTable(this.id, true)" class="sortable">CourseDeg <span
-							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
+					<th id="CourseDeg" onclick="sortTable(this.id, true)"
+						class="sortable">CourseDeg <span class="normalarrow">&uarr;</span><span
+						class="normalarrow">&darr;</span>
 					</th>
 					<th id="Mark" onclick="sortCustom(this.id, true)" class="sortable">Mark
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
@@ -201,8 +225,8 @@
 		<form class="long_button">
 			<input id="publish" type="button" value="PUBLISH" />
 		</form>
-		<form class="long_button">
-			<input id="record" type="button" value="RECORD" />
+		<form id="record_form" class="long_button">
+			<input id="record_button" type="button" value="RECORD" />
 		</form>
 	</div>
 </body>

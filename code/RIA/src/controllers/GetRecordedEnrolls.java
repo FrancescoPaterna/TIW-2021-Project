@@ -73,7 +73,7 @@ public class GetRecordedEnrolls extends HttpServlet {
 			return;
 		}
 		
-		RecordedEnrolls recordedEnrolls = new RecordedEnrolls(recorded, date, time);
+		RecordedEnrolls recordedEnrolls = new RecordedEnrolls(recorded, date, time, recordID);
 		String serialized_enrolls = new Gson().toJson(recordedEnrolls);		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
