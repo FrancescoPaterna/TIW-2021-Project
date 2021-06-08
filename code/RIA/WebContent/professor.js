@@ -196,7 +196,12 @@
 		/**********************************************************************************************************/
 
 		//+++++++++++++++++++++++++++++++++++++++++++++RECORD++++++++++++++++++++++++++++++++++++++++++++++++//
+		this.recordDiv = document.getElementById("recordDiv");
+		this.recordTable = document.getElementById("recordTable");
+		this.recordTableBody = document.getElementById("recordTableBody");
 		this.recordForm = document.getElementById("record_form");
+		this.recordLogo = document.getElementById("recordLogo");
+		this.recordLegalValue = document.getElementById("recordLegalValue");
 
 		//BUTTONS
 		this.record_button = document.getElementById("record_button");
@@ -220,6 +225,11 @@
 			this.first_single_modify.style.visibility = "hidden";
 			this.second_single_modify.style.visibility = "hidden";
 			this.multipleModalForm.style.visibility = "hidden";
+			this.recordDiv.style.display = "none";
+			this.recordTable.style.visibility = "hidden";
+			this.recordTableBody.style.visibility = "hidden";
+			this.recordLogo.style.visibility = "hidden";
+			this.recordLegalValue.style.visibility = "hidden";
 		}
 
 		this.show = function (exam_date_id) {
@@ -475,7 +485,7 @@
 			self.multipleModalForm.appendChild(button);
 			self.multiple_modify_button.classList.add("modify");
 			self.multiple_modify_button.addEventListener("click", (e) => {
-				self.resetModal;
+				self.resetModal();
 				self.modal_title = "MULTIPLE MODIFY";
 				self.modal.style.display = "block";
 				self.multipleModalForm.style.visibility = "visible";
@@ -499,14 +509,14 @@
 				// send the form if valid
 				var form = e.target.closest("form");
 				if(form.checkValidity()){
-					var self = this;
+					var self = selfInRecordButton;
 					makeCall("POST", 'RecordScores', form,
 						function (req) {
 							if (req.readyState == XMLHttpRequest.DONE) {
 								var message = req.responseText;
 								if (req.status == 200) {
-									console.log("Results recorded!")
-									// TODO pageOrchestrator.refresh();
+									var record = JSON.parse(req.responseText);
+									self.showRecordedEnrolls(record); // self visible by closure
 								} else {
 									self.alert.textContent = message;
 								}
@@ -518,6 +528,44 @@
 				}
 			})
 
+		}
+		
+		this.showRecordedEnrolls = function(record) {
+			var row, destcell;
+			this.resetModal();
+			this.modal_title = "Record generated";
+			this.modal.style.display = "block";
+			this.modal_title.textContent = "University of NightCity Official Record";
+			this.modal_message.textContent = 'Document #' + record.IDRecord + ' - generated and digitally signed on ' + record.date +
+				' at ' + record.time;
+			this.recordDiv.style.display = "block";
+			
+			var self = this;
+			record.recordedEnrolls.forEach(function(recordedEnroll) {
+				row = document.createElement("tr");
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.IDstudent;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.surname;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.name;
+				row.appendChild(destcell);
+				destcell = document.createElement("td");
+				destcell.textContent = recordedEnroll.mark;
+				self.recordTableBody.appendChild(row);
+			});
+			
+			this.span.addEventListener("click", (c) => {
+					// dependency close button
+					self.modal.style.display = "none";
+				}, false);
+				
+			this.recordTable.style.visibility = "visible";
+			this.recordTableBody.style.visibility = "visible";
+			this.recordLogo.style.visibility = "visible";
+			this.recordLegalValue.style.visibility = "visible";
 		}
 
 		this.isModifible = function (status) {
@@ -555,7 +603,7 @@
 			this.s_surname.textContent = surname;
 
 			/*Insert the value in the first table in the Modal Window MODIFY*/
-			this.resetModal;
+			this.resetModal();
 
 			// INSERT TITLE
 			this.modal_title.textContent = "MODIFY SCORE";
