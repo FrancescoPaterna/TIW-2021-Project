@@ -571,7 +571,7 @@
 			}
 
 
-		}
+		
 
 
 		// Register event to publish button only if there is at least one mark in the "INSERTED" status
@@ -584,6 +584,8 @@
 			self.publish_button.setAttribute("id", "publishlo");
 			self.publish_button.removeEventListener("click", self.publishFunction);
 		}
+
+	}
 
 
 		this.recordFunction = function (e) {
