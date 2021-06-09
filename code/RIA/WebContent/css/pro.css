@@ -1,6 +1,6 @@
 /*main_color_page*/
 :root {
-  --pro: #da3030;
+	--pro: #da3030;
 }
 
 .proback {
@@ -10,10 +10,11 @@
 	background-attachment: fixed;
 }
 
-.main{
+.main {
 	background-color: var(--pro);
 	color: white
 }
+
 .userdata {
 	position: absolute;
 	top: 50px;
@@ -31,51 +32,53 @@
 }
 
 .wrapper {
-  margin: 0 auto;
-  padding: 20px 0px 0px 0px;
-  font-size: 22px;
+	margin: 0 auto;
+	padding: 20px 0px 0px 0px;
+	font-size: 22px;
 }
 
 .table {
-  margin: 0 0 40px 0;
-  width: 40%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  display: inline-table;
-  border-collapse: collapse;
-  margin-left: 10px;
-  margin-right: 10px;
+	margin: 0 0 40px 0;
+	width: 40%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	display: inline-table;
+	border-collapse: collapse;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .tablefull {
-  margin: 0 0 40px 0;
-  width: max-content;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  display: inline-table;
-  border-collapse: collapse;
-  margin-left: 10px;
-  margin-right: 10px;
+	margin: 0 0 40px 0;
+	width: max-content;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	display: inline-table;
+	border-collapse: collapse;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 
 tr {
-  display: table-row;
-  background: #eeeeec;
+	display: table-row;
+	background: #eeeeec;
 }
+
 tr:nth-of-type(odd) {
-  background: #d3d7cf;
+	background: #d3d7cf;
 }
+
 .row.header {
-  font-weight: 900;
-  color: #ffffff;
-  background: var(--pro);
+	font-weight: 900;
+	color: #ffffff;
+	background: var(--pro);
 }
 
 td {
-  padding: 12px 10px;
-  display: table-cell;
+	padding: 12px 10px;
+	display: table-cell;
 }
 
-a{
+a {
 	text-decoration: none;
 }
 
@@ -105,15 +108,15 @@ a:hover {
 }
 
 
-.showbar{
+.showbar {
 	display: inline-flex;
 }
 
-.show{
-  margin-left: 10px;
-  margin-right: 10px;
-  display: inline-table;
-  visibility: hidden;
+.show {
+	margin-left: 10px;
+	margin-right: 10px;
+	display: inline-table;
+	visibility: hidden;
 }
 
 .modify {
@@ -188,36 +191,37 @@ a:hover {
 	cursor: pointer;
 }
 
-.long_button{
+.long_button {
 	width: max-content;
 	display: inline-block;
 	margin-left: 3%;
 	margin-right: 3%;
 }
 
-th{
-    padding: 0px 30px 0px 30px;
+th {
+	padding: 0px 30px 0px 30px;
 }
+
 th.sortable {
 	cursor: pointer;
 	padding: 0px 30px 0px 30px;
 }
 
 th.sortable:hover {
-	color:blue;
+	color: blue;
 }
 
 th.sortable:active {
-	color:yellow;
+	color: yellow;
 }
 
-.boldarrow{
+.boldarrow {
 	color: blue;
 	font-weight: bold;
 	letter-spacing: -0.2em;
 }
 
-.normalarrow{
+.normalarrow {
 	color: white;
 	font-weight: bold;
 	letter-spacing: -0.2em;
@@ -247,44 +251,53 @@ th.sortable:active {
 
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	display: none;
+	/* Hidden by default */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1;
+	/* Sit on top */
+	padding-top: 100px;
+	/* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%;
+	/* Full width */
+	height: 100%;
+	/* Full height */
+	overflow: auto;
+	/* Enable scroll if needed */
+	background-color: rgb(0, 0, 0);
+	/* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4);
+	/* Black w/ opacity */
 }
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
 }
 
 /* The Close Button */
 .close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 35px;
-  font-weight: bold;
+	color: #aaaaaa;
+	float: right;
+	font-size: 35px;
+	font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }
 
-#update{
+#update {
 	background-color: #3465a4;
 	margin-left: 13px;
 	padding: 5px 12px;
@@ -298,6 +311,46 @@ th.sortable:active {
 	background-color: #5893d1;
 }
 
-#sendNewScore{
+#sendNewScore {
 	display: inline-flex;
+}
+
+#multipleModifyForm {
+	position: fixed;
+	top: 30%;
+	left: 30%;
+}
+
+.inputGroup {
+	border-width: 1px;
+	border-color: grey;
+	text-align: left;
+}
+
+
+.inputGroup input:checked~label {
+	font-weight: bold;
+	background-color: #5893d1;
+	color: white;
+	border: none;
+}
+
+#multi_score {
+	position: fixed;
+	left: 57%;
+	top: 30%;
+	width: 10%;
+	height: 5%;
+	font-size: 20px;
+}
+
+
+#UPDATE {
+	position: fixed;
+	left: 57%;
+	top: 36%;
+	width: 10%;
+	height: 7%;
+	font-size: 25px;
+
 }

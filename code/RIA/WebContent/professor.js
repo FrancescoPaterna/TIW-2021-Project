@@ -166,6 +166,7 @@
 		this.modal_title = document.getElementById("modal_title");      //ModalTitle  
 		this.modal_message = document.getElementById("modal_message");  //ModalMessage
 		this.modal = document.getElementById("myModal");                //MainModal
+		this.modal_content = document.getElementById("modalContent");   //ModalContent
 		this.span = document.getElementsByClassName("close")[0];        //CloseButton
 
 		//+++++++++++++++SINGLE MODIFY+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
@@ -345,6 +346,7 @@
 
 			select = document.createElement("select");
 			select.required = true;
+			select.setAttribute("id", "multi_score");
 			select.setAttribute("name", "score");
 			option = document.createElement("option");
 			option.setAttribute("selected", "selected");
@@ -352,57 +354,46 @@
 			option.textContent = "";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "ABSENT");
 			option.textContent = "ABSENT";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "RIMANDATO");
 			option.textContent = "RIMANDATO";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "RITIRATO");
 			option.textContent = "RITIRATO";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "18");
 			option.textContent = "18";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "19");
 			option.textContent = "19";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "20");
 			option.textContent = "20";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "21");
 			option.textContent = "21";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "22");
 			option.textContent = "22";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "23");
 			option.textContent = "23";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "24");
 			option.textContent = "24";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "25");
 			option.textContent = "25";
 			select.appendChild(option);
@@ -419,23 +410,26 @@
 			option.textContent = "28";
 			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "29");
 			option.textContent = "29";
+			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "30");
 			option.textContent = "30";
+			select.appendChild(option);
 			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
 			option.setAttribute("value", "30L");
 			option.textContent = "30L";
+			select.appendChild(option);
+
 			self.multipleModalForm.appendChild(select);
 
 
 			button = document.createElement("input");
 			button.setAttribute("type", "button");
 			button.setAttribute("name", "UPDATE");
+			button.setAttribute("id", "UPDATE");
+			button.setAttribute("value", "UPDATE");
 			button.classList.add("smodify");
 
 
@@ -477,13 +471,17 @@
 			self.multiple_modify_button.classList.add("modify");
 			self.multiple_modify_button.addEventListener("click", (e) => {
 				self.resetModal();
-				self.modal_title = "MULTIPLE MODIFY";
+				self.modal_title.textContent = "MULTIPLE MODIFY";
+				self.modal_content.style.height = "60%";
+				self.modal_content.style.width = "40%";
 				self.modal.style.display = "block";
 				self.multipleModalForm.style.visibility = "visible";
 				var self2 = self;
 				self.span.addEventListener("click", (c) => {
 					// dependency close button
 					self2.modal.style.display = "none";
+					self.modal_content.style.height = "auto";
+					self.modal_content.style.width = "80%";
 				}, false);
 			}, false);
 
@@ -496,16 +494,22 @@
 
 		this.AppendIfNOTINSERTED = function (ed) {
 
-			var rowModal, label;
+			var rowModal, label, div;
+			div = document.createElement("div");
+			div.classList.add("inputGroup");
 			rowModal = document.createElement("input");
+			div.appendChild(rowModal);
+
 			rowModal.setAttribute("type", "checkbox");
 			rowModal.setAttribute("name", "IDStudent");
 			rowModal.setAttribute("value", ed.IDstudent);
 			label = document.createElement("label");
+			div.appendChild(label);
+
 			label.setAttribute("for", ed.IDstudent);
-			label.textContent = ed.IDstudent;
-			this.multipleModalForm.appendChild(label);
-			this.multipleModalForm.appendChild(rowModal);
+			label.textContent = ed.IDstudent + "  " + ed.name + "  " + ed.surname;
+			this.multipleModalForm.appendChild(div);
+
 			this.multipleModalForm.appendChild(document.createElement("br"));
 		}
 
