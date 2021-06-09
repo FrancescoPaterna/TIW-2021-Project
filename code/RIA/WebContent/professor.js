@@ -329,6 +329,7 @@
 			//clear memory on record button
 			this.isRecordable = false;
 			this.isPublishable = false;
+			this.multiple_modify_button_flag = false;
 			// build updated list
 			var self = this;     //FIRST 
 			flag = 0;
@@ -358,6 +359,7 @@
 				destcell = document.createElement("td");
 				if (examdates.status == "NOT_INSERTED") {
 					self.AppendIfNOTINSERTED(examdates);
+					this.multiple_modify_button_flag = true;
 				}
 
 				// if there is a mark in "PUBLISHED" status, enable publish button
@@ -408,7 +410,9 @@
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
+			self.multiple_modify_button.classList.add("modifylo");
 
+			if(self.multiple_modify_button_flag == true){
 			self.multipleModalForm.appendChild(document.createElement("br"));
 
 			select = document.createElement("select");
@@ -556,7 +560,7 @@
 					self.modal_content.style.width = "80%";
 				}, false);
 			}, false);
-
+		}
 
 
 			// Register event to record button only if there is at least one mark in the "PUBLISHED" status
