@@ -244,7 +244,6 @@
 		/**************/this.s_surname = document.getElementById("modify_surname");
 
 		//+++++++++++++++++++++++++++++++++++++++++++++RECORD++++++++++++++++++++++++++++++++++++++++++++++++//
-		this.isRecordable;
 		this.recordDiv = document.getElementById("recordDiv");
 		this.recordTable = document.getElementById("recordTable");
 		this.recordTableBody = document.getElementById("recordTableBody");
@@ -257,8 +256,13 @@
 		this.multipleModalForm = document.getElementById("multipleModifyForm");
 		/**********************************************************************************************************/
 
+		//++++++++++++++++++++++++++++++++++++++++++PUBLISH+++++++++++++++++++++++++++++++++++++++++++++++++++++//
+		this.publishInput = document.getElementById("publish_exam_id");
+		/**********************************************************************************************************/
 
 		//BUTTONS
+		this.isRecordable;
+		this.isPublishable;
 		this.record_button = document.getElementById("record_button");
 		this.multiple_modify_button = document.getElementById("multiple_modify");
 		this.publish_button = document.getElementById("publish");
@@ -324,6 +328,7 @@
 			this.multipleModalForm.innerHTML = "";
 			//clear memory on record button
 			this.isRecordable = false;
+			this.isPublishable = false;
 			// build updated list
 			var self = this;     //FIRST 
 			flag = 0;
@@ -355,9 +360,14 @@
 					self.AppendIfNOTINSERTED(examdates);
 				}
 
-				// if there is a mark in "PUBLISHED" status, enable record button
+				// if there is a mark in "PUBLISHED" status, enable publish button
 				if (examdates.status.trim() == "PUBLISHED") {
 					self.isRecordable = true;
+				}
+
+				// if there is a mark in "INSERTED" status, enable record button
+				if (examdates.status.trim() == "INSERTED") {
+					self.isPublishable = true;
 				}
 
 				/*If a score == INSERTED OR NOT_INSERTED OR PUBLISH, Enable the Single Modify Button */
@@ -563,6 +573,19 @@
 
 		}
 
+
+		// Register event to publish button only if there is at least one mark in the "INSERTED" status
+		if (self.isPublishable) {
+			// make the publish button clickable
+			self.publish_button.setAttribute("id", "publish");
+			self.publish_button.addEventListener("click", self.publishFunction);
+		} else {
+			// make the publish button inactive
+			self.publish_button.setAttribute("id", "publishlo");
+			self.publish_button.removeEventListener("click", self.publishFunction);
+		}
+
+
 		this.recordFunction = function (e) {
 			// create an input field where to put the exam_date_id to be sent to the servlet
 			var input = sessionEnrolls.recordInput;
@@ -591,6 +614,39 @@
 				form.reportValidity();
 			}
 		}
+
+
+
+
+
+		this.publishFunction = function (e) {
+			// create an input field where to put the exam_date_id to be sent to the servlet
+			var input = sessionEnrolls.publishInput;
+			input.setAttribute("value", sessionEnrolls.current_exam);
+
+			// send the form if valid
+			var form = e.target.closest("form");
+			if (form.checkValidity()) {
+				var self = sessionEnrolls;
+				makeCall("POST", 'UpdateStatus', form,
+					function (req) {
+						if (req.readyState == XMLHttpRequest.DONE) {
+							var message = req.responseText;
+							if (req.status == 200) {
+								self.resetMain();
+								self.show(self.current_exam);
+							} else {
+								self.alert.textContent = message;
+							}
+						}
+					}
+				);
+			} else {
+				form.reportValidity();
+			}
+		}
+
+
 
 		this.isModifible = function (status) {
 			if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
@@ -694,26 +750,7 @@
 
 
 
-		/*Function That Support the PUBLISH button*/
-		document.getElementById("publish").addEventListener('click', (event) => {
-			makeCall("POST", "UpdateStatus", event.target.closest("form"),
-				function (req) {
-					if (req.readyState == 4) {
-						switch (req.status) {
-							case 200:
-								console.log("SCORE PUBLISHED!");
-								break;
-							case 400: // bad request
-								break;
-							case 401: // unauthorized
-								break;
-							case 500: // server error
-								break;
-						}
-					}
-				}
-			);
-		});
+
 
 
 
