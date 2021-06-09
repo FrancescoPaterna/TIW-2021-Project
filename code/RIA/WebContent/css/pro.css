@@ -118,11 +118,25 @@ a:hover {
 }
 
 .show {
-	margin-left: 10px;
-	margin-right: 10px;
-	display: inline-table;
+	margin-left: 308px;
+	margin-right: 308px;
+	display: inline-block;
 	visibility: hidden;
+
 }
+
+#showcourse,
+#showdate {
+	font-weight: bold;
+	border-radius: 6px;
+	background-color: var(--pro);
+	color: white;
+	cursor: pointer;
+	width: 178px;
+	height: 28px;
+}
+
+
 
 .modify {
 	background-color: #3465a4;

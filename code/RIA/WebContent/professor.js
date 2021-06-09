@@ -2,7 +2,7 @@
 * Professor Managment
 */
 
-(function() { // avoid variables ending up in the global scope
+(function () { // avoid variables ending up in the global scope
 
 	// page components
 	var courseList, courseDate, sessionEnrolls,
@@ -23,7 +23,7 @@
 	function PersonalMessage(_username, _id, idcontainer, messagecontainer) {
 		this.username = _username;
 		this.id = _id;
-		this.show = function() {
+		this.show = function () {
 			messagecontainer.textContent = this.username;
 			idcontainer.textContent = this.id;
 		}
@@ -34,14 +34,14 @@
 		this.coursePro = _id_coursePro;
 		this.courseProBody = _id_courseProBody;
 
-		this.reset = function() {
+		this.reset = function () {
 			this.coursePro.style.visibility = "hidden";
 		}
 
-		this.show = function() {
+		this.show = function () {
 			var self = this;
 			makeCall("GET", "GetCoursePro", null,
-				function(req) {
+				function (req) {
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
@@ -60,12 +60,12 @@
 
 		};
 
-		this.update = function(courlist) {
+		this.update = function (courlist) {
 			var elem, i, row, destcell, linkcell, anchor;
 			this.courseProBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this;
-			courlist.forEach(function(course) { // self visible here, not this
+			courlist.forEach(function (course) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = course.id;
@@ -80,6 +80,7 @@
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
 					courseDate.show(e.target.getAttribute("course_id")); // the list must know the details container
+					courseList.waiter(course);
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
 				row.appendChild(linkcell);
@@ -88,21 +89,50 @@
 			});
 			this.coursePro.style.visibility = "visible";
 		}
+
+		this.waiter = function (course) {
+			var elem, i, row, destcell, linkcell, anchor;
+			this.courseProBody.innerHTML = ""; // empty the table body
+			// build updated list
+
+			// self visible here, not this
+			row = document.createElement("tr");
+			destcell = document.createElement("td");
+			destcell.textContent = course.id;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = course.name;
+			row.appendChild(destcell);
+			this.courseProBody.appendChild(row);
+			document.getElementById("showcourse").style.visibility = "visible";
+			this.coursePro.style.visibility = "visible";
+			document.getElementById("showcourse").addEventListener("click", (e) => {
+				courseList.reset();
+				courseList.show();
+				courseDate.reset();
+				sessionEnrolls.resetMain();
+				document.getElementById("showdate").style.visibility = "hidden";
+				document.getElementById("showcourse").style.visibility = "hidden";
+			}, false); //TODO Repeat bubbling?
+		}
+
 	}
 
 	function CourseDate(_alert, _id_courseDatePro, _id_courseDateProBody) {
 		this.alert = _alert;
 		this.courseDatePro = _id_courseDatePro;
 		this.courseDateProBody = _id_courseDateProBody;
+		this.current_course;
 
-		this.reset = function() {
+		this.reset = function () {
 			this.courseDatePro.style.visibility = "hidden";
 		}
 
-		this.show = function(course_id) {
+		this.show = function (course_id) {
 			var self = this;
+			this.current_course = course_id;
 			makeCall("GET", "GetCourseDatePro?course_id=" + course_id, null,
-				function(req) {
+				function (req) {
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
@@ -121,12 +151,12 @@
 
 		};
 
-		this.update = function(courlist) {
+		this.update = function (courlist) {
 			var elem, i, row, destcell, linkcell, anchor;
 			this.courseDateProBody.innerHTML = ""; // empty the table body = document.getElementById("modify_surname")
 			// build updated list
 			var self = this;
-			courlist.forEach(function(examdates) { // self visible here, not this
+			courlist.forEach(function (examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = examdates.ID;
@@ -146,6 +176,7 @@
 					// dependency via module parameter
 					sessionEnrolls.save(e.target.getAttribute("exam_date_id")); // save the selected exam_date_id in the current_exam VAR
 					sessionEnrolls.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
+					courseDate.waiter(examdates);
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
 				row.appendChild(linkcell);
@@ -153,6 +184,27 @@
 
 			});
 			this.courseDatePro.style.visibility = "visible";
+		}
+
+		this.waiter = function (examdate) {
+			var row, destcell, linkcell, anchor;
+			this.courseDateProBody.innerHTML = "";
+			row = document.createElement("tr");
+			destcell = document.createElement("td");
+			destcell.textContent = examdate.ID;
+			row.appendChild(destcell);
+			destcell = document.createElement("td");
+			destcell.textContent = examdate.data;
+			row.appendChild(destcell);
+			this.courseDateProBody.appendChild(row);
+			document.getElementById("showdate").style.visibility = "visible";
+			this.courseDatePro.style.visibility = "visible";
+			document.getElementById("showdate").addEventListener("click", (e) => {
+				courseDate.reset();
+				courseDate.show(this.current_course);
+				sessionEnrolls.resetMain();
+				document.getElementById("showdate").style.visibility = "hidden";
+			}, false); //TODO Repeat bubbling?
 		}
 	}
 
@@ -213,7 +265,7 @@
 		//VAR
 		var current_exam;
 
-		this.resetMain = function() {
+		this.resetMain = function () {
 			this.sessionEnrolls.style.visibility = "hidden";
 			this.record_button.style.visibility = "hidden";
 			this.publish_button.style.visibility = "hidden";
@@ -221,7 +273,7 @@
 		}
 
 
-		this.resetModal = function() {
+		this.resetModal = function () {
 			//this.modal.style.visibility = "hidden";
 			this.modal_title.textContent = "";
 			this.modal_message.textContent = "";
@@ -236,14 +288,14 @@
 			this.recordLegalValue.style.visibility = "hidden";
 		}
 
-		this.save = function(exam_date_id) {
+		this.save = function (exam_date_id) {
 			this.current_exam = exam_date_id;
 		}
 
-		this.show = function(exam_date_id) {
+		this.show = function (exam_date_id) {
 			var self = this;
 			makeCall("GET", "GetSessionEnrolls?exam_date_id=" + exam_date_id, null,
-				function(req) {
+				function (req) {
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
@@ -266,7 +318,7 @@
 			this.multiple_modify_button.style.visibility = "visible";
 		};
 
-		this.update = function(courlist) {
+		this.update = function (courlist) {
 			var elem, flag, row, destcell, input, select, option, label, button;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
 			this.multipleModalForm.innerHTML = "";
@@ -275,7 +327,7 @@
 			// build updated list
 			var self = this;     //FIRST 
 			flag = 0;
-			courlist.forEach(function(examdates) { // self visible here, not this
+			courlist.forEach(function (examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = examdates.IDstudent;
@@ -443,7 +495,7 @@
 			button.addEventListener("click", (e) => {
 				var form = e.target.closest("form");
 				if (form.checkValidity()) {
-					var array = $("input[name='IDStudent']:checked").map(function() {
+					var array = $("input[name='IDStudent']:checked").map(function () {
 						return this.value;
 					}).get();
 					var score = form.querySelector("select[name = 'score']").value;
@@ -456,7 +508,7 @@
 
 					var self = this;
 					makeCallJSON("POST", 'UpdateMultipleScore', form,
-						function(req) {
+						function (req) {
 							if (req.readyState == 4) {
 								var message = req.responseText;
 								if (req.status == 200) {
@@ -511,7 +563,7 @@
 
 		}
 
-		this.recordFunction = function(e) {
+		this.recordFunction = function (e) {
 			// create an input field where to put the exam_date_id to be sent to the servlet
 			var input = sessionEnrolls.recordInput;
 			input.setAttribute("value", sessionEnrolls.current_exam);
@@ -521,7 +573,7 @@
 			if (form.checkValidity()) {
 				var self = sessionEnrolls;
 				makeCall("POST", 'RecordScores', form,
-					function(req) {
+					function (req) {
 						if (req.readyState == XMLHttpRequest.DONE) {
 							var message = req.responseText;
 							if (req.status == 200) {
@@ -540,12 +592,12 @@
 			}
 		}
 
-		this.isModifible = function(status) {
+		this.isModifible = function (status) {
 			if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
 				return true;
 		}
 
-		this.AppendIfNOTINSERTED = function(ed) {
+		this.AppendIfNOTINSERTED = function (ed) {
 
 			var rowModal, label, div;
 			div = document.createElement("div");
@@ -567,7 +619,7 @@
 		}
 
 		// When the user clicks on <span> (x), close the modal
-		this.CloseButton = function() {
+		this.CloseButton = function () {
 			this.modal.style.display = "none";
 		}
 
@@ -580,7 +632,7 @@
 
 
 		/* Update the parameters in the Single Modify Modal Window*/
-		this.update_single_modifier = function(id, name, surname, email, score, coursedeg, status) {
+		this.update_single_modifier = function (id, name, surname, email, score, coursedeg, status) {
 
 			/****FIRST TABLE******/
 			this.f_id.textContent = id;
@@ -611,7 +663,7 @@
 				var new_score = form.querySelector("select[name = 'score']").value;
 				if (form.checkValidity()) {
 					makeCall("POST", "UpdateScore", form,
-						function(req) {
+						function (req) {
 							var self2 = self;
 							if (req.readyState == 4) {
 								var self3 = self2;
@@ -645,7 +697,7 @@
 		/*Function That Support the PUBLISH button*/
 		document.getElementById("publish").addEventListener('click', (event) => {
 			makeCall("POST", "UpdateStatus", event.target.closest("form"),
-				function(req) {
+				function (req) {
 					if (req.readyState == 4) {
 						switch (req.status) {
 							case 200:
@@ -667,7 +719,7 @@
 
 
 
-		this.showRecordedEnrolls = function(record) {
+		this.showRecordedEnrolls = function (record) {
 			var row, destcell;
 			// clear the modal page
 			this.resetModal();
@@ -680,7 +732,7 @@
 
 			// fill the table with recorded enrolls
 			var self = this;
-			record.recordedEnrolls.forEach(function(recordedEnroll) {
+			record.recordedEnrolls.forEach(function (recordedEnroll) {
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = recordedEnroll.IDstudent;
@@ -709,12 +761,18 @@
 			this.recordLegalValue.style.visibility = "visible";
 		}
 
+
+
+
+
+
+
 	}
 
 	function PageOrchestrator() {
 		var alertContainer = document.getElementById("id_alert");
 
-		this.start = function() {
+		this.start = function () {
 			var user = sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			var id = sessionStorage.getItem('id')
 			personalMessage = new PersonalMessage(user, id, document.getElementById("id"), document.getElementById("id_username"));
@@ -742,7 +800,7 @@
 
 
 
-		this.refresh = function() {
+		this.refresh = function () {
 			alertContainer.textContent = "";
 			courseList.reset();
 			courseDate.reset();
@@ -750,5 +808,7 @@
 			sessionEnrolls.resetModal();
 			courseList.show();
 		};
+
+
 	}
 })();
