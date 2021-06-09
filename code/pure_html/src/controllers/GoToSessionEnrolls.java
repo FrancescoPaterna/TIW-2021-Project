@@ -26,6 +26,7 @@ import dao.EnrollsDAO;
 import dao.ExamDateDAO;
 
 import utils.ConnectionHandler;
+import utils.Rebuilder;
 
 /**
  * Servlet implementation class GoToSessionEnrolls
@@ -72,7 +73,6 @@ public class GoToSessionEnrolls extends HttpServlet {
 		String maskget;
 		String path;
 		Boolean publish = true, record = true;
-		String recovered_mask;
 
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -401,9 +401,9 @@ public class GoToSessionEnrolls extends HttpServlet {
 			e.printStackTrace();
 		}
 
-	
+		String recovered_mask = Rebuilder.resetMask(mask);
 		
-		ctx.setVariable("recovered_mask", mask);
+		ctx.setVariable("recovered_mask", recovered_mask);
 		ctx.setVariable("publish", publish);
 		ctx.setVariable("record", record);
 		ctx.setVariable("course_id", course_id);
