@@ -518,6 +518,8 @@
 									if (req.status == 200) {
 										var record = JSON.parse(req.responseText);
 										self.showRecordedEnrolls(record); // self visible by closure
+										self.resetMain();
+										self.show(self.current_exam);
 									} else {
 										self.alert.textContent = message;
 									}
