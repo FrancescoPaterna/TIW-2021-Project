@@ -359,7 +359,7 @@
 				destcell = document.createElement("td");
 				if (examdates.status == "NOT_INSERTED") {
 					self.AppendIfNOTINSERTED(examdates);
-					this.multiple_modify_button_flag = true;
+					self.multiple_modify_button_flag = true;
 				}
 
 				// if there is a mark in "PUBLISHED" status, enable publish button
@@ -410,9 +410,9 @@
 				self.sessionEnrollsBody.appendChild(row);
 
 			});
-			self.multiple_modify_button.classList.add("modifylo");
+			self.multiple_modify_button.setAttribute("class", "modifylo");
 
-			if(self.multiple_modify_button_flag == true){
+			if(self.multiple_modify_button_flag){
 			self.multipleModalForm.appendChild(document.createElement("br"));
 
 			select = document.createElement("select");
@@ -544,7 +544,7 @@
 			});
 
 			self.multipleModalForm.appendChild(button);
-			self.multiple_modify_button.classList.add("modify");
+			self.multiple_modify_button.setAttribute("class", "modify");
 			self.multiple_modify_button.addEventListener("click", (e) => {
 				self.resetModal();
 				self.modal_title.textContent = "MULTIPLE MODIFY";
