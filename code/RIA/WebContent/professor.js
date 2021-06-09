@@ -192,6 +192,7 @@
 		/**************/this.s_surname = document.getElementById("modify_surname");
 
 		//+++++++++++++++++++++++++++++++++++++++++++++RECORD++++++++++++++++++++++++++++++++++++++++++++++++//
+		this.isRecordable;
 		this.recordDiv = document.getElementById("recordDiv");
 		this.recordTable = document.getElementById("recordTable");
 		this.recordTableBody = document.getElementById("recordTableBody");
@@ -226,7 +227,7 @@
 			this.first_single_modify.style.visibility = "hidden";
 			this.second_single_modify.style.visibility = "hidden";
 			this.multipleModalForm.style.visibility = "hidden";
-			this.recordDiv.style.display = "none";
+			this.recordDiv.style.visibility = "hidden";
 			this.recordTable.style.visibility = "hidden";
 			this.recordTableBody.style.visibility = "hidden";
 			this.recordLogo.style.visibility = "hidden";
@@ -267,6 +268,8 @@
 			var elem, flag, row, destcell, input, select, option, label, button;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
 			this.multipleModalForm.innerHTML = "";
+			//clear memory on record button
+			this.isRecordable = false;
 			// build updated list
 			var self = this;     //FIRST 
 			flag = 0;
@@ -297,11 +300,11 @@
 				if (examdates.status == "NOT_INSERTED") {
 					self.AppendIfNOTINSERTED(examdates);
 				}
-
-
-
-
-
+				
+				// if there is a mark in "PUBLISHED" status, enable record button
+				if(examdates.status.trim() == "PUBLISHED"){
+					self.isRecordable = true;
+				} 
 
 				/*If a score == INSERTED OR NOT_INSERTED OR PUBLISH, Enable the Single Modify Button */
 				if (self.isModifible(examdates.status.trim())) {
@@ -490,6 +493,47 @@
 				}, false);
 			}, false);
 
+			
+
+			// Register event to record button only if there is at least one mark in the "PUBLISHED" status
+			if(self.isRecordable) {
+				// make the record button clickable
+				self.record_button.setAttribute("class", "record")
+				self.record_button.addEventListener("click", (e) => {
+					// create an input field where to put the exam_date_id to be sent to the servlet
+					input = document.createElement("input");
+					input.setAttribute("type", "hidden");
+					input.setAttribute("name", "exam_date_id");
+					input.setAttribute("value", this.current_exam);
+					this.recordForm.appendChild(input);
+
+					// send the form if valid
+					var form = e.target.closest("form");
+					if (form.checkValidity()) {
+						var self = this;
+						makeCall("POST", 'RecordScores', form,
+							function (req) {
+								if (req.readyState == XMLHttpRequest.DONE) {
+									var message = req.responseText;
+									if (req.status == 200) {
+										var record = JSON.parse(req.responseText);
+										self.showRecordedEnrolls(record); // self visible by closure
+									} else {
+										self.alert.textContent = message;
+									}
+								}
+							}
+						);
+					} else {
+						form.reportValidity();
+					}
+				});
+			} else {
+				// make the record button inactive
+				self.record_button.setAttribute("class", "recordlo")
+			}
+			
+
 		}
 
 		this.isModifible = function (status) {
@@ -617,49 +661,20 @@
 
 
 
-		// Register event to record button
-		this.record_button.addEventListener("click", (e) => {
-			// create an input field where to put the exam_date_id to be sent to the servlet
-			input = document.createElement("input");
-			input.setAttribute("type", "hidden");
-			input.setAttribute("name", "exam_date_id");
-			input.setAttribute("value", this.current_exam);
-			this.recordForm.appendChild(input);
-
-			// send the form if valid
-			var form = e.target.closest("form");
-			if (form.checkValidity()) {
-				var self = this;
-				makeCall("POST", 'RecordScores', form,
-					function (req) {
-						if (req.readyState == XMLHttpRequest.DONE) {
-							var message = req.responseText;
-							if (req.status == 200) {
-								var record = JSON.parse(req.responseText);
-								self.showRecordedEnrolls(record); // self visible by closure
-							} else {
-								self.alert.textContent = message;
-							}
-						}
-					}
-				);
-			} else {
-				form.reportValidity();
-			}
-		})
-
 
 
 		this.showRecordedEnrolls = function (record) {
 			var row, destcell;
+			// clear the modal page
 			this.resetModal();
-			this.modal_title = "Record generated";
 			this.modal.style.display = "block";
+			// setup the modal page content
 			this.modal_title.textContent = "University of NightCity Official Record";
 			this.modal_message.textContent = 'Document #' + record.IDRecord + ' - generated and digitally signed on ' + record.date +
 				' at ' + record.time;
-			this.recordDiv.style.display = "block";
+			this.recordDiv.style.visibility = "visible";
 
+			// fill the table with recorded enrolls
 			var self = this;
 			record.recordedEnrolls.forEach(function (recordedEnroll) {
 				row = document.createElement("tr");
@@ -674,14 +689,16 @@
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
 				destcell.textContent = recordedEnroll.mark;
+				row.appendChild(destcell);
 				self.recordTableBody.appendChild(row);
 			});
 
+			// register event on close button
 			this.span.addEventListener("click", (c) => {
-				// dependency close button
 				self.modal.style.display = "none";
 			}, false);
 
+			// show only record components in the modal page
 			this.recordTable.style.visibility = "visible";
 			this.recordTableBody.style.visibility = "visible";
 			this.recordLogo.style.visibility = "visible";

@@ -57,6 +57,11 @@
 	margin-right: 10px;
 }
 
+.recordtable {
+	margin: 0 0 40px 0;
+	width: max-content;
+	display: inline-table;
+}
 
 tr {
 	display: table-row;
@@ -143,7 +148,7 @@ a:hover {
 	width: 250px;
 }
 
-#record {
+.record {
 	background-color: #4e9a06;
 	padding: 12px 15px;
 	border-radius: 6px;
@@ -153,13 +158,13 @@ a:hover {
 	width: 250px;
 }
 
-#record:hover {
+.record:hover {
 	background-color: #80dd25;
 }
 
 /* RECORDLO OLD COLOR #8ae234;  #8c8768*  #cab928/
 /* PUBLISHLO OLD COLOR #fde946 */
-#recordlo {
+.recordlo {
 	background-color: #8c8768;
 	padding: 12px 15px;
 	border-radius: 6px;
