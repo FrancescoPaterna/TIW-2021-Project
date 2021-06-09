@@ -22,7 +22,6 @@ import beans.User;
 import dao.EnrollsDAO;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
-import utils.Rebuilder;
 
 /**
  * Servlet implementation class UpdateStatus
@@ -70,7 +69,7 @@ public class UpdateStatus extends HttpServlet {
 		if (user.getRole().equals("professor")) {
 
 			Integer exam_date_id;
-			Integer sort = 1;
+			Integer sort = Integer.parseInt(request.getParameter("sort"));
 			Integer secretsortcode, course_id;
 			String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 			String mask;
@@ -79,7 +78,7 @@ public class UpdateStatus extends HttpServlet {
 			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-			secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
+			//secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
 			course_id = Integer.parseInt(request.getParameter("course_id"));
 			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
@@ -132,9 +131,8 @@ public class UpdateStatus extends HttpServlet {
 				}
 			
 
-			recovered_mask = Rebuilder.resetMask(mask, secretsortcode);
-			sort = Rebuilder.resetSecretSortCode(secretsortcode);	
-			String sorturl = "?mask=" + recovered_mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + String.valueOf(sort);
+			//sort = Rebuilder.resetSecretSortCode(secretsortcode);	
+			String sorturl = "?mask=" + mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + sort;
 			target = "/GoToSessionEnrolls";
 			path = getServletContext().getContextPath();
 			response.sendRedirect(path + target + sorturl);

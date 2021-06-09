@@ -24,7 +24,6 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import beans.Enroll;
 import beans.User;
 import utils.ConnectionHandler;
-import utils.Rebuilder;
 
 import dao.EnrollsDAO;
 import dao.ExamDateDAO;
@@ -75,10 +74,10 @@ public class GoToRecord extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		// If the user is not logged in (not present in session) redirect to the login
 		HttpSession session = request.getSession();
 
-		int sort = 1;
+		// int sort = 1;
 		int rec, secretsortcode, exam_date_id, course_id;
 		String mask, recovered_mask, coursename, date, time, path;
 		Timestamp timestamp;
@@ -87,24 +86,18 @@ public class GoToRecord extends HttpServlet {
 		RecordDAO recordDAO = new RecordDAO(connection);
 		ExamDateDAO examdatedao = new ExamDateDAO(connection);
 		User user = (User) session.getAttribute("user");
-
+		Integer sort = Integer.parseInt(request.getParameter("sort"));
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
 		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
 		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-		secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
+		// secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
 		// target = "/GoToSessionEnrolls";
 
 		path = "/WEB-INF/Record.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
-		recovered_mask = Rebuilder.resetMask(mask, secretsortcode);
-		sort = Rebuilder.resetSecretSortCode(secretsortcode);
-
-		ctx.setVariable("mask", recovered_mask);
-		ctx.setVariable("sort", sort);
 
 		List<Enroll> recorded;
 
@@ -167,6 +160,8 @@ public class GoToRecord extends HttpServlet {
 
 				// Redirect to the HomePage and add courses to the parameters*/
 
+				ctx.setVariable("mask", mask);
+				ctx.setVariable("sort", sort);
 				ctx.setVariable("recorded", recorded);
 				ctx.setVariable("rec", rec);
 				ctx.setVariable("coursename", coursename);

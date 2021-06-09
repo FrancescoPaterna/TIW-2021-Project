@@ -21,7 +21,6 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import dao.EnrollsDAO;
 //import beans.User;
 import utils.ConnectionHandler;
-import utils.Rebuilder;
 
 /**
  * Servlet implementation class GoToMOdify
@@ -59,10 +58,10 @@ public class GoToModify extends HttpServlet {
 		// User user = (User) session.getAttribute("user"); //TDDO Da usare per un
 		// controllo
 
-		Integer secretsortcode, course_id, id_stud, exam_date_id, sort;
+		Integer course_id, id_stud, exam_date_id, sort;
 		String coursename, mask, date, name, surname, email, coursedeg, mark, status, recovered_mask;
 
-		secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
+		sort = Integer.parseInt(request.getParameter("sort"));
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		id_stud = Integer.parseInt(request.getParameter("id_stud"));
 		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
@@ -89,11 +88,7 @@ public class GoToModify extends HttpServlet {
 			return;
 		}
 
-		recovered_mask = Rebuilder.resetMask(mask, secretsortcode);
-		sort = Rebuilder.resetSecretSortCode(secretsortcode);
-
-		ctx.setVariable("mask", recovered_mask);
-		ctx.setVariable("sort", sort);
+		
 
 		if (!isModifiable) {
 			path = "/WEB-INF/Warning.html";
@@ -102,12 +97,12 @@ public class GoToModify extends HttpServlet {
 			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}
-
-		ctx.setVariable("secret_code", secretsortcode);
+		
+		ctx.setVariable("sort", sort);
 		ctx.setVariable("course_id", course_id);
 		ctx.setVariable("id_stud", id_stud);
 		ctx.setVariable("exam_date_id", exam_date_id);
-
+		ctx.setVariable("mask", mask);
 		ctx.setVariable("mark", mark);
 		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("date", date);

@@ -50,8 +50,6 @@ public class GoToSessionEnrolls extends HttpServlet {
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
 
-	
-
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -66,7 +64,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 
 		Integer course_id = null;
 		Integer exam_date_id = null;
-		Integer secretsortcode = null;
+		// Integer secretsortcode = null;
 		String sort;
 		String coursename;
 		String date;
@@ -74,7 +72,8 @@ public class GoToSessionEnrolls extends HttpServlet {
 		String maskget;
 		String path;
 		Boolean publish = true, record = true;
-		
+		String recovered_mask;
+
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
@@ -85,19 +84,17 @@ public class GoToSessionEnrolls extends HttpServlet {
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
 
-		
 		ExamDateDAO examdateDAO = new ExamDateDAO(connection);
 		User user = (User) session.getAttribute("user");
 
-		
 		try {
-			if(!examdateDAO.CheckExamDateByProf(user.getId(), exam_date_id)) {
-				 path ="/WEB-INF/Forbidden.html";
-					ctx.setVariable("error", "UNAUTHORIZED ACCESS");
-					ctx.setVariable("description", "Attempt to access a resource not owned by you!");
-					templateEngine.process(path, ctx, response.getWriter());
-					session.invalidate();
-					return;
+			if (!examdateDAO.CheckExamDateByProf(user.getId(), exam_date_id)) {
+				path = "/WEB-INF/Forbidden.html";
+				ctx.setVariable("error", "UNAUTHORIZED ACCESS");
+				ctx.setVariable("description", "Attempt to access a resource not owned by you!");
+				templateEngine.process(path, ctx, response.getWriter());
+				session.invalidate();
+				return;
 			}
 		} catch (NumberFormatException | NullPointerException e) {
 			// only for debugging e.printStackTrace();
@@ -112,10 +109,8 @@ public class GoToSessionEnrolls extends HttpServlet {
 		List<Enroll> enrolls = new ArrayList<>();
 		path = "/WEB-INF/ExamEnrolls.html";
 
-		
 		if (sort.equals("0")) {
 			maskget = "2222222";
-			secretsortcode = 00;
 			try {
 				enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
 
@@ -125,11 +120,10 @@ public class GoToSessionEnrolls extends HttpServlet {
 				return;
 			}
 		}
-		
+
 		else if (sort.equals("1")) {
 			if (mask.charAt(0) == '0' || mask.charAt(0) == '2') {
-				maskget = '1' + mask.substring(1, 7);
-				secretsortcode = 10;
+				maskget = '1' + "222222";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
 
@@ -139,8 +133,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = '0' + mask.substring(1, 7);
-				secretsortcode = 11;
+				maskget = '0' + "222222";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByIDDesc(exam_date_id);
 
@@ -153,8 +146,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 
 		} else if (sort.equals("2")) {
 			if (mask.charAt(1) == '0' || mask.charAt(1) == '2') {
-				maskget = mask.substring(0,1) + '1' + mask.substring(2, 7);
-				secretsortcode = 20;
+				maskget = "2" + '1' + "22222";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByNameAsc(exam_date_id);
 
@@ -164,8 +156,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = mask.substring(0,1) + '0' + mask.substring(2, 7);
-				secretsortcode = 21;
+				maskget = "2" + '0' + "22222";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByNameDesc(exam_date_id);
 
@@ -177,8 +168,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 			}
 		} else if (sort.equals("3")) {
 			if (mask.charAt(2) == '0' || mask.charAt(2) == '2') {
-				maskget = mask.substring(0, 2) + '1' + mask.substring(3, 7);
-				secretsortcode = 30;
+				maskget = "22" + '1' + "2222";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedBySurnameAsc(exam_date_id);
 
@@ -188,8 +178,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = mask.substring(0, 2) + '0' + mask.substring(3, 7);
-				secretsortcode = 31;
+				maskget = "22" + '0' + "2222";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedBySurnameDesc(exam_date_id);
 
@@ -201,8 +190,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 			}
 		} else if (sort.equals("4")) {
 			if (mask.charAt(3) == '0' || mask.charAt(3) == '2') {
-				maskget = mask.substring(0, 3) + '1' + mask.substring(4, 7);
-				secretsortcode = 40;
+				maskget = "222" + '1' + "222";
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByEmailAsc(exam_date_id);
@@ -212,8 +200,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = mask.substring(0, 3) + '0' + mask.substring(4, 7);
-				secretsortcode = 41;
+				maskget = "222" + '0' + "222";
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByEmailDesc(exam_date_id);
@@ -225,8 +212,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 			}
 		} else if (sort.equals("5")) {
 			if (mask.charAt(4) == '0' || mask.charAt(4) == '2') {
-				maskget = mask.substring(0, 4) + '1' + mask.substring(5, 7);
-				secretsortcode = 50;
+				maskget = "2222" + '1' + "22";
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByCoursedegAsc(exam_date_id);
@@ -236,8 +222,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = mask.substring(0, 4) + '0' + mask.substring(5, 7);
-				secretsortcode = 51;
+				maskget = "2222" + '0' + "22";
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByCoursedegDesc(exam_date_id);
 				} catch (SQLException e) {
@@ -248,8 +233,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 			}
 		} else if (sort.equals("6")) {
 			if (mask.charAt(5) == '0' || mask.charAt(5) == '2') {
-				maskget = mask.substring(0, 5) + '1' + mask.substring(6, 7);
-				secretsortcode = 60;
+				maskget = "22222" + '1' + '2';
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByMarkAsc(exam_date_id);
@@ -259,8 +243,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = mask.substring(0, 5) + '0' + mask.substring(6, 7);
-				secretsortcode = 61;
+				maskget = "22222" + '0' + '2';
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByMarkDesc(exam_date_id);
 				} catch (SQLException e) {
@@ -273,8 +256,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 
 		else if (sort.equals("7")) {
 			if (mask.charAt(6) == '0' || mask.charAt(6) == '2') {
-				maskget = mask.substring(0, 6) + '1';
-				secretsortcode = 70;
+				maskget = "222222" + '1';
 
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByStatusAsc(exam_date_id);
@@ -284,8 +266,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 					return;
 				}
 			} else {
-				maskget = mask.substring(0, 6) + '0';
-				secretsortcode = 71;
+				maskget = "222222" + '0';
 				try {
 					enrolls = enrollsDAO.FindEnrollsOrderedByStatusDesc(exam_date_id);
 				} catch (SQLException e) {
@@ -301,18 +282,128 @@ public class GoToSessionEnrolls extends HttpServlet {
 			return;
 
 		}
-		
-	
-			try {
-				publish = enrollsDAO.assertion_published(exam_date_id);
-				record = enrollsDAO.assertion_record(exam_date_id);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-	
-		
 
+		/*
+		 * if (sort.equals("0")) { maskget = "2222222"; secretsortcode = 00; try {
+		 * enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } }
+		 * 
+		 * else if (sort.equals("1")) { if (mask.charAt(0) == '0' || mask.charAt(0) ==
+		 * '2') { maskget = '1' + mask.substring(1, 7); secretsortcode = 10; try {
+		 * enrolls = enrollsDAO.FindEnrollsOrderedByIDAsc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = '0' + mask.substring(1, 7); secretsortcode = 11; try { enrolls =
+		 * enrollsDAO.FindEnrollsOrderedByIDDesc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } }
+		 * 
+		 * } else if (sort.equals("2")) { if (mask.charAt(1) == '0' || mask.charAt(1) ==
+		 * '2') { maskget = mask.substring(0,1) + '1' + mask.substring(2, 7);
+		 * secretsortcode = 20; try { enrolls =
+		 * enrollsDAO.FindEnrollsOrderedByNameAsc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = mask.substring(0,1) + '0' + mask.substring(2, 7); secretsortcode =
+		 * 21; try { enrolls = enrollsDAO.FindEnrollsOrderedByNameDesc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } } else if
+		 * (sort.equals("3")) { if (mask.charAt(2) == '0' || mask.charAt(2) == '2') {
+		 * maskget = mask.substring(0, 2) + '1' + mask.substring(3, 7); secretsortcode =
+		 * 30; try { enrolls = enrollsDAO.FindEnrollsOrderedBySurnameAsc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = mask.substring(0, 2) + '0' + mask.substring(3, 7); secretsortcode =
+		 * 31; try { enrolls = enrollsDAO.FindEnrollsOrderedBySurnameDesc(exam_date_id);
+		 * 
+		 * } catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } } else if
+		 * (sort.equals("4")) { if (mask.charAt(3) == '0' || mask.charAt(3) == '2') {
+		 * maskget = mask.substring(0, 3) + '1' + mask.substring(4, 7); secretsortcode =
+		 * 40;
+		 * 
+		 * try { enrolls = enrollsDAO.FindEnrollsOrderedByEmailAsc(exam_date_id); }
+		 * catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = mask.substring(0, 3) + '0' + mask.substring(4, 7); secretsortcode =
+		 * 41;
+		 * 
+		 * try { enrolls = enrollsDAO.FindEnrollsOrderedByEmailDesc(exam_date_id); }
+		 * catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } } else if
+		 * (sort.equals("5")) { if (mask.charAt(4) == '0' || mask.charAt(4) == '2') {
+		 * maskget = mask.substring(0, 4) + '1' + mask.substring(5, 7); secretsortcode =
+		 * 50;
+		 * 
+		 * try { enrolls = enrollsDAO.FindEnrollsOrderedByCoursedegAsc(exam_date_id); }
+		 * catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = mask.substring(0, 4) + '0' + mask.substring(5, 7); secretsortcode =
+		 * 51; try { enrolls =
+		 * enrollsDAO.FindEnrollsOrderedByCoursedegDesc(exam_date_id); } catch
+		 * (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } } else if
+		 * (sort.equals("6")) { if (mask.charAt(5) == '0' || mask.charAt(5) == '2') {
+		 * maskget = mask.substring(0, 5) + '1' + mask.substring(6, 7); secretsortcode =
+		 * 60;
+		 * 
+		 * try { enrolls = enrollsDAO.FindEnrollsOrderedByMarkAsc(exam_date_id); } catch
+		 * (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = mask.substring(0, 5) + '0' + mask.substring(6, 7); secretsortcode =
+		 * 61; try { enrolls = enrollsDAO.FindEnrollsOrderedByMarkDesc(exam_date_id); }
+		 * catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } }
+		 * 
+		 * else if (sort.equals("7")) { if (mask.charAt(6) == '0' || mask.charAt(6) ==
+		 * '2') { maskget = mask.substring(0, 6) + '1'; secretsortcode = 70;
+		 * 
+		 * try { enrolls = enrollsDAO.FindEnrollsOrderedByStatusAsc(exam_date_id); }
+		 * catch (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } else {
+		 * maskget = mask.substring(0, 6) + '0'; secretsortcode = 71; try { enrolls =
+		 * enrollsDAO.FindEnrollsOrderedByStatusDesc(exam_date_id); } catch
+		 * (SQLException e) {
+		 * response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Not possible to recover enrolls for this exam date"); return; } } }
+		 * 
+		 * else { response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+		 * "Attempted SQL Injection"); return;
+		 * 
+		 * }
+		 */
+
+		try {
+			publish = enrollsDAO.assertion_published(exam_date_id);
+			record = enrollsDAO.assertion_record(exam_date_id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	
 		
+		ctx.setVariable("recovered_mask", mask);
 		ctx.setVariable("publish", publish);
 		ctx.setVariable("record", record);
 		ctx.setVariable("course_id", course_id);
@@ -321,7 +412,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("date", date);
 		ctx.setVariable("mask", maskget);
-		ctx.setVariable("secret_code", secretsortcode);
+		ctx.setVariable("sort", sort);
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 

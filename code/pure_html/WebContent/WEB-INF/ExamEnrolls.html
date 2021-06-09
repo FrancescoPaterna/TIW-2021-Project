@@ -163,8 +163,8 @@
 						<form action="GoToModify" method="GET">
 							<input type="hidden" name="coursename" id="coursename"
 								th:value="${coursename}" /> <input type="hidden"
-								name="secret_code" th:value="${secret_code}" /> <input
-								type="hidden" name="mask" th:value="${mask}" /> <input
+								name="sort" th:value="${sort}" /> <input
+								type="hidden" name="mask" th:value="${recovered_mask}" /> <input
 								type="hidden" name="date" th:value="${date}" /> <input
 								type="hidden" name="exam_date_id" th:value="${exam_date_id}" />
 							<input type="hidden" name="course_id" th:value="${course_id}" />
@@ -195,9 +195,9 @@
 			<form class=proenrollform action="UpdateStatus" method="POST">
 				<input type="hidden" name="coursename" id="coursename"
 					th:value="${coursename}" /> <input type="hidden" name="mask"
-					th:value="${mask}" /> <input type="hidden" name="date"
-					th:value="${date}" /> <input type="hidden" name="secret_code"
-					th:value="${secret_code}" /> <input type="hidden" name="course_id"
+					th:value="${recovered_mask}" /> <input type="hidden" name="date"
+					th:value="${date}" /> <input type="hidden" name="sort"
+					th:value="${sort}" /> <input type="hidden" name="course_id"
 					th:value="${course_id}" />
 
 				<button th:class="${publish} ? publish : publishlo"
@@ -209,8 +209,8 @@
 			<form class=proenrollform action="GoToRecord" method="POST">
 				<input type="hidden" name="coursename" id="coursename"
 					th:value="${coursename}" /> <input type="hidden"
-					name="secret_code" th:value="${secret_code}" /> <input
-					type="hidden" name="mask" th:value="${mask}" /> <input
+					name="sort" th:value="${sort}" /> <input
+					type="hidden" name="mask" th:value="${recovered_mask}" /> <input
 					type="hidden" name="date" th:value="${date}" /> <input
 					type="hidden" name="course_id" th:value="${course_id}" />
 

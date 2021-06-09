@@ -68,7 +68,7 @@ public class UpdateScore extends HttpServlet {
 		Integer secret_code, course_id, id_stud, exam_date_id, sort;
 		String coursename, mask, date, name, surname, email, coursedeg, score, path;
 
-		secret_code = Integer.parseInt(request.getParameter("secret_code"));
+		//secret_code = Integer.parseInt(request.getParameter("secret_code"));
 		course_id = Integer.parseInt(request.getParameter("course_id"));
 		id_stud = Integer.parseInt(request.getParameter("id_stud"));
 		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
@@ -128,7 +128,7 @@ public class UpdateScore extends HttpServlet {
 		}
 		
 		path = getServletContext().getContextPath();
-		response.sendRedirect(path + "/GoToModify?secret_code=" + secret_code + "&course_id=" + course_id + "&id_stud=" + 
+		response.sendRedirect(path + "/GoToModify?course_id=" + course_id + "&id_stud=" + 
 				id_stud + "&exam_date_id=" + exam_date_id + "&mark=" +  score + "&sort=" + sort + "&coursename=" + coursename + "&mask=" + 
 				mask + "&date=" + date + "&name=" + name + "&surname=" + surname + "&email=" + email + "&coursedeg=" + 
 				coursedeg + "&status=" + "INSERTED");
