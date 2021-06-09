@@ -455,7 +455,12 @@
 							if (req.readyState == 4) {
 								var message = req.responseText;
 								if (req.status == 200) {
-									// TODO pageOrchestrator.refresh();
+									self.resetModal();
+									self.modal_title.textContent = "CONFIRMED";
+									self.modal_message.textContent = "SCORE CORRECTLY UPDATED";
+									self.modal_content.style.height = "auto";
+									self.resetMain();
+									self.show(self.current_exam);
 								} else {
 									self.alert.textContent = message;
 								}
@@ -507,7 +512,7 @@
 			div.appendChild(label);
 
 			label.setAttribute("for", ed.IDstudent);
-			label.textContent = ed.IDstudent + "  " + ed.name + "  " + ed.surname;
+			label.textContent = "  " + ed.IDstudent + " - " + ed.name + "  " + ed.surname;
 			this.multipleModalForm.appendChild(div);
 
 			this.multipleModalForm.appendChild(document.createElement("br"));

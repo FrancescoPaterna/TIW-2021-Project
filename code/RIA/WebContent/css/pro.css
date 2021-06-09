@@ -354,3 +354,8 @@ th.sortable:active {
 	font-size: 25px;
 
 }
+
+input[type=checkbox] {
+	transform: scale(1.2);
+	cursor: pointer;
+}
