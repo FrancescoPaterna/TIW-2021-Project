@@ -425,10 +425,9 @@ public class EnrollsDAO {
 	public boolean checkModifiableCondition(int examDateId, int studentId) throws SQLException {
 		
 		boolean isStatusModifiable;
-		//String query = "SELECT * FROM projectdb.enroll WHERE IDExamDate = ? AND IDStudent = ? AND status =  "
 		String query = "SELECT * \r\n" +
 				"FROM projectdb.enroll \r\n" + 
-				"WHERE IDExamDate = ? AND IDStudent = ? AND (status = 'NOT_INSERTED' OR status = 'INSERTED' OR status = 'PUBLISHED')";
+				"WHERE IDExamDate = ? AND IDStudent = ? AND (status = 'NOT_INSERTED' OR status = 'INSERTED')";
 		
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, examDateId);
@@ -445,7 +444,7 @@ public class EnrollsDAO {
 
 	public int insertMark(int examDateId, int studentId, String mark) throws SQLException {
 		int modifiedRows = 0;
-		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE (IDExamDate = ? AND IDStudent = ?) AND (status = 'INSERTED' OR status = 'NOT_INSERTED' OR status = 'PUBLISHED') ";
+		String query = "UPDATE projectdb.enroll SET status='INSERTED', mark = ? WHERE (IDExamDate = ? AND IDStudent = ?) AND (status = 'INSERTED' OR status = 'NOT_INSERTED') ";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setString(1, mark);
 			pstatement.setInt(2, examDateId);

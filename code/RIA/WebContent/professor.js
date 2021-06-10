@@ -655,7 +655,7 @@
 
 
 		this.isModifible = function (status) {
-			if (status == "NOT_INSERTED" || status == "INSERTED" || status == "PUBLISHED")
+			if (status == "NOT_INSERTED" || status == "INSERTED")
 				return true;
 		}
 

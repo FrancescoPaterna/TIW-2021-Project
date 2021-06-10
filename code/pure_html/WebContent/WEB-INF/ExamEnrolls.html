@@ -180,6 +180,9 @@
 
 								<button th:case="'REJECTED'" th:class=modifylo name="id_stud"
 									type="button" th:value="${e.IDstudent}">Modify</button>
+									
+								<button th:case="'PUBLISHED'" th:class=modifylo name="id_stud"
+									type="button" th:value="${e.IDstudent}">Modify</button>
 
 								<button th:case="*" th:class=modify name="id_stud" type="submit"
 									th:value="${e.IDstudent}">Modify</button>

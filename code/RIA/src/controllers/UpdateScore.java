@@ -79,7 +79,7 @@ public class UpdateScore extends HttpServlet {
 					if (enrollsdao.insertMark(exam_date_id, id_stud, score) == 0) {
 						response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 						response.getWriter()
-								.println("UNAUTHORIZED MODIFY,Attempt to modify a score recorded or refused!");
+								.println("UNAUTHORIZED MODIFY,Attempt to modify a score recorded, published or refused!");
 						session.invalidate();
 						return;
 					}
