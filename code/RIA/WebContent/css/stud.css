@@ -107,13 +107,25 @@ a:hover {
 	background-color: #4b68ff;
 }
 
-.showbar{
+.showbar {
 	display: inline-flex;
 }
 
-.show{
-  margin-left: 10px;
-  margin-right: 10px;
-  display: inline-table;
-  visibility: hidden;
+.show {
+	margin-left: 230px;
+	margin-right: 230px;
+	display: inline-block;
+	visibility: hidden;
+
+}
+
+#showcourse,
+#showdate {
+	font-weight: bold;
+	border-radius: 6px;
+	background-color: var(--stud);
+	color: white;
+	cursor: pointer;
+	width: 178px;
+	height: 28px;
 }
