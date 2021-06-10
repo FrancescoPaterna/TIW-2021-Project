@@ -1,5 +1,5 @@
 /*
-* Professor Managment
+* Professor Management
 */
 
 (function () { // avoid variables ending up in the global scope

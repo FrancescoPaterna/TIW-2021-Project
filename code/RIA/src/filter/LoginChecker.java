@@ -4,15 +4,11 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
-import utils.ConnectionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,22 +21,13 @@ public class LoginChecker implements Filter {
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-
-	}
-
-	/**
-	 * Default constructor.
-	 */
-	public LoginChecker() {
-		// TODO Auto-generated constructor stub
-	}
+	public void init(FilterConfig fConfig) throws ServletException {}
 
 	/**
 	 * @see Filter#destroy()
 	 */
 	public void destroy() {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 	}
 
 	/**
@@ -53,9 +40,11 @@ public class LoginChecker implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		String loginpath = req.getServletContext().getContextPath() + "/index.html";
 
+		
+		// if the user is not logged in, redirect him to the login page
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("user") == null) {
-			ServletContext servletContext = req.getServletContext();
+			s.invalidate();
 			res.sendRedirect(loginpath);
 			return;
 		}

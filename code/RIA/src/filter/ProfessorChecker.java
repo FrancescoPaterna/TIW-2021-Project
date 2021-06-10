@@ -4,7 +4,6 @@ import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -15,18 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import beans.User;
 
-/**
- * Servlet Filter implementation class AdminChecker
- */
 
 public class ProfessorChecker implements Filter {
-
-	/**
-	 * Default constructor.
-	 */
-	public ProfessorChecker() {
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * @see Filter#destroy()
@@ -42,14 +31,15 @@ public class ProfessorChecker implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String loginpath = "WEB-INF/Forbidden.html";
-		// check if the client is an admin
+		String loginpath = req.getServletContext().getContextPath() + "/index.html";
+		
+		// check if the client is a professor, otherwise redirect him to the login page
 		HttpSession s = req.getSession();
 		User u = null;
 		u = (User) s.getAttribute("user");
 		if (!u.getRole().equals("professor")) {
-			ServletContext servletContext = req.getServletContext();
 			req.getSession().invalidate();
+			res.sendRedirect(loginpath);
 			return;
 		}
 		// pass the request along the filter chain
@@ -59,9 +49,7 @@ public class ProfessorChecker implements Filter {
 	/**
 	 * @see Filter#init(FilterConfig)
 	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		ServletContext servletContext = fConfig.getServletContext();
-	}
+	public void init(FilterConfig fConfig) throws ServletException {}
 
 
 }
