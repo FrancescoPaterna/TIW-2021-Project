@@ -133,6 +133,10 @@
 		}
 
 		this.show = function (course_id) {
+			if(course_id == this.current_course){      //ASYNC 2.0
+				this.update(this.currentDateList);
+				return;
+			}
 			var self = this;
 			this.current_course = course_id;
 			makeCall("GET", "GetCourseDatePro?course_id=" + course_id, null,
