@@ -19,7 +19,7 @@ public class CourseDAO {
 	public List<Course> findCoursesByIdProf(int profId) throws SQLException {
 		List<Course> courses = new ArrayList<>();
 		
-		String query = "SELECT * from course where IDProfessor = ? ORDER BY ID ASC";
+		String query = "SELECT * from course where IDProfessor = ? ORDER BY name DESC";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, profId);
 			try (ResultSet result = pstatement.executeQuery();) {
@@ -41,7 +41,7 @@ public class CourseDAO {
 		String query = "SELECT course.ID, course.name, course.IDProfessor\r\n"
 						+ "FROM projectdb.course course JOIN projectdb.signup signup ON course.ID = signup.IDCourse\r\n"
 						+ "WHERE IDStudent = ?\r\n"
-						+ "ORDER BY ID ASC";
+						+ "ORDER BY name DESC";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 			pstatement.setInt(1, studId);
 			try (ResultSet result = pstatement.executeQuery();) {

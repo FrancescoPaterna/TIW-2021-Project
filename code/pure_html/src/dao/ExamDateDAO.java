@@ -18,7 +18,7 @@ public class ExamDateDAO {
 
 	public List<ExamDate> FindExameDateBYCourseForProfessor(int course_id) throws SQLException {
 		List<ExamDate> examdates = new ArrayList<>();
-		String query = "SELECT  IDExam, date  FROM examdate   WHERE IDCourse = ? ";
+		String query = "SELECT  IDExam, date  FROM examdate WHERE IDCourse = ? ORDER BY date DESC";
 		try (PreparedStatement pstatement = con.prepareStatement(query);) {
 			pstatement.setInt(1, course_id);
 			try (ResultSet result = pstatement.executeQuery();) {
