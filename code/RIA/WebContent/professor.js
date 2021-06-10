@@ -322,7 +322,7 @@
 			this.multiple_modify_button.style.visibility = "visible";
 		};
 
-		this.update = function (courlist) {
+		this.update = function (enrolls) {
 			var elem, flag, row, destcell, input, select, option, label, button;
 			this.sessionEnrollsBody.innerHTML = ""; // empty the table body
 			this.multipleModalForm.innerHTML = "";
@@ -333,7 +333,7 @@
 			// build updated list
 			var self = this;     //FIRST 
 			flag = 0;
-			courlist.forEach(function (examdates) { // self visible here, not this
+			enrolls.forEach(function (examdates) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
 				destcell.textContent = examdates.IDstudent;
@@ -362,12 +362,12 @@
 					self.multiple_modify_button_flag = true;
 				}
 
-				// if there is a mark in "PUBLISHED" status, enable publish button
-				if (examdates.status.trim() == "PUBLISHED") {
+				// if there is a mark in "PUBLISHED" or "REJECTED" status, enable record button
+				if (examdates.status.trim() == "PUBLISHED" || examdates.status.trim() == "REJECTED") {
 					self.isRecordable = true;
 				}
 
-				// if there is a mark in "INSERTED" status, enable record button
+				// if there is a mark in "INSERTED" status, enable published button
 				if (examdates.status.trim() == "INSERTED") {
 					self.isPublishable = true;
 				}

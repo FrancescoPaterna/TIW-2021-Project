@@ -478,14 +478,19 @@ public class EnrollsDAO {
 
 	public void recordScore(int examDateId, int recordID) throws SQLException {
 
-		String query = "UPDATE projectdb.enroll SET status='RECORDED' WHERE IDExamDate = ? AND status = 'PUBLISHED'";
-		String query2 = "UPDATE projectdb.enroll SET IDRecord= ? WHERE IDRecord is null AND IDExamDate = ? AND status='RECORDED'";
+		String query1 = "UPDATE projectdb.enroll SET mark='RIMANDATO' WHERE IDExamDate = ? AND status = 'REJECTED'";
+		String query2 = "UPDATE projectdb.enroll SET status='RECORDED' WHERE IDExamDate = ? AND (status = 'PUBLISHED' OR status = 'REJECTED')";
+		String query3 = "UPDATE projectdb.enroll SET IDRecord= ? WHERE IDRecord is null AND IDExamDate = ? AND status='RECORDED'";
 
-		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
+		try (PreparedStatement pstatement = connection.prepareStatement(query1);) {
 			pstatement.setInt(1, examDateId);
 			pstatement.executeUpdate();
 		}
 		try (PreparedStatement pstatement = connection.prepareStatement(query2);) {
+			pstatement.setInt(1, examDateId);
+			pstatement.executeUpdate();
+		}
+		try (PreparedStatement pstatement = connection.prepareStatement(query3);) {
 
 			pstatement.setInt(1, recordID);
 			pstatement.setInt(2, examDateId);
@@ -519,7 +524,7 @@ public class EnrollsDAO {
 	public boolean assertion_record(int id_exam) throws SQLException {
 		boolean assert_rec;
 
-		String query = "SELECT * FROM projectdb.enroll WHERE enroll.IDExamDate = ? AND enroll.status = 'PUBLISHED'";
+		String query = "SELECT * FROM projectdb.enroll WHERE enroll.IDExamDate = ? AND (enroll.status = 'PUBLISHED' OR enroll.status = 'REJECTED')";
 		try (PreparedStatement pstatement = connection.prepareStatement(query);) {
 
 			pstatement.setInt(1, id_exam);
