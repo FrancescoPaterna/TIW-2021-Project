@@ -33,6 +33,7 @@
 		this.alert = _alert;
 		this.coursePro = _id_coursePro;
 		this.courseProBody = _id_courseProBody;
+		this.current_courseList;
 
 		this.reset = function () {
 			this.coursePro.style.visibility = "hidden";
@@ -46,6 +47,7 @@
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesToShow = JSON.parse(req.responseText);
+							courseList.current_courseList = CoursesToShow;
 							if (CoursesToShow.length == 0) {
 								self.alert.textContent = "no courses entered yet";
 								return;
@@ -108,7 +110,8 @@
 			this.coursePro.style.visibility = "visible";
 			document.getElementById("showcourse").addEventListener("click", (e) => {
 				courseList.reset();
-				courseList.show();
+				//courseList.show();   OLD Mode
+				courseList.update(courseList.current_courseList);   //Async 2.0 MODE
 				courseDate.reset();
 				sessionEnrolls.resetMain();
 				document.getElementById("showdate").style.visibility = "hidden";
@@ -123,6 +126,7 @@
 		this.courseDatePro = _id_courseDatePro;
 		this.courseDateProBody = _id_courseDateProBody;
 		this.current_course;
+		this.currentDateList;
 
 		this.reset = function () {
 			this.courseDatePro.style.visibility = "hidden";
@@ -137,6 +141,7 @@
 						var message = req.responseText;
 						if (req.status == 200) {
 							var CoursesDates = JSON.parse(req.responseText);
+							courseDate.currentDateList = CoursesDates;
 							if (CoursesDates.length == 0) {
 								self.alert.textContent = "no exam dates available";
 								return;
@@ -201,7 +206,8 @@
 			this.courseDatePro.style.visibility = "visible";
 			document.getElementById("showdate").addEventListener("click", (e) => {
 				courseDate.reset();
-				courseDate.show(this.current_course);
+				//courseDate.show(this.current_course); OLD MODE
+				courseDate.update(courseDate.currentDateList);  //Async 2.0 MODE
 				sessionEnrolls.resetMain();
 				document.getElementById("showdate").style.visibility = "hidden";
 			}, false); //TODO Repeat bubbling?
@@ -532,6 +538,8 @@
 										self.modal.style.display = "none";
 										self.modal_content.style.height = "auto";
 										self.modal_content.style.width = "80%";
+										self.multiple_modify_button_flag = false;
+										self.multiple_modify_button.removeEventListener("click", (e));
 									} else {
 										self.alert.textContent = message;
 									}
