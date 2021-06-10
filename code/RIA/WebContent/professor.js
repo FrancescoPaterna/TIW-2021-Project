@@ -412,155 +412,155 @@
 			});
 			self.multiple_modify_button.setAttribute("class", "modifylo");
 
-			if(self.multiple_modify_button_flag){
-			self.multipleModalForm.appendChild(document.createElement("br"));
+			if (self.multiple_modify_button_flag) {
+				self.multipleModalForm.appendChild(document.createElement("br"));
 
-			select = document.createElement("select");
-			select.required = true;
-			select.setAttribute("id", "multi_score");
-			select.setAttribute("name", "score");
-			option = document.createElement("option");
-			option.setAttribute("selected", "selected");
-			option.setAttribute("value", "");
-			option.textContent = "";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "ABSENT");
-			option.textContent = "ABSENT";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "RIMANDATO");
-			option.textContent = "RIMANDATO";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "RITIRATO");
-			option.textContent = "RITIRATO";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "18");
-			option.textContent = "18";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "19");
-			option.textContent = "19";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "20");
-			option.textContent = "20";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "21");
-			option.textContent = "21";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "22");
-			option.textContent = "22";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "23");
-			option.textContent = "23";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "24");
-			option.textContent = "24";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "25");
-			option.textContent = "25";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "26");
-			option.textContent = "26";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "27");
-			option.textContent = "27";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "28");
-			option.textContent = "28";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "29");
-			option.textContent = "29";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "30");
-			option.textContent = "30";
-			select.appendChild(option);
-			option = document.createElement("option");
-			option.setAttribute("value", "30L");
-			option.textContent = "30L";
-			select.appendChild(option);
+				select = document.createElement("select");
+				select.required = true;
+				select.setAttribute("id", "multi_score");
+				select.setAttribute("name", "score");
+				option = document.createElement("option");
+				option.setAttribute("selected", "selected");
+				option.setAttribute("value", "");
+				option.textContent = "";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "ABSENT");
+				option.textContent = "ABSENT";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "RIMANDATO");
+				option.textContent = "RIMANDATO";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "RITIRATO");
+				option.textContent = "RITIRATO";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "18");
+				option.textContent = "18";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "19");
+				option.textContent = "19";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "20");
+				option.textContent = "20";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "21");
+				option.textContent = "21";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "22");
+				option.textContent = "22";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "23");
+				option.textContent = "23";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "24");
+				option.textContent = "24";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "25");
+				option.textContent = "25";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "26");
+				option.textContent = "26";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "27");
+				option.textContent = "27";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "28");
+				option.textContent = "28";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "29");
+				option.textContent = "29";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "30");
+				option.textContent = "30";
+				select.appendChild(option);
+				option = document.createElement("option");
+				option.setAttribute("value", "30L");
+				option.textContent = "30L";
+				select.appendChild(option);
 
-			self.multipleModalForm.appendChild(select);
-
-
-			button = document.createElement("input");
-			button.setAttribute("type", "button");
-			button.setAttribute("name", "UPDATE");
-			button.setAttribute("id", "UPDATE");
-			button.setAttribute("value", "UPDATE");
-			button.classList.add("smodify");
+				self.multipleModalForm.appendChild(select);
 
 
+				button = document.createElement("input");
+				button.setAttribute("type", "button");
+				button.setAttribute("name", "UPDATE");
+				button.setAttribute("id", "UPDATE");
+				button.setAttribute("value", "UPDATE");
+				button.classList.add("smodify");
 
-			var selfInButton = self;
-			button.addEventListener("click", (e) => {
-				var form = e.target.closest("form");
-				if (form.checkValidity()) {
-					var array = $("input[name='IDStudent']:checked").map(function () {
-						return this.value;
-					}).get();
-					var score = form.querySelector("select[name = 'score']").value;
-					form = {
-						"id_stud": array,
-						"score": score,
-						"exam_date_id": selfInButton.current_exam
-					}
-					form = JSON.stringify(form);
 
-					var self = this;
-					makeCallJSON("POST", 'UpdateMultipleScore', form,
-						function (req) {
-							if (req.readyState == 4) {
-								var message = req.responseText;
-								if (req.status == 200) {
-									self.resetModal();
-									self.modal_title.textContent = "CONFIRMED";
-									self.modal_message.textContent = "SCORE CORRECTLY UPDATED";
-									self.modal_content.style.height = "auto";
-									self.resetMain();
-									self.show(self.current_exam);
-								} else {
-									self.alert.textContent = message;
+
+				var selfInButton = self;
+				button.addEventListener("click", (e) => {
+					var form = e.target.closest("form");
+					if (form.checkValidity()) {
+						var array = $("input[name='IDStudent']:checked").map(function () {
+							return this.value;
+						}).get();
+						var score = form.querySelector("select[name = 'score']").value;
+						form = {
+							"id_stud": array,
+							"score": score,
+							"exam_date_id": selfInButton.current_exam
+						}
+						form = JSON.stringify(form);
+
+						var self = this;
+						makeCallJSON("POST", 'UpdateMultipleScore', form,
+							function (req) {
+								if (req.readyState == 4) {
+									var message = req.responseText;
+									if (req.status == 200) {
+										self.resetModal();
+										self.resetMain();
+										self.show(self.current_exam);
+										self.modal.style.display = "none";
+										self.modal_content.style.height = "auto";
+										self.modal_content.style.width = "80%";
+									} else {
+										self.alert.textContent = message;
+									}
 								}
 							}
-						}
-					);
-				} else {
-					form.reportValidity();
-				}
-			});
+						);
+					} else {
+						form.reportValidity();
+					}
+				});
 
-			self.multipleModalForm.appendChild(button);
-			self.multiple_modify_button.setAttribute("class", "modify");
-			self.multiple_modify_button.addEventListener("click", (e) => {
-				self.resetModal();
-				self.modal_title.textContent = "MULTIPLE MODIFY";
-				self.modal_content.style.height = "60%";
-				self.modal_content.style.width = "40%";
-				self.modal.style.display = "block";
-				self.multipleModalForm.style.visibility = "visible";
-				var self2 = self;
-				self.span.addEventListener("click", (c) => {
-					// dependency close button
-					self2.modal.style.display = "none";
-					self.modal_content.style.height = "auto";
-					self.modal_content.style.width = "80%";
+				self.multipleModalForm.appendChild(button);
+				self.multiple_modify_button.setAttribute("class", "modify");
+				self.multiple_modify_button.addEventListener("click", (e) => {
+					self.resetModal();
+					self.modal_title.textContent = "MULTIPLE MODIFY";
+					self.modal_content.style.height = "60%";
+					self.modal_content.style.width = "40%";
+					self.modal.style.display = "block";
+					self.multipleModalForm.style.visibility = "visible";
+					var self2 = self;
+					self.span.addEventListener("click", (c) => {
+						// dependency close button
+						self2.modal.style.display = "none";
+						self.modal_content.style.height = "auto";
+						self.modal_content.style.width = "80%";
+					}, false);
 				}, false);
-			}, false);
-		}
+			}
 
 
 			// Register event to record button only if there is at least one mark in the "PUBLISHED" status
@@ -575,21 +575,21 @@
 			}
 
 
-		
 
 
-		// Register event to publish button only if there is at least one mark in the "INSERTED" status
-		if (self.isPublishable) {
-			// make the publish button clickable
-			self.publish_button.setAttribute("id", "publish");
-			self.publish_button.addEventListener("click", self.publishFunction);
-		} else {
-			// make the publish button inactive
-			self.publish_button.setAttribute("id", "publishlo");
-			self.publish_button.removeEventListener("click", self.publishFunction);
+
+			// Register event to publish button only if there is at least one mark in the "INSERTED" status
+			if (self.isPublishable) {
+				// make the publish button clickable
+				self.publish_button.setAttribute("id", "publish");
+				self.publish_button.addEventListener("click", self.publishFunction);
+			} else {
+				// make the publish button inactive
+				self.publish_button.setAttribute("id", "publishlo");
+				self.publish_button.removeEventListener("click", self.publishFunction);
+			}
+
 		}
-
-	}
 
 
 		this.recordFunction = function (e) {

@@ -352,6 +352,12 @@ th.sortable:active {
 	background-color: #5893d1;
 	color: white;
 	border: none;
+	padding-left: 5px;
+	margin-left: 5px;
+	padding-right: 14px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	border-radius: 4px;
 }
 
 #multi_score {
