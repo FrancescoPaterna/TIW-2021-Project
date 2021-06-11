@@ -261,6 +261,7 @@
 		this.recordLogo = document.getElementById("recordLogo");
 		this.recordLegalValue = document.getElementById("recordLegalValue");
 		this.recordInput = document.getElementById("record_exam_id");
+		this.second_line_record = document.getElementById("second_line_record");
 
 		//+++++++++MULTIPLE MODIFY+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 		this.multipleModalForm = document.getElementById("multipleModifyForm");
@@ -778,11 +779,15 @@
 			var row, destcell;
 			// clear the modal page
 			this.resetModal();
+			this.modal_content.setAttribute("class","modal_record");
 			this.modal.style.display = "block";
 			// setup the modal page content
 			this.modal_title.textContent = "University of NightCity Official Record";
 			this.modal_message.textContent = 'Document #' + record.IDRecord + ' - generated and digitally signed on ' + record.date +
 				' at ' + record.time;
+
+			this.second_line_record.textContent = "Registration of the Session " + sessionEnrolls.current_exam +
+			   ' relating to the course of ' + sessionEnrolls.current_course + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			this.recordDiv.style.visibility = "visible";
 
 			// fill the table with recorded enrolls
@@ -806,7 +811,9 @@
 
 			// register event on close button
 			this.span.addEventListener("click", (c) => {
+				self.second_line_record.textContent = "";
 				self.modal.style.display = "none";
+				self.modal_content.setAttribute("class","modal-content");
 			}, false);
 
 			// show only record components in the modal page

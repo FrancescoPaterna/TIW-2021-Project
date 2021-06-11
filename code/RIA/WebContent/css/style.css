@@ -1,9 +1,9 @@
 /*@import url(https://fonts.googleapis.com/css?family=Orbitron);*/
 @font-face {
-    font-family: 'Orbitron';
-    src: url("../resources/Orbitron.ttf");
-    font-weight: normal;
-    font-style: normal;
+	font-family: 'Orbitron';
+	src: url("../resources/Orbitron.ttf");
+	font-weight: normal;
+	font-style: normal;
 }
 
 .start {
@@ -124,8 +124,9 @@ input[type=password] {
 }
 
 /*Record table*/
-.rec {
-	background-color: #888a85;
+#rec {
+	background-color:#da3030;
+	color: white;
 }
 
 /*Button to reject the evaluation*/
@@ -246,7 +247,7 @@ input[type=password] {
 	background-color: #888a85;
 }
 
-.alertmessage{
+.alertmessage {
 	font-weight: bold;
 	font-size: 50px;
 }

@@ -59,7 +59,7 @@
 
 .recordtable {
 	margin: 0 0 40px 0;
-	width: max-content;
+	width: 60%;
 	display: inline-table;
 }
 
@@ -299,7 +299,21 @@ th.sortable:active {
 	padding: 20px;
 	border: 1px solid #888;
 	width: 80%;
+
 }
+
+/**/
+.modal_record {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	height: 80%;
+	overflow: scroll;
+}
+
+
 
 /* The Close Button */
 .close {
@@ -383,4 +397,8 @@ th.sortable:active {
 input[type=checkbox] {
 	transform: scale(1.2);
 	cursor: pointer;
+}
+
+h2 span {
+	display: block;
 }
