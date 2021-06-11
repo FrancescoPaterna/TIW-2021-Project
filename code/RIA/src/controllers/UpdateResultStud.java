@@ -3,7 +3,6 @@ package controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,9 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
-import beans.Enroll;
 import beans.User;
 import dao.EnrollsDAO;
 import utils.ConnectionHandler;
@@ -33,13 +29,6 @@ public class UpdateResultStud extends HttpServlet {
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
@@ -58,9 +47,10 @@ public class UpdateResultStud extends HttpServlet {
 			return;
 		}
 		
-		
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 
+		// refuse score, this action is safe because we use the StudentID taken from the session user
+		// so if another user tries to refuse a score of another student, this action has no effects
 		try {
 			enrollsDAO.RefuseScore(IDExamDate, user.getId());
 			
@@ -70,6 +60,9 @@ public class UpdateResultStud extends HttpServlet {
 			return;
 		}
 		
+		// redirect to another servlet to get result details updated
+		// results are not sent immediately by this servlet in order to avoid problems with
+		// user refreshing the page after having done a POST to this servlet
 		response.sendRedirect(session.getServletContext() + "/GetResultDetails");
 		
 	}

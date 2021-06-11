@@ -42,6 +42,7 @@ public class GetCourseStud extends HttpServlet {
 		CourseDAO courseDAO = new CourseDAO(connection);
 		List<Course> courses = new ArrayList<>();
 		
+		// recover courses from the database
 		try {
 			courses = courseDAO.findCoursesByIdStudent(user.getId());
 		} catch (SQLException e) {
@@ -49,6 +50,7 @@ public class GetCourseStud extends HttpServlet {
 			return;
 		}
 		
+		// send back retrieved courses as JSON
 		String serialized_courses = new Gson().toJson(courses);
 
 		

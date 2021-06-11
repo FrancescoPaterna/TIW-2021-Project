@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -49,12 +48,14 @@ public class CheckLogin extends HttpServlet {
 		id = StringEscapeUtils.escapeJava(request.getParameter("id"));
 		pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
 		
+		// check if id is valid
 		if(id == null || id.isEmpty()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("ID must be not null");
 			return;
 		}
 		
+		// check if id is valid
 		if(pwd == null || pwd.isEmpty()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("Password must be not null");
@@ -62,14 +63,13 @@ public class CheckLogin extends HttpServlet {
 		}
 
 
-
+		// build encrypted version of the password
 		MessageDigest digest;
 		try {
 			digest = MessageDigest.getInstance("SHA-1");
 			byte[] hash = digest.digest(pwd.getBytes(StandardCharsets.UTF_8));
 			secure_pwd = HexString.toHexString(hash);
 		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -79,7 +79,7 @@ public class CheckLogin extends HttpServlet {
 		try {
 			user = userDao.checkCredentials(id, secure_pwd);
 		} catch (SQLException e) {
-			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.getWriter().println("DB Error");
 			return;
 		}
@@ -87,7 +87,6 @@ public class CheckLogin extends HttpServlet {
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
 
-		String path;
 		if (user == null) {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.getWriter().println("Incorrect credentials");

@@ -52,6 +52,7 @@ public class RecordScores extends HttpServlet {
 		RecordDAO recordDAO = new RecordDAO(connection);
 		ExamDateDAO examdatedao = new ExamDateDAO(connection);
 		
+		// check if the user has the authorization to record scores for the specified exam date
 		try {
 			if (!examdatedao.CheckExamDateByProf(user.getId(), exam_date_id)) {
 				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

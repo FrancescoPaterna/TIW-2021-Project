@@ -13,13 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import beans.Enroll;
 import beans.RecordedEnrolls;
-import beans.User;
 import dao.EnrollsDAO;
 import dao.RecordDAO;
 import utils.ConnectionHandler;
@@ -38,8 +36,6 @@ public class GetRecordedEnrolls extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
 		
 		Integer recordID;
 		try {
@@ -60,6 +56,9 @@ public class GetRecordedEnrolls extends HttpServlet {
 		Timestamp timestamp;
 		String date, time;
 		
+		// recover enrolls associated with the recordID specified,
+		// then recover current timestamp from the database
+		// finally convert the timestamp to the desired format
 		try {
 			recorded = enrollsDAO.findRecordedStudents(recordID);
 		
@@ -73,6 +72,7 @@ public class GetRecordedEnrolls extends HttpServlet {
 			return;
 		}
 		
+		// send all data to the client as JSON
 		RecordedEnrolls recordedEnrolls = new RecordedEnrolls(recorded, date, time, recordID);
 		String serialized_enrolls = new Gson().toJson(recordedEnrolls);		
 		response.setContentType("application/json");

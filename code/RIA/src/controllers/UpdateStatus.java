@@ -20,31 +20,16 @@ import dao.EnrollsDAO;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
 
-/**
- * Servlet implementation class UpdateStatus
- */
 @WebServlet("/UpdateStatus")
 @MultipartConfig
 public class UpdateStatus extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UpdateStatus() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	public void init() throws ServletException {
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -53,17 +38,25 @@ public class UpdateStatus extends HttpServlet {
 
 		user = (User) request.getSession().getAttribute("user");
 
-		// reset mask value
-
 		if (user.getRole().equals("professor")) {
 
 			Integer exam_date_id;
-			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+			
+			try {
+				exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+				// If the argument of Integer.parseInt is null or is a string of length zero, a NumberFormatException is thrown
+				// @see https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String)
+			} catch (NumberFormatException | NullPointerException e) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				response.getWriter().println("Incorrect or missing param values");
+				return;
+			}
+			
 			
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 			ExamDateDAO examdatedao = new ExamDateDAO(connection);
 
-
+			// check if the user has the authorization to update status for the specified exam date
 			try {
 				if (!examdatedao.CheckExamDateByProf(user.getId(), exam_date_id)) {
 					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -73,11 +66,11 @@ public class UpdateStatus extends HttpServlet {
 				}
 			} catch (SQLException s) {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				response.getWriter().println("UNAUTHORIZED ACCESS,Attempt to access a resource not owned by you!");
-				session.invalidate();
+				response.getWriter().println("DB error");
 				return;
 			}
 
+			// if there are scores to publish, publish them
 			try {
 				if (enrollsDAO.assertion_published(exam_date_id)) {
 					try {
@@ -88,7 +81,7 @@ public class UpdateStatus extends HttpServlet {
 						return;
 					}
 				} else {
-					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					response.setStatus(HttpServletResponse.SC_NO_CONTENT);
 					response.getWriter()
 							.println("Impossible To Publish Any Score, Cannot Find Any Score in Published State!");
 					return;
@@ -101,8 +94,8 @@ public class UpdateStatus extends HttpServlet {
 			response.setStatus(HttpServletResponse.SC_OK);
 
 		} else {
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			response.getWriter().println("UNAUTHORIZED USER");
-
 		}
 	}
 

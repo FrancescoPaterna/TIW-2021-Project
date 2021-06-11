@@ -8,6 +8,7 @@ import java.util.List;
 import java.lang.String;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import dao.CourseDAO;
 import utils.ConnectionHandler;
 
 @WebServlet("/GetCoursePro")
+@MultipartConfig
 public class GetCoursePro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection connection = null;
@@ -43,6 +45,7 @@ public class GetCoursePro extends HttpServlet {
 		CourseDAO courseDAO = new CourseDAO(connection);
 		List<Course> courses = new ArrayList<>();
 		
+		// recover courses from the database 
 		try {
 			courses = courseDAO.findCoursesByIdProf(user.getId());
 		} catch (SQLException e) {
@@ -51,7 +54,7 @@ public class GetCoursePro extends HttpServlet {
 			return;
 		}
 
-		// Redirect to the Home page and add missions to the parameters
+		// send back retrieved courses as JSON
 		
 		String serialized_courses = new Gson().toJson(courses);
 

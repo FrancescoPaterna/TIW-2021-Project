@@ -50,10 +50,10 @@ public class GetResultDetails extends HttpServlet {
 			return;
 		}
 		
-		
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		Enroll enroll;
 		
+		// recover the enroll bean for the specified student and the specified exam date
 		try {
 			enroll = enrollsDAO.FindStudentScore(IDExamDate, user.getId());
 
@@ -63,6 +63,7 @@ public class GetResultDetails extends HttpServlet {
 			return;
 		}
 		
+		// if the result can be shown to the student then send it as JSON
 		if(!(enroll.getStatus() == Status.NOT_INSERTED || enroll.getStatus() == Status.INSERTED)) {
 			String serialized_resultDetails = new Gson().toJson(enroll);		
 			response.setContentType("application/json");
@@ -77,7 +78,6 @@ public class GetResultDetails extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -21,7 +21,7 @@ import dao.ExamDateDAO;
 import utils.GoodScore;
 
 /**
- * Servlet implementation class UpdateMark
+ * Servlet implementation class UpdateScore
  */
 @WebServlet("/UpdateScore")
 @MultipartConfig
