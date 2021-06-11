@@ -26,6 +26,7 @@ import dao.EnrollsDAO;
 import dao.ExamDateDAO;
 
 import utils.ConnectionHandler;
+import utils.ParamsChecker;
 import utils.Rebuilder;
 
 /**
@@ -51,21 +52,17 @@ public class GoToSessionEnrolls extends HttpServlet {
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(req, resp);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String loginpath = "/index.html";
 		HttpSession session = request.getSession();
 
 		Integer course_id = null;
 		Integer exam_date_id = null;
-		// Integer secretsortcode = null;
 		String sort;
 		String coursename;
 		String date;
@@ -77,12 +74,24 @@ public class GoToSessionEnrolls extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-		sort = StringEscapeUtils.escapeJava(request.getParameter("sort"));
-		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-		course_id = Integer.parseInt(request.getParameter("course_id"));
-		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+		try {
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			sort = StringEscapeUtils.escapeJava(request.getParameter("sort"));
+			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+		} catch (NumberFormatException | NullPointerException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
+		
+		// check params
+		if(!ParamsChecker.checkParam(coursename) || !ParamsChecker.checkParam(date) || !ParamsChecker.checkParam(sort) ||
+				!ParamsChecker.checkParam(mask)) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
 
 		ExamDateDAO examdateDAO = new ExamDateDAO(connection);
 		User user = (User) session.getAttribute("user");
@@ -101,8 +110,8 @@ public class GoToSessionEnrolls extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect param values");
 			return;
 		} catch (SQLException e) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "DB Error");
-			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "DB Error");
+			return;
 		}
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);

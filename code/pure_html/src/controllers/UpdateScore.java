@@ -18,12 +18,12 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import beans.Status;
 import beans.User;
 import utils.ConnectionHandler;
 import dao.EnrollsDAO;
 import dao.ExamDateDAO;
 import utils.GoodScore;
+import utils.ParamsChecker;
 
 /**
  * Servlet implementation class UpdateMark
@@ -34,14 +34,6 @@ public class UpdateScore extends HttpServlet {
 	private TemplateEngine templateEngine;
 	private Connection connection = null;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UpdateScore() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -51,11 +43,6 @@ public class UpdateScore extends HttpServlet {
 		templateResolver.setSuffix(".html");
 		connection = ConnectionHandler.getConnection(getServletContext());
 	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -69,19 +56,33 @@ public class UpdateScore extends HttpServlet {
 		String coursename, mask, date, name, surname, email, coursedeg, score, path;
 
 		//secret_code = Integer.parseInt(request.getParameter("secret_code"));
-		course_id = Integer.parseInt(request.getParameter("course_id"));
-		id_stud = Integer.parseInt(request.getParameter("id_stud"));
-		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
-		sort = Integer.parseInt(request.getParameter("sort"));
-
-		score = StringEscapeUtils.escapeJava(request.getParameter("score"));
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-		name = StringEscapeUtils.escapeJava(request.getParameter("name"));
-		surname = StringEscapeUtils.escapeJava(request.getParameter("surname"));
-		email = StringEscapeUtils.escapeJava(request.getParameter("email"));
-		coursedeg = StringEscapeUtils.escapeJava(request.getParameter("coursedeg"));
+		try {
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			id_stud = Integer.parseInt(request.getParameter("id_stud"));
+			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+			sort = Integer.parseInt(request.getParameter("sort"));
+			score = StringEscapeUtils.escapeJava(request.getParameter("score"));
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
+			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			name = StringEscapeUtils.escapeJava(request.getParameter("name"));
+			surname = StringEscapeUtils.escapeJava(request.getParameter("surname"));
+			email = StringEscapeUtils.escapeJava(request.getParameter("email"));
+			coursedeg = StringEscapeUtils.escapeJava(request.getParameter("coursedeg"));
+		} catch (NumberFormatException | NullPointerException e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Incorrect or missing values");
+			return;
+		}
+		
+		// check params
+		if(!ParamsChecker.checkParam(coursename) || !ParamsChecker.checkParam(mask) || !ParamsChecker.checkParam(date) ||
+				!ParamsChecker.checkParam(name) || !ParamsChecker.checkParam(surname) || !ParamsChecker.checkParam(email) ||
+				!ParamsChecker.checkParam(coursedeg)) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Incorrect or missing values");
+			return;
+		}
+		
+		
 
 		EnrollsDAO enrollsdao = new EnrollsDAO(connection);
 		ExamDateDAO examdatedao = new ExamDateDAO(connection);

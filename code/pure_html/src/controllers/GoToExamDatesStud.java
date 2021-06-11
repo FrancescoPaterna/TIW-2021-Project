@@ -55,8 +55,23 @@ public class GoToExamDatesStud extends HttpServlet {
 		User user = (User) session.getAttribute("user");
 		Integer course_id; 
 		String coursename;
-		course_id = Integer.parseInt(request.getParameter("course_id"));
+		
+		// check params
+		try {
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			// If the argument of Integer.parseInt is null or is a string of length zero, a NumberFormatException is thrown
+			// @see
+			// https://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html#parseInt(java.lang.String)
+		} catch (NumberFormatException | NullPointerException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
+		
 		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+		if(coursename == null || coursename.isEmpty()) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
 
 		
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);

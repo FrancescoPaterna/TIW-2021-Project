@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringEscapeUtils;
 import org.thymeleaf.TemplateEngine;
@@ -21,23 +20,16 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import dao.EnrollsDAO;
 //import beans.User;
 import utils.ConnectionHandler;
+import utils.ParamsChecker;
 
 /**
- * Servlet implementation class GoToMOdify
+ * Servlet implementation class GoToModify
  */
 @WebServlet("/GoToModify")
 public class GoToModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	private Connection connection = null;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public GoToModify() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -55,26 +47,37 @@ public class GoToModify extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// User user = (User) session.getAttribute("user"); //TDDO Da usare per un
-		// controllo
 
 		Integer course_id, id_stud, exam_date_id, sort;
 		String coursename, mask, date, name, surname, email, coursedeg, mark, status, recovered_mask;
 
-		sort = Integer.parseInt(request.getParameter("sort"));
-		course_id = Integer.parseInt(request.getParameter("course_id"));
-		id_stud = Integer.parseInt(request.getParameter("id_stud"));
-		exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
-		mark = StringEscapeUtils.escapeJava(request.getParameter("mark"));
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-		mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-		name = StringEscapeUtils.escapeJava(request.getParameter("name"));
-		surname = StringEscapeUtils.escapeJava(request.getParameter("surname"));
-		email = StringEscapeUtils.escapeJava(request.getParameter("email"));
-		coursedeg = StringEscapeUtils.escapeJava(request.getParameter("coursedeg"));
-		status = StringEscapeUtils.escapeJava(request.getParameter("status"));
-
+		try {
+			sort = Integer.parseInt(request.getParameter("sort"));
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+			id_stud = Integer.parseInt(request.getParameter("id_stud"));
+			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+			mark = StringEscapeUtils.escapeJava(request.getParameter("mark"));
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
+			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			name = StringEscapeUtils.escapeJava(request.getParameter("name"));
+			surname = StringEscapeUtils.escapeJava(request.getParameter("surname"));
+			email = StringEscapeUtils.escapeJava(request.getParameter("email"));
+			coursedeg = StringEscapeUtils.escapeJava(request.getParameter("coursedeg"));
+			status = StringEscapeUtils.escapeJava(request.getParameter("status"));
+		} catch (NumberFormatException | NullPointerException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
+		
+		// check params
+		if(!ParamsChecker.checkParam(coursename) || !ParamsChecker.checkParam(mask) || !ParamsChecker.checkParam(date) ||
+				!ParamsChecker.checkParam(name) || !ParamsChecker.checkParam(surname) || !ParamsChecker.checkParam(email) ||
+				!ParamsChecker.checkParam(coursedeg) || !ParamsChecker.checkParam(status)) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
+		
 		String path = "/WEB-INF/Modify.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -116,13 +119,8 @@ public class GoToModify extends HttpServlet {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

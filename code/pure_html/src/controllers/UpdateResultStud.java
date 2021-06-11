@@ -24,6 +24,7 @@ import beans.User;
 import dao.EnrollsDAO;
 import utils.ConnectionHandler;
 import utils.GoodScore;
+import utils.ParamsChecker;
 
 /**
  * Servlet implementation class UpdateResultStud
@@ -71,6 +72,12 @@ public class UpdateResultStud extends HttpServlet {
 			professor.setSurname(request.getParameter("professors"));
 		} catch (NumberFormatException | NullPointerException e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Incorrect or missing values");
+			return;
+		}
+		
+		// check params
+		if(!ParamsChecker.checkParam(date) || !ParamsChecker.checkParam(coursename)) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
 			return;
 		}
 		

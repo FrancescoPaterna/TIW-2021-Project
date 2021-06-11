@@ -22,6 +22,7 @@ import beans.User;
 import dao.EnrollsDAO;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
+import utils.ParamsChecker;
 
 /**
  * Servlet implementation class UpdateStatus
@@ -31,14 +32,6 @@ public class UpdateStatus extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	private Connection connection = null;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public UpdateStatus() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -69,26 +62,35 @@ public class UpdateStatus extends HttpServlet {
 		if (user.getRole().equals("professor")) {
 
 			Integer exam_date_id;
-			Integer sort = Integer.parseInt(request.getParameter("sort"));
-			Integer secretsortcode, course_id;
-			String date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			Integer sort;
+			Integer course_id;
+			String date;
 			String mask;
-			String recovered_mask;
 			String coursename;
-			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-			mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
-			//secretsortcode = Integer.parseInt(request.getParameter("secret_code"));
-			course_id = Integer.parseInt(request.getParameter("course_id"));
-			exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+			
+			try {
+				sort = Integer.parseInt(request.getParameter("sort"));
+				coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+				date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+				mask = StringEscapeUtils.escapeJava(request.getParameter("mask"));
+				course_id = Integer.parseInt(request.getParameter("course_id"));
+				exam_date_id = Integer.parseInt(request.getParameter("exam_date_id"));
+			} catch (NumberFormatException | NullPointerException e) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Incorrect or missing values");
+				return;
+			}
+			
+			// check params
+			if(!ParamsChecker.checkParam(coursename) || !ParamsChecker.checkParam(date) || !ParamsChecker.checkParam(mask)) {
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Incorrect or missing values");
+				return;
+			}
+			
 			EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 			ExamDateDAO examdatedao = new ExamDateDAO(connection);
 			
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			
-			
-
 			
 			try {
 				if(!examdatedao.CheckExamDateByProf(user.getId() ,exam_date_id)) {

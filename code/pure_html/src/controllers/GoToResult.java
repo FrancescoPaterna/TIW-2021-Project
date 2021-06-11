@@ -25,6 +25,7 @@ import dao.EnrollsDAO;
 import dao.UserDAO;
 import utils.ConnectionHandler;
 import utils.GoodScore;
+import utils.ParamsChecker;
 
 @WebServlet("/GoToResult")
 public class GoToResult extends HttpServlet {
@@ -55,12 +56,27 @@ public class GoToResult extends HttpServlet {
 		Integer course_id;
 		String coursename;
 		String date;
+		
 		HttpSession session = request.getSession();
+		
 		User user = (User) session.getAttribute("user");
-		IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
-		coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
-		date = StringEscapeUtils.escapeJava(request.getParameter("date"));
-		course_id = Integer.parseInt(request.getParameter("course_id"));
+		
+		try {
+			IDExamDate = Integer.parseInt(request.getParameter("IDExamDate"));
+			coursename = StringEscapeUtils.escapeJava(request.getParameter("coursename"));
+			date = StringEscapeUtils.escapeJava(request.getParameter("date"));
+			course_id = Integer.parseInt(request.getParameter("course_id"));
+		} catch (NumberFormatException | NullPointerException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
+		
+		// check params
+		if(!ParamsChecker.checkParam(date) || !ParamsChecker.checkParam(coursename)) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Incorrect or missing param values");
+			return;
+		}
+		
 
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
