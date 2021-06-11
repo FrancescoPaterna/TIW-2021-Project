@@ -444,8 +444,8 @@
 				option.textContent = "RIMANDATO";
 				select.appendChild(option);
 				option = document.createElement("option");
-				option.setAttribute("value", "RITIRATO");
-				option.textContent = "RITIRATO";
+				option.setAttribute("value", "RIPROVATO");
+				option.textContent = "RIPROVATO";
 				select.appendChild(option);
 				option = document.createElement("option");
 				option.setAttribute("value", "18");
@@ -544,7 +544,7 @@
 										self.modal_content.style.height = "auto";
 										self.modal_content.style.width = "80%";
 										self.multiple_modify_button_flag = false;
-										self.multiple_modify_button.removeEventListener("click", (e)); //TODO FIX THIS SHIT
+										self.multiple_modify_button.removeEventListener("click"); //TODO FIX THIS SHIT
 									} else {
 										self.alert.textContent = message;
 									}
