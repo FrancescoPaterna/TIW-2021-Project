@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
-<meta charset="utf-8">
-<title>HomePage Student</title>
-<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-<link rel="stylesheet" type="text/css" media="all" href="css/stud.css" />
-<script src="student.js" charset="utf-8" defer></script>
-<script src="utils.js" charset="utf-8" defer></script>
+	<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
+	<meta charset="utf-8">
+	<title>HomePage Student</title>
+	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/stud.css" />
+	<script src="student.js" charset="utf-8" defer></script>
+	<script src="utils.js" charset="utf-8" defer></script>
 </head>
-<body class=proback>
-	<div class=main>
+
+<body class="proback">
+	<div class="main">
 		<div class="userdata">
 			Stud. <span id="id_username"></span><br> ID: <span id="id"></span><br>
 		</div>
 		<div>
 			<form action="LogOut" method="get">
-				<button class=logoutbutton type="submit">logout &#10008;</button>
+				<button class="logoutbutton" type="submit">logout &#10008;</button>
 			</form>
 			<h1>NCU Student Home page</h1>
-			<div id="id_alert" class="alertmessage"></div>
+			<div id="id_alert" class="alertmessagestud"></div>
 
 		</div>
 	</div>
 
-	<div class=wrapper>
-		<table id="id_courseStud" class=table>
+	<div class="wrapper">
+		<table id="id_courseStud" class="table">
 			<thead>
-				<tr class='row header'>
+				<tr class="row header">
 					<th>ID</th>
 					<th>Course</th>
 				</tr>
 			</thead>
-			<tbody id="id_courseStudBody">
+			<tbody id="id_courseStudBody"></tbody>
 		</table>
 
-		<table id="id_courseDateStud" class=table>
+		<table id="id_courseDateStud" class="table">
 			<thead>
-				<tr class='row header'>
+				<tr class="row header">
 					<th>ID_ExamDate</th>
 					<th>Date</th>
 				</tr>
 			</thead>
-			<tbody id="id_courseDateStudBody">
+			<tbody id="id_courseDateStudBody"></tbody>
 		</table>
 	</div>
 
-		<div class="showbar">
+	<div class="showbar">
 		<form class="show">
 			<input id="showcourse" type="button" value="show all courses" />
 		</form>
@@ -56,14 +58,12 @@
 	</div>
 
 
-	<div class=showbar>
-		<form class=show>
-			<input id="showcourse" type="button"
-				value="show &#128065;" />
+	<div class="showbar">
+		<form class="show">
+			<input id="showcourse" type="button" value="show &#128065;" />
 		</form>
-		<form class=show>
-			<input id="showdate" type="button"
-				value="show &#128065;" />
+		<form class="show">
+			<input id="showdate" type="button" value="show &#128065;" />
 		</form>
 	</div>
 
@@ -72,10 +72,10 @@
 
 	<div id="id_alertNoResults" class="alertmessage"></div>
 
-	<div class=wrapper>
-		<table id="id_resultDetails" class=tablefull>
+	<div class="wrapper">
+		<table id="id_resultDetails" class="tablefull">
 			<thead>
-				<tr class='row header'>
+				<tr class="row header">
 					<th>IdStudent</th>
 					<th>Name</th>
 					<th>Surname</th>
@@ -85,11 +85,11 @@
 					<th>Course</th>
 					<th>Score</th>
 					<th>State</th>
-					<th>Option</th>
+					<th id="opt"></th>
 				</tr>
 			</thead>
 			<tbody id="id_resultDetailsBody">
-				<tr> 
+				<tr>
 					<td id="IDStudent"></td>
 					<td id="name"></td>
 					<td id="surname"></td>
@@ -99,17 +99,19 @@
 					<td id="coursename"></td>
 					<td id="score"></td>
 					<td id="state"></td>
-					<td id="option">
+					<td id="opt_button">
 						<form id="refuseScoreForm" action="#">
-							<input id="refuseScoreInput" type="hidden" name="IDExamDate" required>
+							<input id="refuseScoreData" type="hidden" required>
+							<input id="refuseScoreInput" type="hidden">
 						</form>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		
-		
+		<div id="okRefusedMessage" class="alertmessage"></div>
+
 	</div>
 
 </body>
+
 </html>

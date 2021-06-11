@@ -1,6 +1,6 @@
 /*main_color_page*/
 :root {
-  --stud: #3b5998
+	--stud: #3b5998
 }
 
 .proback {
@@ -10,10 +10,11 @@
 	background-attachment: fixed;
 }
 
-.main{
-	background-color:  var(--stud);
+.main {
+	background-color: var(--stud);
 	color: white
 }
+
 .userdata {
 	position: absolute;
 	top: 50px;
@@ -31,53 +32,58 @@
 }
 
 .wrapper {
-  margin: 0 auto;
-  padding: 20px 0px 0px 0px;
-  width: 80%;
-  font-size: 22px;
+	margin: 0 auto;
+	padding: 20px 0px 0px 0px;
+	font-size: 22px;
 }
 
 .table {
-  margin: 0 0 40px 0;
-  width: 40%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  display: inline-table;
-  border-collapse: collapse;
-  margin-left: 10px;
-  margin-right: 10px;
+	margin: 0 0 40px 0;
+	width: 40%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	display: inline-table;
+	border-collapse: collapse;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .tablefull {
-  margin: 0 0 40px 0;
-  width: 100%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  display: inline-table;
-  border-collapse: collapse;
-  margin-left: 10px;
-  margin-right: 10px;
+	margin: 0 0 40px 0;
+	width: 80%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+	display: inline-table;
+	border-collapse: collapse;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 
 tr {
-  display: table-row;
-  background: #eeeeec;
+	display: table-row;
+	background: #eeeeec;
 }
+
 tr:nth-of-type(odd) {
-  background: #d3d7cf;
+	background: #d3d7cf;
 }
+
 .row.header {
-  font-weight: 900;
-  color: #ffffff;
-  background: var(--stud);
+	font-weight: 900;
+	color: #ffffff;
+	background: var(--stud);
 }
 
 
 td {
-  padding: 12px 10px;
-  display: table-cell;
+	padding: 12px 10px;
+	display: table-cell;
 }
 
-a{
+th {
+	padding: 0px 30px 0px 30px;
+}
+
+a {
 	text-decoration: none;
 }
 
@@ -128,4 +134,26 @@ a:hover {
 	cursor: pointer;
 	width: 178px;
 	height: 28px;
+}
+
+.refuse_score {
+	background-color: #ff0000;
+	padding: 5px 12px;
+	border-radius: 6px;
+	color: white;
+	cursor: pointer;
+	display: inherit;
+	font-weight: bold;
+	font-size: 21px;
+	margin-left: 10px;
+}
+
+.refuse_score:hover {
+	background-color: #a40000;
+}
+
+.alertmessagestud {
+	font-weight: bold;
+	font-size: 30px;
+	color: red;
 }

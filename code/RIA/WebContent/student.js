@@ -83,7 +83,7 @@
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
 					courseDate.show(e.target.getAttribute("course_id"),
-					e.target.getAttribute("coursename")); // the list must know the details container
+						e.target.getAttribute("coursename")); // the list must know the details container
 					self.waiter(course);
 				}, false); //TODO Repeat bubbling? 
 				anchor.href = "#";
@@ -229,16 +229,26 @@
 		this.alertNoResults = document.getElementById("id_alertNoResults");
 		this.resultDetails = _id_resultDetails;
 		this.resultDetailsBody = _id_resultDetailsBody;
+		this.option = document.getElementById("opt");
+		this.option_button = document.getElementById("opt_button");
 		this.exam_date_id;
 		this.date;
 		this.course_id;
 		this.coursename;
-		this.refuseButtonCreated = false;
+		//this.result;
+		this.refuseScoreData = document.getElementById("refuseScoreData");
+		this.refuseInput = document.getElementById("refuseScoreInput");
+		this.refuseForm = document.getElementById("refuseScoreForm");
+		this.okayRef = document.getElementById("okRefusedMessage");
 
 		this.reset = function () {
 			this.alertNoResults.textContent = "";
 			this.resultDetails.style.visibility = "hidden";
 			this.resultDetailsBody.style.visibility = "hidden";
+			this.okayRef.textContent = "";
+			this.option.textContent = "";
+			this.removeColumn();
+			//console.log(resultDetails.result);
 		}
 
 		this.show = function (exam_date_id, exam_date, course_id, coursename) {
@@ -252,8 +262,9 @@
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
-							var resultDetails = JSON.parse(req.responseText);
-							self.update(resultDetails); // self visible by closure
+							var resultDet = JSON.parse(req.responseText);
+							//resultDetails.result = resultDet;
+							self.update(resultDet); // self visible by closure
 						} else if (req.status == 204) {
 							self.alertNoResults.textContent = "The result has not been published yet!";
 							return;
@@ -265,16 +276,16 @@
 			);
 		}
 
-		this.update = function (resultDetails) {
+		this.update = function (result) {
 			var elem, row, destcell, input, form;
 			destcell = document.getElementById("IDStudent");
-			destcell.textContent = resultDetails.IDstudent;
+			destcell.textContent = result.IDstudent;
 			destcell = document.getElementById("name");
-			destcell.textContent = resultDetails.name;
+			destcell.textContent = result.name;
 			destcell = document.getElementById("surname");
-			destcell.textContent = resultDetails.surname;
+			destcell.textContent = result.surname;
 			destcell = document.getElementById("coursedeg");
-			destcell.textContent = resultDetails.courseDeg;
+			destcell.textContent = result.courseDeg;
 			destcell = document.getElementById("date");
 			destcell.textContent = this.date;
 			destcell = document.getElementById("course_id");
@@ -282,34 +293,27 @@
 			destcell = document.getElementById("coursename");
 			destcell.textContent = this.coursename;
 			destcell = document.getElementById("score");
-			destcell.textContent = resultDetails.mark;
+			destcell.textContent = result.mark;
 			destcell = document.getElementById("state");
-			destcell.textContent = resultDetails.status;
-			destcell = document.getElementById("option");
+			destcell.textContent = result.status;
 
-			if (this.isRefusable(resultDetails.mark, resultDetails.status)) {
+			if (this.isRefusable(result.mark, result.status)) {
+				//generate the column line on the table
+				resultDetails.option.textContent = "option";
+				resultDetails.refuseForm.style.visibility = "visible";
 
-				// If the button "Refuse" has not been created yet, create it and append to the form
+				// Show Refuse button and load the exam date id value
+				// It will also generate the column option in the table
+				resultDetails.refuseScoreData.setAttribute("name", "IDExamDate");
+				resultDetails.refuseInput.setAttribute("name", "IDExamDate");
+				resultDetails.refuseInput.setAttribute("value", "Refuse");
+				resultDetails.refuseScoreData.setAttribute("value", resultDetails.exam_date_id);
+				resultDetails.refuseInput.setAttribute("class", "refuse_score");
+				resultDetails.refuseInput.setAttribute("type", "button");
+				resultDetails.refuseInput.addEventListener("click", (e) => {
+					resultDetails.refuseScore(e.target.closest("form"));
+				}, false);
 
-				if (!this.refuseButtonCreated) {
-					form = document.getElementById("refuseScoreForm");
-
-					input = document.getElementById("refuseScoreInput");
-					input.setAttribute("value", this.exam_date_id);
-
-					elem = document.createElement("button");
-					elem.setAttribute("class", "button2");
-					elem.textContent = "Refuse";
-					elem.setAttribute("type", "submit");
-					elem.setAttribute("value", this.exam_date_id);
-					elem.setAttribute("name", "IDExamDate");
-					elem.addEventListener("click", (e) => {
-						this.refuseScore(e.target.closest("form"));
-					}, false);
-					form.appendChild(elem);
-					destcell.appendChild(form);
-					this.refuseButtonCreated = true;
-				}
 			}
 			//make details visible
 			this.resultDetails.style.visibility = "visible";
@@ -318,8 +322,8 @@
 
 		this.isRefusable = function (mark, status) {
 			if (status == "PUBLISHED") {
-				if (isNaN(mark)) return false;
-				if ((mark >= 18 && mark <= 30) || (mark == '30L')) {
+				if (mark != "30L" && isNaN(mark)) return false;  
+				if ((mark >= 18 && mark <= 30) || (mark == "30L")) {
 					return true;
 				} else return false;
 			} else return false;
@@ -331,9 +335,12 @@
 				makeCall("POST", 'UpdateResultStud', form,
 					function (req) {
 						if (req.readyState == XMLHttpRequest.DONE) {
-							var message = req.responseText;
+							var message = JSON.parse(req.responseText);
 							if (req.status == 200) {
-								pageOrchestrator.refresh();
+								resultDetails.reset();
+								resultDetails.update(message);
+								resultDetails.okayRef.textContent = "Score Refused!"
+
 							} else {
 								self.alert.textContent = message;
 								self.reset();
@@ -344,6 +351,13 @@
 			} else {
 				form.reportValidity();
 			}
+
+		}
+
+		this.removeColumn = function () {
+			resultDetails.option.textContent = "";
+			resultDetails.refuseForm.style.visibility = "hidden";
+			resultDetails.refuseInput.setAttribute("type", "hidden");
 
 		}
 

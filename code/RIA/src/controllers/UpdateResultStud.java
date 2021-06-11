@@ -63,7 +63,8 @@ public class UpdateResultStud extends HttpServlet {
 		// redirect to another servlet to get result details updated
 		// results are not sent immediately by this servlet in order to avoid problems with
 		// user refreshing the page after having done a POST to this servlet
-		response.sendRedirect(session.getServletContext() + "/GetResultDetails");
+		String path = getServletContext().getContextPath();
+		response.sendRedirect(path + "/GetResultDetails?IDExamDate=" + IDExamDate);
 		
 	}
 
