@@ -64,7 +64,7 @@ public class GoToRecord extends HttpServlet {
 
 		int rec, exam_date_id, course_id;
 		Integer sort;
-		String mask, coursename, date, time, path;
+		String mask, coursename, date, time, path, professor;
 		Timestamp timestamp;
 
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
@@ -72,6 +72,8 @@ public class GoToRecord extends HttpServlet {
 		ExamDateDAO examdatedao = new ExamDateDAO(connection);
 		
 		User user = (User) session.getAttribute("user");
+		
+		professor = user.getName() + ' ' + user.getSurname();
 		
 		try {
 			sort = Integer.parseInt(request.getParameter("sort"));
@@ -166,6 +168,7 @@ public class GoToRecord extends HttpServlet {
 				ctx.setVariable("time", time);
 				ctx.setVariable("exam_date_id", exam_date_id);
 				ctx.setVariable("course_id", course_id);
+				ctx.setVariable("professor", professor);
 
 				templateEngine.process(path, ctx, response.getWriter());
 			} else {
