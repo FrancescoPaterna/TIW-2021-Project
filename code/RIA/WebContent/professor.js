@@ -544,7 +544,7 @@
 										self.modal_content.style.height = "auto";
 										self.modal_content.style.width = "80%";
 										self.multiple_modify_button_flag = false;
-										self.multiple_modify_button.removeEventListener("click", (e));
+										self.multiple_modify_button.removeEventListener("click", (e)); //TODO FIX THIS SHIT
 									} else {
 										self.alert.textContent = message;
 									}
