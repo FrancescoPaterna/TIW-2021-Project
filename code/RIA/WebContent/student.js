@@ -1,5 +1,5 @@
 /**
- * Student Managment 
+ * Student Management 
  */
 
 (function () { // avoid variables ending up in the global scope
@@ -30,8 +30,8 @@
 
 	function CourseList(_alert, _id_courseStud, _id_courseStudBody) {
 		this.alert = _alert;
-		this.courseStud = _id_courseStud;
-		this.courseStudBody = _id_courseStudBody;
+		this.courseStud = _id_courseStud; // table of courses list
+		this.courseStudBody = _id_courseStudBody; // table body of courses list
 		this.current_courseList;
 
 		this.reset = function () {
@@ -45,13 +45,14 @@
 					if (req.readyState == XMLHttpRequest.DONE) {
 						var message = req.responseText;
 						if (req.status == 200) {
-							var CoursesToShow = JSON.parse(req.responseText);
-							courseList.current_courseList = CoursesToShow;
-							if (CoursesToShow.length == 0) {
+							// parse from JSON courses received by the server and show them
+							var coursesToShow = JSON.parse(req.responseText);
+							courseList.current_courseList = coursesToShow;
+							if (coursesToShow.length == 0) {
 								self.alert.textContent = "no courses entered yet";
 								return;
 							}
-							self.update(CoursesToShow); // self visible by closure
+							self.update(coursesToShow); // self visible by closure
 						}
 					} else {
 						self.alert.textContent = message;
@@ -62,7 +63,7 @@
 		};
 
 		this.update = function (courseList) {
-			var elem, i, row, destcell, linkcell, anchor;
+			var row, destcell, linkcell, anchor;
 			this.courseStudBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this; // used to refer to the current function from inner functions
