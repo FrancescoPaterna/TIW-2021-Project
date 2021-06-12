@@ -135,7 +135,7 @@
 		}
 
 		this.show = function (course_id) {
-			if(course_id == this.current_course){      //ASYNC 2.0
+			if (course_id == this.current_course) {      //ASYNC 2.0
 				this.update(this.currentDateList);
 				return;
 			}
@@ -232,6 +232,8 @@
 		this.modal = document.getElementById("myModal");                //MainModal
 		this.modal_content = document.getElementById("modalContent");   //ModalContent
 		this.span = document.getElementsByClassName("close")[0];        //CloseButton
+		this.modal_allert = document.getElementById("modal_alert");   //ModalAllert
+
 
 		//+++++++++++++++SINGLE MODIFY+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 		this.single_modify_form = document.getElementById("sendNewScore"); //The Single Modify Form
@@ -305,7 +307,7 @@
 			this.recordLogo.style.visibility = "hidden";
 			this.recordLegalValue.style.visibility = "hidden";
 			this.print_button.style.visibility = "hidden";
-			
+
 		}
 
 		this.save = function (exam_date_id) {
@@ -528,6 +530,10 @@
 						var array = $("input[name='IDStudent']:checked").map(function () {
 							return this.value;
 						}).get();
+						if(array.length == 0){
+							sessionEnrolls.modal_allert.textContent = "Please select at least one student"
+							return;
+						}
 						var score = form.querySelector("select[name = 'score']").value;
 						form = {
 							"id_stud": array,
@@ -551,7 +557,7 @@
 										self.multiple_modify_button_flag = false;
 										self.multiple_modify_button.removeEventListener("click", e); //TODO FIX THIS SHIT
 									} else {
-										self.alert.textContent = message;
+										sessionEnrolls.modal_allert.textContent = message;
 									}
 								}
 							}
@@ -785,7 +791,7 @@
 			// clear the modal page
 			this.resetModal();
 			this.print_button.style.visibility = "visible";
-			this.modal_content.setAttribute("class","modal_record");
+			this.modal_content.setAttribute("class", "modal_record");
 			this.modal.style.display = "block";
 			// setup the modal page content
 			this.modal_title.textContent = "University of NightCity Official Record";
@@ -793,7 +799,7 @@
 				' at ' + record.time;
 
 			this.second_line_record.textContent = "Registration of the Session " + sessionEnrolls.current_exam +
-			   ' relating to the course of ' + courseList.current_course_name + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
+				' relating to the course of ' + courseList.current_course_name + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			this.recordDiv.style.visibility = "visible";
 
 			// fill the table with recorded enrolls
@@ -819,7 +825,7 @@
 			this.span.addEventListener("click", (c) => {
 				self.second_line_record.textContent = "";
 				self.modal.style.display = "none";
-				self.modal_content.setAttribute("class","modal-content");
+				self.modal_content.setAttribute("class", "modal-content");
 			}, false);
 
 			// show only record components in the modal page

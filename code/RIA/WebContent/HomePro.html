@@ -48,110 +48,109 @@
 
 		<!-- Modal content -->
 		<div id="modalContent" class="modal-content">
-			<frameset id="printf" name="printf">
-				<input id="print_button" class="prb no-print" type="button" value="&#128438;" onclick="printDiv('modalContent')">
-				<span class="close no-print">&times;</span>
-				<h1 id="modal_title"></h1>
-				<table id="first_single_modify" class="table">
-					<thead>
-						<tr class="row header">
-							<th>IdStud</th>
-							<th>name</th>
-							<th>surname</th>
-							<th>email</th>
-							<th>coursedeg</th>
-							<th>score</th>
-							<th>status</th>
-						</tr>
-					</thead>
-					<tbody>
+			<input id="print_button" class="prb no-print" type="button" value="&#128438;"
+				onclick="printDiv('modalContent')">
+			<span class="close no-print">&times;</span>
+			<h1 id="modal_title"></h1>
+			<table id="first_single_modify" class="table">
+				<thead>
+					<tr class="row header">
+						<th>IdStud</th>
+						<th>name</th>
+						<th>surname</th>
+						<th>email</th>
+						<th>coursedeg</th>
+						<th>score</th>
+						<th>status</th>
+					</tr>
+				</thead>
+				<tbody>
 
 
-						<tr>
-							<td id="f_modify_idstud"></td>
-							<td id="f_modify_name"></td>
-							<td id="f_modify_surname"></td>
-							<td id="f_modify_email"></td>
-							<td id="f_modify_coursedeg"></td>
-							<td id="f_modify_score"></td>
-							<td id="f_modify_status"></td>
-						</tr>
-					</tbody>
-				</table>
-				<h2 id="modal_message"></h2>
-				<h2 id="second_line_record"></h2>
-				<table id="second_single_modify" class="tablefull">
-					<thead>
-						<tr class="row header">
-							<th>IdStud</th>
-							<th>surname</th>
-							<th>name</th>
-							<th>new
-								score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><span id="modify_id"></span></td>
-							<td><span id="modify_name"></span></td>
-							<td><span id="modify_surname"></span></td>
-							<td>
-								<form id="sendNewScore" action="#">
+					<tr>
+						<td id="f_modify_idstud"></td>
+						<td id="f_modify_name"></td>
+						<td id="f_modify_surname"></td>
+						<td id="f_modify_email"></td>
+						<td id="f_modify_coursedeg"></td>
+						<td id="f_modify_score"></td>
+						<td id="f_modify_status"></td>
+					</tr>
+				</tbody>
+			</table>
+			<h2 id="modal_message"></h2>
+			<h2 id="second_line_record"></h2>
+			<table id="second_single_modify" class="tablefull">
+				<thead>
+					<tr class="row header">
+						<th>IdStud</th>
+						<th>surname</th>
+						<th>name</th>
+						<th>new
+							score&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><span id="modify_id"></span></td>
+						<td><span id="modify_name"></span></td>
+						<td><span id="modify_surname"></span></td>
+						<td>
+							<form id="sendNewScore" action="#">
 
-									<input id="id_stud" type="hidden" name="id_stud"> <input id="exam_date_id"
-										type="hidden" name="exam_date_id"> <select class="score" name="score" id="score"
-										required>
-										<option value="" selected="selected"></option>
-										<option value="ABSENT">ABSENT</option>
-										<option value="RIMANDATO">RIMANDATO</option>
-										<option value="RIPROVATO">RIPROVATO</option>
-										<option value="18">18</option>
-										<option value="19">19</option>
-										<option value="20">20</option>
-										<option value="21">21</option>
-										<option value="22">22</option>
-										<option value="23">23</option>
-										<option value="24">24</option>
-										<option value="25">25</option>
-										<option value="26">26</option>
-										<option value="27">27</option>
-										<option value="28">28</option>
-										<option value="29">29</option>
-										<option value="30">30</option>
-										<option value="30L">30L</option>
-									</select> <input id="update" type="button" value="update">
-								</form>
-							</td>
+								<input id="id_stud" type="hidden" name="id_stud"> <input id="exam_date_id" type="hidden"
+									name="exam_date_id"> <select class="score" name="score" id="score" required>
+									<option value="" selected="selected"></option>
+									<option value="ABSENT">ABSENT</option>
+									<option value="RIMANDATO">RIMANDATO</option>
+									<option value="RIPROVATO">RIPROVATO</option>
+									<option value="18">18</option>
+									<option value="19">19</option>
+									<option value="20">20</option>
+									<option value="21">21</option>
+									<option value="22">22</option>
+									<option value="23">23</option>
+									<option value="24">24</option>
+									<option value="25">25</option>
+									<option value="26">26</option>
+									<option value="27">27</option>
+									<option value="28">28</option>
+									<option value="29">29</option>
+									<option value="30">30</option>
+									<option value="30L">30L</option>
+								</select> <input id="update" type="button" value="update">
+							</form>
+						</td>
 
-						</tr>
-					</tbody>
-				</table>
+					</tr>
+				</tbody>
+			</table>
 
-				<div id="recordDiv">
+			<div id="recordDiv">
 
-					<div>
-						<table id="recordTable" class=recordtable>
-							<thead>
-								<tr id=rec>
-									<th>ID</th>
-									<th>Surname</th>
-									<th>Name</th>
-									<th>Mark</th>
-								</tr>
-							</thead>
-							<tbody id="recordTableBody">
-						</table>
-					</div>
-
-					<img id="recordLogo" class=logo2 src="/ERR_pure_html/resources/logo_dark.png" alt="logo">
-					<p id="recordLegalValue">The document has legal value and must be printed and stored</p>
+				<div>
+					<table id="recordTable" class="recordtable">
+						<thead>
+							<tr id="rec">
+								<th>ID</th>
+								<th>Surname</th>
+								<th>Name</th>
+								<th>Mark</th>
+							</tr>
+						</thead>
+						<tbody id="recordTableBody"></tbody>
+					</table>
 				</div>
-			</frameset>
+
+				<img id="recordLogo" class="logo2" src="/ERR_pure_html/resources/logo_dark.png" alt="logo">
+				<p id="recordLegalValue">The document has legal value and must be printed and stored</p>
+			</div>
+			<div>
+				<form id="multipleModifyForm" action="#"></form>
+			</div>
+			<div id="modal_alert" class="alert_modal"></div>
 		</div>
 
-		<div>
-			<form id="multipleModifyForm" action="#"></form>
-		</div>
 
 	</div>
 

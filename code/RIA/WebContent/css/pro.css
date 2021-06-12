@@ -351,8 +351,11 @@ th.sortable:active {
 #multipleModifyForm {
 	position: fixed;
 	top: 30%;
-	left: 30%;
+	left: 32%;
+	overflow-y: scroll;
+	height: 36%;
 }
+
 
 .inputGroup {
 	border-width: 1px;
@@ -401,4 +404,15 @@ input[type=checkbox] {
 
 h2 span {
 	display: block;
+}
+
+
+.alert_modal{
+font-weight: bold;
+font-size: 28px;
+position: fixed;
+top: 54%;
+left: 49%;
+width: 21%;
+color: red;
 }
