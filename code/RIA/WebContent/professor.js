@@ -718,8 +718,8 @@
 			sessionEnrolls.span.addEventListener("click", (c) => {
 				// dependency close button
 				sessionEnrolls.modal.style.display = "none";
-				sessionEnrolls.modal_content.style.height = "auto";
-				sessionEnrolls.modal_content.style.width = "80%";
+				sessionEnrolls.modal_content.style.height = "80%";
+				sessionEnrolls.modal_content.style.width = "75%";
 			});
 		}
 

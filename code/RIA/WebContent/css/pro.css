@@ -354,6 +354,7 @@ th.sortable:active {
 	left: 32%;
 	overflow-y: scroll;
 	height: 36%;
+	padding: 26px;
 }
 
 
