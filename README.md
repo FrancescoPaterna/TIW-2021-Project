@@ -36,8 +36,8 @@ You need and IDE like **Eclipse IDE for Enterprise Java Developers** (or similar
 
 ### Tecnologies Used: HTML, CSS, JDBC, Java, JavaScript, JQuery. 
 
-####Professor's Home Page
+#### Professor's Home Page
 [![Pro_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Professor_RIA.gif)]
 
-####Student's Home Page
-[![Stud_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Studnet_RIA.gif)]
+#### Student's Home Page
+[![Stud_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Student_RIA.gif)]
