@@ -174,7 +174,7 @@ public class GoToRecord extends HttpServlet {
 			} else {
 				path = "/WEB-INF/Warning.html";
 				ctx.setVariable("error", "Impossible To Record Score");
-				ctx.setVariable("description", "Cannot Find Any Score in Published State!");
+				ctx.setVariable("description", "Cannot Find Any Score in PUBLISHED or REJECTED Status!");
 				templateEngine.process(path, ctx, response.getWriter());
 				return;
 

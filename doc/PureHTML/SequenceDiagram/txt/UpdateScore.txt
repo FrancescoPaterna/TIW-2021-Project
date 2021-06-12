@@ -7,16 +7,21 @@ participant EnrollsDAO
 participant Session
 participant GoodScore
 participant WebContext
+participant GoToModify
 participant TemplateEngine
 
-note left of Browser:secret_code\ncourse_id\nid_stud\nexam_date_id\nsort\nscore\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg
+note left of Browser:course_id\nid_stud\nexam_date_id\nsort\nscore\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg
 
 Browser->UpdateScore: POST
 
 activate UpdateScore
 UpdateScore-->>EnrollsDAO: new EnrollsDAO(connection)
+activate EnrollsDAO
+deactivateafter EnrollsDAO
 UpdateScore-->>ExamDateDAO:new ExamDateDAO(connection)
 
+activate ExamDateDAO
+deactivateafter ExamDateDAO
 UpdateScore->Session:getAttribute("user")
 activate Session
 Session-->>UpdateScore:user
@@ -43,6 +48,10 @@ deactivateafter Session
 UpdateScore->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
+else otherwise
+UpdateScore->GoToModify:Redirect
+activate GoToModify
+deactivateafter GoToModify
 end 
 else otherwise
 UpdateScore->WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
@@ -56,30 +65,4 @@ UpdateScore->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 end 
-else otherwise
-UpdateScore->WebContext:setVariable("secret_code", secret_code)
-activate WebContext
-UpdateScore->WebContext:setVariable("course_id", course_id)
-UpdateScore->WebContext:setVariable("id_stud", id_stud)
-UpdateScore->WebContext:setVariable("exam_date_id", exam_date_id)
-UpdateScore->WebContext:setVariable("mark", score)
-UpdateScore->WebContext:setVariable("coursename", coursename)
-UpdateScore->WebContext:setVariable("mask", mask)
-UpdateScore->WebContext:setVariable("date", date)
-UpdateScore->WebContext:setVariable("name", name)
-UpdateScore->WebContext:setVariable("surname", surname)
-UpdateScore->WebContext:setVariable("email", email)
-UpdateScore->WebContext:setVariable("coursedeg", coursedeg)
-UpdateScore->WebContext:setVariable("status", "INSERTED")
-deactivate WebContext
-UpdateScore->TemplateEngine: process("Modify.html", ctx, response.getWriter())
-activate TemplateEngine
-deactivateafter TemplateEngine
 end 
-
-
-
-
-
-
-

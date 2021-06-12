@@ -6,6 +6,7 @@ participant Session
 participant UserDAO
 participant EnrollsDAO
 participant GoodScore
+participant WebContext
 participant TemplateEngine
 
 note left of Browser:IDExamDate\ncoursename\ndate \ncourse_id
@@ -19,6 +20,13 @@ activate Session
 Session-->>GoToResult:user
 
 deactivate Session
+
+GoToResult-->>EnrollsDAO:new EnrollsDAO
+activate EnrollsDAO
+deactivateafter EnrollsDAO
+GoToResult-->>UserDAO:new UserDAO
+activate UserDAO
+deactivateafter UserDAO
 GoToResult->EnrollsDAO:FindStudentScore(IDExamDate, user)
 activate EnrollsDAO
 EnrollsDAO-->GoToResult:enroll
@@ -31,12 +39,40 @@ UserDAO-->>GoToResult:professor
 deactivate UserDAO
 alt !(enroll.getStatus()==NOT_INSERTED || enroll.getStatus()==INSERTED)
 alt enroll.getStatus()==PUBLISHED && GoodScore.CheckGoodScore(enroll.getMark())
-
-GoToResult->TemplateEngine:Result.html, course_id, enroll, date, coursename, IDExamDate, professor
+GoToResult->WebContext:setVariable("course_id", course_id)
+activate WebContext
+GoToResult->WebContext:setVariable("enroll", enroll)
+GoToResult->WebContext:setVariable("date", date)
+GoToResult->WebContext:setVariable("coursename", coursename)
+GoToResult->WebContext:setVariable("IDExamDate", IDExamDate)
+GoToResult->WebContext:setVariable("professor", professor)
+deactivateafter WebContext
+GoToResult->TemplateEngine:process("Result.html", ctx, response.getWriter())
+activate TemplateEngine
+deactivateafter TemplateEngine
 else otherwise
-GoToResult->TemplateEngine:ResultLocked.html, course_id, enroll, date, coursename, IDExamDate, professor
+GoToResult->WebContext:setVariable("course_id", course_id)
+activate WebContext
+GoToResult->WebContext:setVariable("enroll", enroll)
+GoToResult->WebContext:setVariable("date", date)
+GoToResult->WebContext:setVariable("coursename", coursename)
+GoToResult->WebContext:setVariable("IDExamDate", IDExamDate)
+GoToResult->WebContext:setVariable("professor", professor)
+deactivateafter WebContext
+GoToResult->TemplateEngine:process("ResultLocked.html", ctx, response.getWriter())
+activate TemplateEngine
+deactivateafter TemplateEngine
 end
 else otherwise
-GoToResult->TemplateEngine:ResultEmpty.html, course_id, enroll, date, coursename, IDExamDate, professor
+GoToResult->WebContext:setVariable("course_id", course_id)
+activate WebContext
+GoToResult->WebContext:setVariable("enroll", enroll)
+GoToResult->WebContext:setVariable("date", date)
+GoToResult->WebContext:setVariable("coursename", coursename)
+GoToResult->WebContext:setVariable("IDExamDate", IDExamDate)
+GoToResult->WebContext:setVariable("professor", professor)
+deactivateafter WebContext
+GoToResult->TemplateEngine:process("ResultEmpty.html", ctx, response.getWriter())
+activate TemplateEngine
+deactivateafter TemplateEngine
 end
-

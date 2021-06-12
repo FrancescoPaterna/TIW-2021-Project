@@ -3,11 +3,10 @@ title GoToModify
 participant Browser
 participant GoToModify
 participant EnrollsDAO
-participant Rebuilder
 participant WebContext
 participant TemplateEngine
 
-note left of Browser:secretsortcode\ncourse_id\nid_stud\nexam_date_id\nmark\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg\nstatus
+note left of Browser:sort\ncourse_id\nid_stud\nexam_date_id\nmark\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg\nstatus
 
 Browser->GoToModify:GET
 activate GoToModify
@@ -21,33 +20,22 @@ activate EnrollsDAO
 EnrollsDAO-->>GoToModify: isModifiable
 
 deactivate EnrollsDAO
-GoToModify->Rebuilder:resetMask(mask, secretsortcode)
-activate Rebuilder
-Rebuilder-->>GoToModify:recovered_mask
 
-GoToModify->Rebuilder:reserSecretSortcode(secretosortcode)
-Rebuilder-->>GoToModify:sort
-
-deactivate Rebuilder
-GoToModify->WebContext:setVariable("mask", recovered_mask)
-activate WebContext
-GoToModify->WebContext:setVariable("sort", sort)
-
-deactivate WebContext
 alt isModifiable == false
 GoToModify->WebContext:setVariable("error", "Impossible To Modify Score")
 activate WebContext
-GoToModify->WebContext:setVariable("description", "You Can Only Modify Score in NOT_INSERTED, INSERT and PUBLISHED State!")
+GoToModify->WebContext:setVariable("description", "You Can Only Modify Score in NOT_INSERTED or INSERTED Status!")
 deactivate WebContext
 GoToModify->TemplateEngine: process("Warning.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 else otherwise
-GoToModify->WebContext:setVariable("secret_code", secretsortcode)
+GoToModify->WebContext:setVariable("sort", secretsortcode)
 activate WebContext
 GoToModify->WebContext:setVariable("course_id", course_id)
 GoToModify->WebContext:setVariable("id_stud", id_stud)
 GoToModify->WebContext:setVariable("exam_date_id", exam_date_id)
+GoToModify->WebContext:setVariable("mask", recovered_mask)
 GoToModify->WebContext:setVariable("mark", mark)
 GoToModify->WebContext:setVariable("coursename", coursename)
 GoToModify->WebContext:setVariable("date", date)

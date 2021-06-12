@@ -6,12 +6,11 @@ participant Session
 participant EnrollsDAO
 participant RecordDAO
 participant ExamDateDAO
-participant Rebuilder
 participant SimpleDateFormat
 participant WebContext
 participant TemplateEngine
 
-note left of Browser:course_id\nexam_date_id\ncoursename\ndate\nmask\nsecretsortcode 
+note left of Browser:sort\ncourse_id\nexam_date_id\ncoursename\ndate\nmask
 
 Browser->GoToRecord:POST
 
@@ -25,19 +24,6 @@ GoToRecord-->>EnrollsDAO:new EnrollsDAO(connection)
 GoToRecord-->>RecordDAO:new RecordDAO(connection)
 GoToRecord-->>ExamDateDAO:new ExamDateDAO(connection)
 
-GoToRecord->Rebuilder:resetMask(mask, secretsortcode)
-activate Rebuilder
-Rebuilder-->>GoToRecord:recovered_mask
-deactivate Rebuilder
-GoToRecord->Rebuilder:resetSecretSortCode(secretsortcode)
-activate Rebuilder
-Rebuilder-->>GoToRecord:sort
-
-deactivate Rebuilder
-GoToRecord->WebContext:setVariable("mask", recovered_mask
-activate WebContext
-GoToRecord->WebContext:setVariable("sort", sort)
-deactivate WebContext
 alt examdateDAO.CheckExamDateByProf(user.getId(), exam_date_id) == false
 GoToRecord->WebContext:setVariable("error", "UNAUTHORIZED ACCESS")
 activate WebContext
@@ -69,10 +55,10 @@ GoToRecord->RecordDAO:getCurrentTimestamp(rec)
 activate RecordDAO
 RecordDAO-->>GoToRecord:timestamp
 deactivate RecordDAO
-GoToRecord-->>SimpleDateFormat:new SimpleDateFormat("dd--MM-yyyy")
+GoToRecord-->>SimpleDateFormat:new SimpleDateFormat("dd-mm-yyyy")
 GoToRecord->SimpleDateFormat:format(timestamp)
 activate SimpleDateFormat
-SimpleDateFormat-->>GoToRecord:time
+SimpleDateFormat-->>GoToRecord:date
 deactivate SimpleDateFormat
 GoToRecord-->>SimpleDateFormat:new SimpleDateFormat("HH:mm")
 GoToRecord->SimpleDateFormat:format(timestamp)
@@ -81,12 +67,16 @@ SimpleDateFormat-->>GoToRecord:time
 deactivate SimpleDateFormat
 GoToRecord->WebContext:setVariable("recorded", recorded)
 activate WebContext
+GoToRecord->WebContext:setVariable("mask", mask)
+GoToRecord->WebContext:setVariable("sort", sort)
+GoToRecord->WebContext:setVariable("recorded", recorded)
 GoToRecord->WebContext:setVariable("rec", rec)
 GoToRecord->WebContext:setVariable("coursename", coursename)
 GoToRecord->WebContext:setVariable("date", date)
 GoToRecord->WebContext:setVariable("time", time)
 GoToRecord->WebContext:setVariable("exam_date_id", exam_date_id)
 GoToRecord->WebContext:setVariable("course_id", course_id)
+GoToRecord->WebContext:setVariable("professor", professor)
 deactivate WebContext
 GoToRecord->TemplateEngine:process("Record.html, ctx, response.getWriter())
 activate TemplateEngine
@@ -101,9 +91,3 @@ activate TemplateEngine
 deactivateafter TemplateEngine
 end
 end
-
-
-
-
-
-

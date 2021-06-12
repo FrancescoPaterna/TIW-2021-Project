@@ -18,7 +18,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import dao.EnrollsDAO;
-//import beans.User;
 import utils.ConnectionHandler;
 import utils.ParamsChecker;
 
@@ -49,7 +48,7 @@ public class GoToModify extends HttpServlet {
 			throws ServletException, IOException {
 
 		Integer course_id, id_stud, exam_date_id, sort;
-		String coursename, mask, date, name, surname, email, coursedeg, mark, status, recovered_mask;
+		String coursename, mask, date, name, surname, email, coursedeg, mark, status;
 
 		try {
 			sort = Integer.parseInt(request.getParameter("sort"));
@@ -96,7 +95,7 @@ public class GoToModify extends HttpServlet {
 		if (!isModifiable) {
 			path = "/WEB-INF/Warning.html";
 			ctx.setVariable("error", "Impossible To Modify Score");
-			ctx.setVariable("description", "You Can Only Modify Score in NOT_INSERTED, INSERT and PUBLISHED State!");
+			ctx.setVariable("description", "You Can Only Modify Score in NOT_INSERTED or INSERTED Status!");
 			templateEngine.process(path, ctx, response.getWriter());
 			return;
 		}
