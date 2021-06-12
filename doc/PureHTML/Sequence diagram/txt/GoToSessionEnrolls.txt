@@ -26,11 +26,11 @@ end
 ==SORTING SYSTEM SUMMARY \n==
 alt Sort By IDStud (sort = n)
 alt mask[n-1] = '0'OR mask[n-1] = '2'
-note over GoToSessionEnrolls:secretsortcode [Column (n) ] [ASC]\nmaskget Set '0' To Position (Column -1)\n
+note over GoToSessionEnrolls:maskget: Create a Deafualt Mask [2222222] and Set '1' To Position (Column -1)
 GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByXXXXAsc(exam_date_id)
 end
 alt mask[n-1] = '1'
-note over GoToSessionEnrolls:secretsortcode [Column (0) ] [DESC]\nmaskget Set '1' To Position (Column -1)
+note over GoToSessionEnrolls:maskget: Create a Deafualt Mask [2222222] and Set '0' To Position (Column -1)
 GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByXXXXDesc(exam_date_id)
 end
 end
@@ -40,5 +40,5 @@ end
 ==END SORTING SYSTEM\n\n   See all function in the\n      complete version==
 GoToSessionEnrolls->EnrollsDAO: assertion_published(exam_date_id)
 GoToSessionEnrolls->EnrollsDAO: assertion_record(exam_date_id)
-GoToSessionEnrolls->TemplateEngine: ExamEnrolls.html, publish, record, course_id, exam_date_id, enrolls, coursenam, date, maskget, secretsortcode
+GoToSessionEnrolls->TemplateEngine: ExamEnrolls.html, recovered_mask, publish, record, course_id, exam_date_id, enrolls, coursename, date, mask, sort
 
