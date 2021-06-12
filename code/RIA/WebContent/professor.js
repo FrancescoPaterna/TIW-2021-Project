@@ -297,6 +297,7 @@
 			//this.modal.style.visibility = "hidden";
 			this.modal_title.textContent = "";
 			this.modal_message.textContent = "";
+			this.modal_allert.textContent = "";
 			this.first_single_modify.style.visibility = "hidden";
 			this.second_single_modify.style.visibility = "hidden";
 			this.multipleModalForm.style.visibility = "hidden";
@@ -531,7 +532,7 @@
 							return this.value;
 						}).get();
 						if(array.length == 0){
-							sessionEnrolls.modal_allert.textContent = "Please select at least one student"
+							sessionEnrolls.modal_allert.textContent = "Please select at least one student!"
 							return;
 						}
 						var score = form.querySelector("select[name = 'score']").value;

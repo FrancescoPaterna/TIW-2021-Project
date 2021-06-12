@@ -310,7 +310,7 @@ th.sortable:active {
 	border: 1px solid #888;
 	width: 75%;
 	height: 80%;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 
