@@ -34,6 +34,7 @@
 		this.coursePro = _id_coursePro;
 		this.courseProBody = _id_courseProBody;
 		this.current_courseList;
+		this.current_course_name;
 
 		this.reset = function () {
 			this.coursePro.style.visibility = "hidden";
@@ -81,6 +82,7 @@
 				anchor.setAttribute('course_id', course.id); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
+					courseList.current_course_name = course.name;
 					courseDate.show(e.target.getAttribute("course_id")); // the list must know the details container
 					courseList.waiter(course);
 				}, false); //TODO Repeat bubbling? 
@@ -133,7 +135,7 @@
 		}
 
 		this.show = function (course_id) {
-			if(course_id == this.current_course){      //ASYNC 2.0
+			if (course_id == this.current_course) {      //ASYNC 2.0
 				this.update(this.currentDateList);
 				return;
 			}
@@ -230,6 +232,8 @@
 		this.modal = document.getElementById("myModal");                //MainModal
 		this.modal_content = document.getElementById("modalContent");   //ModalContent
 		this.span = document.getElementsByClassName("close")[0];        //CloseButton
+		this.modal_allert = document.getElementById("modal_alert");   //ModalAllert
+
 
 		//+++++++++++++++SINGLE MODIFY+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++//
 		this.single_modify_form = document.getElementById("sendNewScore"); //The Single Modify Form
@@ -277,6 +281,7 @@
 		this.record_button = document.getElementById("record_button");
 		this.multiple_modify_button = document.getElementById("multiple_modify");
 		this.publish_button = document.getElementById("publish");
+		this.print_button = document.getElementById("print_button");
 		//VAR
 		var current_exam;
 
@@ -292,6 +297,7 @@
 			//this.modal.style.visibility = "hidden";
 			this.modal_title.textContent = "";
 			this.modal_message.textContent = "";
+			this.modal_allert.textContent = "";
 			this.first_single_modify.style.visibility = "hidden";
 			this.second_single_modify.style.visibility = "hidden";
 			this.multipleModalForm.style.visibility = "hidden";
@@ -301,6 +307,8 @@
 			this.recordTableBody.style.visibility = "hidden";
 			this.recordLogo.style.visibility = "hidden";
 			this.recordLegalValue.style.visibility = "hidden";
+			this.print_button.style.visibility = "hidden";
+
 		}
 
 		this.save = function (exam_date_id) {
@@ -394,6 +402,8 @@
 					elem.addEventListener("click", (e) => {
 						self.resetModal();
 						self.modal.style.display = "block";
+						sessionEnrolls.modal_content.style.height = "55%";
+						sessionEnrolls.modal_content.style.width = "75%";
 						self.first_single_modify.style.visibility = "visible";
 						self.second_single_modify.style.visibility = "visible";
 						self.modify_handler_id.setAttribute("value", examdates.IDstudent);
@@ -523,6 +533,10 @@
 						var array = $("input[name='IDStudent']:checked").map(function () {
 							return this.value;
 						}).get();
+						if (array.length == 0) {
+							sessionEnrolls.modal_allert.textContent = "Please select at least one student!"
+							return;
+						}
 						var score = form.querySelector("select[name = 'score']").value;
 						form = {
 							"id_stud": array,
@@ -544,9 +558,9 @@
 										self.modal_content.style.height = "auto";
 										self.modal_content.style.width = "80%";
 										self.multiple_modify_button_flag = false;
-										self.multiple_modify_button.removeEventListener("click"); //TODO FIX THIS SHIT
+										self.multiple_modify_button.removeEventListener("click", sessionEnrolls.multiple_event);
 									} else {
-										self.alert.textContent = message;
+										sessionEnrolls.modal_allert.textContent = message;
 									}
 								}
 							}
@@ -558,22 +572,12 @@
 
 				self.multipleModalForm.appendChild(button);
 				self.multiple_modify_button.setAttribute("class", "modify");
-				self.multiple_modify_button.addEventListener("click", (e) => {
-					self.resetModal();
-					self.modal_title.textContent = "MULTIPLE MODIFY";
-					self.modal_content.style.height = "60%";
-					self.modal_content.style.width = "40%";
-					self.modal.style.display = "block";
-					self.multipleModalForm.style.visibility = "visible";
-					var self2 = self;
-					self.span.addEventListener("click", (c) => {
-						// dependency close button
-						self2.modal.style.display = "none";
-						self.modal_content.style.height = "auto";
-						self.modal_content.style.width = "80%";
-					}, false);
-				}, false);
+				self.multiple_modify_button.addEventListener("click", sessionEnrolls.multiple_event, false);
 			}
+
+
+
+
 
 
 			// Register event to record button only if there is at least one mark in the "PUBLISHED" status
@@ -705,6 +709,22 @@
 			}
 		}*/
 
+		//Need to separate the Event Listner of MultipleModifyButton, to Add and Remove Easly
+		this.multiple_event = function () {
+			sessionEnrolls.resetModal();
+			sessionEnrolls.modal_title.textContent = "MULTIPLE MODIFY";
+			sessionEnrolls.modal_content.style.height = "60%";
+			sessionEnrolls.modal_content.style.width = "40%";
+			sessionEnrolls.modal.style.display = "block";
+			sessionEnrolls.multipleModalForm.style.visibility = "visible";
+			sessionEnrolls.span.addEventListener("click", (c) => {
+				// dependency close button
+				sessionEnrolls.modal.style.display = "none";
+				sessionEnrolls.modal_content.style.height = "80%";
+				sessionEnrolls.modal_content.style.width = "80%";
+			});
+		}
+
 
 		/* Update the parameters in the Single Modify Modal Window*/
 		this.update_single_modifier = function (id, name, surname, email, score, coursedeg, status) {
@@ -779,7 +799,10 @@
 			var row, destcell;
 			// clear the modal page
 			this.resetModal();
-			this.modal_content.setAttribute("class","modal_record");
+			sessionEnrolls.modal_content.style.height = "80%";
+			sessionEnrolls.modal_content.style.width = "80%";
+			this.print_button.style.visibility = "visible";
+			this.modal_content.setAttribute("class", "modal_record");
 			this.modal.style.display = "block";
 			// setup the modal page content
 			this.modal_title.textContent = "University of NightCity Official Record";
@@ -787,7 +810,7 @@
 				' at ' + record.time;
 
 			this.second_line_record.textContent = "Registration of the Session " + sessionEnrolls.current_exam +
-			   ' relating to the course of ' + sessionEnrolls.current_course + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
+				' relating to the course of ' + courseList.current_course_name + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			this.recordDiv.style.visibility = "visible";
 
 			// fill the table with recorded enrolls
@@ -813,7 +836,7 @@
 			this.span.addEventListener("click", (c) => {
 				self.second_line_record.textContent = "";
 				self.modal.style.display = "none";
-				self.modal_content.setAttribute("class","modal-content");
+				self.modal_content.setAttribute("class", "modal-content");
 			}, false);
 
 			// show only record components in the modal page

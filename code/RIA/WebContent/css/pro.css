@@ -298,7 +298,6 @@ th.sortable:active {
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 80%;
 
 }
 
@@ -308,9 +307,7 @@ th.sortable:active {
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 75%;
-	height: 80%;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 
 
@@ -351,8 +348,12 @@ th.sortable:active {
 #multipleModifyForm {
 	position: fixed;
 	top: 30%;
-	left: 30%;
+	left: 32%;
+	overflow-y: scroll;
+	height: 36%;
+	padding: 26px;
 }
+
 
 .inputGroup {
 	border-width: 1px;
@@ -401,4 +402,15 @@ input[type=checkbox] {
 
 h2 span {
 	display: block;
+}
+
+
+.alert_modal{
+font-weight: bold;
+font-size: 28px;
+position: fixed;
+top: 54%;
+left: 49%;
+width: 21%;
+color: red;
 }

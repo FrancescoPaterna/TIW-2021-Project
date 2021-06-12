@@ -229,22 +229,21 @@ input[type=password] {
 }
 
 .prb {
-	background-color: grey;
-	color: white;
+	background-color: white;
+	color: grey;
 	position: absolute;
-	top: 16px;
-	left: 262px;
+	left: 243px;
 	font-weight: bold;
-	width: 155px;
-	height: 42px;
-	font-size: 27px;
+	width: 66px;
+	height: 58px;
+	font-size: 39px;
 	border-radius: 6px;
 	border: none;
 	cursor: pointer;
 }
 
 .prb:hover {
-	background-color: #888a85;
+	background-color: #f0f0ef;
 }
 
 .alertmessage {

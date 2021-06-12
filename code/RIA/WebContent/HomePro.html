@@ -2,15 +2,43 @@
 <html>
 
 <head>
-<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
-<meta charset="UTF-8" />
-<title>HomePage Professor</title>
-<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
-<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
-<script src="professor.js" charset="utf-8" defer></script>
-<script src="sort.js" charset="utf-8" defer></script>
-<script src="utils.js" charset="utf-8" defer></script>
-<script src="jquery-3.6.0.min.js"></script>
+	<link rel="shortcut icon" href="/ERR_pure_html/resources/favicon.png" />
+	<meta charset="UTF-8" />
+	<title>HomePage Professor</title>
+	<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/print.css" />
+	<script src="professor.js" charset="utf-8" defer></script>
+	<script src="sort.js" charset="utf-8" defer></script>
+	<script src="utils.js" charset="utf-8" defer></script>
+	<script src="jquery-3.6.0.min.js"></script>
+
+	<!-------------- Script to print the Record on a PDF --------------------------------------------------->
+	<script defer>
+		printDivCSS = new String('<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />')
+		printDivCSS2 = new String('<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />')
+		printDivCSS3 = new String('<link rel="stylesheet" type="text/css" media="all" href="css/print.css" />')
+
+		function printDiv(divId) {
+			var divContents = document.getElementById("modalContent").innerHTML;
+			var a = window.open('', '', 'height=500, width=500'); //generate an empty print-window
+			a.document.write('<html>');       //Let's manually write the HTML
+			a.document.write('<head>');
+			a.document.write(printDivCSS);  //import the CSS
+			a.document.write(printDivCSS2);
+			a.document.write(printDivCSS3);
+			a.document.write('</head>');
+			a.document.write('<body style="background-color: white">');
+			a.document.write(divContents); //Import the Modal Window Data
+			a.document.write('</body></html>');
+			a.document.close(); //Close the DOC
+			setTimeout(function () { //add a wait state to load safetly the file
+				a.print();  //Let's the magic begin
+			}, 200);
+
+		}
+	</script>
+	<!---------------------------------------------------------------------------------->
 </head>
 
 <body class="proback">
@@ -19,8 +47,10 @@
 	<div id="myModal" class="modal">
 
 		<!-- Modal content -->
-		<div id ="modalContent" class="modal-content">
-			<span class="close">&times;</span>
+		<div id="modalContent" class="modal-content">
+			<input id="print_button" class="prb no-print" type="button" value="&#128438;"
+				onclick="printDiv('modalContent')">
+			<span class="close no-print">&times;</span>
 			<h1 id="modal_title"></h1>
 			<table id="first_single_modify" class="table">
 				<thead>
@@ -68,9 +98,8 @@
 						<td>
 							<form id="sendNewScore" action="#">
 
-								<input id="id_stud" type="hidden" name="id_stud"> <input
-									id="exam_date_id" type="hidden" name="exam_date_id"> <select
-									class="score" name="score" id="score" required>
+								<input id="id_stud" type="hidden" name="id_stud"> <input id="exam_date_id" type="hidden"
+									name="exam_date_id"> <select class="score" name="score" id="score" required>
 									<option value="" selected="selected"></option>
 									<option value="ABSENT">ABSENT</option>
 									<option value="RIMANDATO">RIMANDATO</option>
@@ -96,32 +125,32 @@
 					</tr>
 				</tbody>
 			</table>
-			
+
 			<div id="recordDiv">
 
-			<div>
-				<table id="recordTable" class=recordtable>
-					<thead>
-						<tr id=rec>
-							<th>ID</th>
-							<th>Surname</th>
-							<th>Name</th>
-							<th>Mark</th>
-						</tr>
-					</thead>
-					<tbody id="recordTableBody">
-				</table>
-			</div>
+				<div>
+					<table id="recordTable" class="recordtable">
+						<thead>
+							<tr id="rec">
+								<th>ID</th>
+								<th>Surname</th>
+								<th>Name</th>
+								<th>Mark</th>
+							</tr>
+						</thead>
+						<tbody id="recordTableBody"></tbody>
+					</table>
+				</div>
 
-			<img id="recordLogo" class=logo2 src="/ERR_pure_html/resources/logo_dark.png"
-				alt="logo">
-			<p id="recordLegalValue">The document has legal value and must be printed and stored</p>
+				<img id="recordLogo" class="logo2" src="/ERR_pure_html/resources/logo_dark.png" alt="logo">
+				<p id="recordLegalValue">The document has legal value and must be printed and stored</p>
 			</div>
+			<div>
+				<form id="multipleModifyForm" action="#"></form>
+			</div>
+			<div id="modal_alert" class="alert_modal"></div>
 		</div>
-		
-		<div>
-			<form id="multipleModifyForm" action="#"></form>
-		</div>
+
 
 	</div>
 
@@ -182,16 +211,14 @@
 					<th id="Name" onclick="sortTable(this.id, true)" class="sortable">Name
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="Surname" onclick="sortTable(this.id, true)"
-						class="sortable">Surname <span class="normalarrow">&uarr;</span><span
-						class="normalarrow">&darr;</span>
+					<th id="Surname" onclick="sortTable(this.id, true)" class="sortable">Surname <span
+							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Email" onclick="sortTable(this.id, true)" class="sortable">Email
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
-					<th id="CourseDeg" onclick="sortTable(this.id, true)"
-						class="sortable">CourseDeg <span class="normalarrow">&uarr;</span><span
-						class="normalarrow">&darr;</span>
+					<th id="CourseDeg" onclick="sortTable(this.id, true)" class="sortable">CourseDeg <span
+							class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
 					</th>
 					<th id="Mark" onclick="sortCustom(this.id, true)" class="sortable">Mark
 						<span class="normalarrow">&uarr;</span><span class="normalarrow">&darr;</span>
@@ -225,11 +252,11 @@
 		</form>
 		<form class="long_button">
 			<input id="publish" type="button" value="PUBLISH" />
-			<input id="publish_exam_id" type="hidden" name="exam_date_id"/>
+			<input id="publish_exam_id" type="hidden" name="exam_date_id" />
 		</form>
 		<form id="record_form" class="long_button">
 			<input id="record_button" type="button" value="RECORD" />
-			<input id="record_exam_id" type="hidden" name="exam_date_id"/>
+			<input id="record_exam_id" type="hidden" name="exam_date_id" />
 		</form>
 	</div>
 </body>
