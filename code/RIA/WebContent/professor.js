@@ -34,6 +34,7 @@
 		this.coursePro = _id_coursePro;
 		this.courseProBody = _id_courseProBody;
 		this.current_courseList;
+		this.current_course_name;
 
 		this.reset = function () {
 			this.coursePro.style.visibility = "hidden";
@@ -81,6 +82,7 @@
 				anchor.setAttribute('course_id', course.id); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
+					courseList.current_course_name = course.name;
 					courseDate.show(e.target.getAttribute("course_id")); // the list must know the details container
 					courseList.waiter(course);
 				}, false); //TODO Repeat bubbling? 
@@ -544,7 +546,7 @@
 										self.modal_content.style.height = "auto";
 										self.modal_content.style.width = "80%";
 										self.multiple_modify_button_flag = false;
-										self.multiple_modify_button.removeEventListener("click"); //TODO FIX THIS SHIT
+										self.multiple_modify_button.removeEventListener("click", e); //TODO FIX THIS SHIT
 									} else {
 										self.alert.textContent = message;
 									}
@@ -787,7 +789,7 @@
 				' at ' + record.time;
 
 			this.second_line_record.textContent = "Registration of the Session " + sessionEnrolls.current_exam +
-			   ' relating to the course of ' + sessionEnrolls.current_course + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
+			   ' relating to the course of ' + courseList.current_course_name + ' held by Prof. ' + sessionStorage.getItem('name') + ' ' + sessionStorage.getItem('surname');
 			this.recordDiv.style.visibility = "visible";
 
 			// fill the table with recorded enrolls
