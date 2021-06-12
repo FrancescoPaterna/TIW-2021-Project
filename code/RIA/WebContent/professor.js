@@ -402,6 +402,8 @@
 					elem.addEventListener("click", (e) => {
 						self.resetModal();
 						self.modal.style.display = "block";
+						sessionEnrolls.modal_content.style.height = "55%";
+						sessionEnrolls.modal_content.style.width = "75%";
 						self.first_single_modify.style.visibility = "visible";
 						self.second_single_modify.style.visibility = "visible";
 						self.modify_handler_id.setAttribute("value", examdates.IDstudent);
@@ -719,7 +721,7 @@
 				// dependency close button
 				sessionEnrolls.modal.style.display = "none";
 				sessionEnrolls.modal_content.style.height = "80%";
-				sessionEnrolls.modal_content.style.width = "75%";
+				sessionEnrolls.modal_content.style.width = "80%";
 			});
 		}
 
@@ -797,6 +799,8 @@
 			var row, destcell;
 			// clear the modal page
 			this.resetModal();
+			sessionEnrolls.modal_content.style.height = "80%";
+			sessionEnrolls.modal_content.style.width = "80%";
 			this.print_button.style.visibility = "visible";
 			this.modal_content.setAttribute("class", "modal_record");
 			this.modal.style.display = "block";
