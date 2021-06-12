@@ -49,7 +49,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ProfessorChecker</filter-name>
-		<url-pattern>/HomePro.html</url-pattern>
 		<url-pattern>/GetCoursePro</url-pattern>
 		<url-pattern>/GetCourseDatePro</url-pattern>
 		<url-pattern>/GetRecord</url-pattern>
@@ -63,7 +62,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>StudentChecker</filter-name>
-		<url-pattern>/HomeStud.html</url-pattern>
 		<url-pattern>/GetCourseStud</url-pattern>
 		<url-pattern>/GetCourseDateStud</url-pattern>
 		<url-pattern>/GetResultDetails</url-pattern>
