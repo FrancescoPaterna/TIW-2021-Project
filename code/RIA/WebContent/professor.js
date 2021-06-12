@@ -531,7 +531,7 @@
 						var array = $("input[name='IDStudent']:checked").map(function () {
 							return this.value;
 						}).get();
-						if(array.length == 0){
+						if (array.length == 0) {
 							sessionEnrolls.modal_allert.textContent = "Please select at least one student!"
 							return;
 						}
@@ -556,7 +556,7 @@
 										self.modal_content.style.height = "auto";
 										self.modal_content.style.width = "80%";
 										self.multiple_modify_button_flag = false;
-										self.multiple_modify_button.removeEventListener("click", e); //TODO FIX THIS SHIT
+										self.multiple_modify_button.removeEventListener("click", sessionEnrolls.multiple_event); //TODO FIX THIS SHIT
 									} else {
 										sessionEnrolls.modal_allert.textContent = message;
 									}
@@ -570,22 +570,12 @@
 
 				self.multipleModalForm.appendChild(button);
 				self.multiple_modify_button.setAttribute("class", "modify");
-				self.multiple_modify_button.addEventListener("click", (e) => {
-					self.resetModal();
-					self.modal_title.textContent = "MULTIPLE MODIFY";
-					self.modal_content.style.height = "60%";
-					self.modal_content.style.width = "40%";
-					self.modal.style.display = "block";
-					self.multipleModalForm.style.visibility = "visible";
-					var self2 = self;
-					self.span.addEventListener("click", (c) => {
-						// dependency close button
-						self2.modal.style.display = "none";
-						self.modal_content.style.height = "auto";
-						self.modal_content.style.width = "80%";
-					}, false);
-				}, false);
+				self.multiple_modify_button.addEventListener("click", sessionEnrolls.multiple_event, false);
 			}
+
+
+
+
 
 
 			// Register event to record button only if there is at least one mark in the "PUBLISHED" status
@@ -716,6 +706,22 @@
 				modal.style.display = "none";
 			}
 		}*/
+
+		//Need to separate the Event Listner of MultipleModifyButton, to Add and Remove Easly
+		this.multiple_event = function () {
+			sessionEnrolls.resetModal();
+			sessionEnrolls.modal_title.textContent = "MULTIPLE MODIFY";
+			sessionEnrolls.modal_content.style.height = "60%";
+			sessionEnrolls.modal_content.style.width = "40%";
+			sessionEnrolls.modal.style.display = "block";
+			sessionEnrolls.multipleModalForm.style.visibility = "visible";
+			sessionEnrolls.span.addEventListener("click", (c) => {
+				// dependency close button
+				sessionEnrolls.modal.style.display = "none";
+				sessionEnrolls.modal_content.style.height = "auto";
+				sessionEnrolls.modal_content.style.width = "80%";
+			});
+		}
 
 
 		/* Update the parameters in the Single Modify Modal Window*/
