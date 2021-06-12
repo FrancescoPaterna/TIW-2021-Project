@@ -14,7 +14,7 @@
 	<script src="jquery-3.6.0.min.js"></script>
 
 	<!-------------- Script to print the Record on a PDF --------------------------------------------------->
-	<script>
+	<script defer>
 		printDivCSS = new String('<link rel="stylesheet" type="text/css" media="all" href="css/style.css" />')
 		printDivCSS2 = new String('<link rel="stylesheet" type="text/css" media="all" href="css/pro.css" />')
 		printDivCSS3 = new String('<link rel="stylesheet" type="text/css" media="all" href="css/print.css" />')
@@ -23,16 +23,18 @@
 			var divContents = document.getElementById("modalContent").innerHTML;
 			var a = window.open('', '', 'height=500, width=500'); //generate an empty print-window
 			a.document.write('<html>');       //Let's manually write the HTML
-			a.document.write('<head>');   
+			a.document.write('<head>');
 			a.document.write(printDivCSS);  //import the CSS
 			a.document.write(printDivCSS2);
 			a.document.write(printDivCSS3);
 			a.document.write('</head>');
-			a.document.write('<body style="background-color: white;>');   
+			a.document.write('<body style="background-color: white">');
 			a.document.write(divContents); //Import the Modal Window Data
 			a.document.write('</body></html>');
 			a.document.close(); //Close the DOC
-			a.print();  //Let's the magic begin
+			setTimeout(function () { //add a wait state to load safetly the file
+				a.print();  //Let's the magic begin
+			}, 1000);
 
 		}
 	</script>
@@ -47,7 +49,7 @@
 		<!-- Modal content -->
 		<div id="modalContent" class="modal-content">
 			<frameset id="printf" name="printf">
-				<input class="prb no-print" type="button" value="&#128438;" onclick="printDiv('modalContent')">
+				<input id="print_button" class="prb no-print" type="button" value="&#128438;" onclick="printDiv('modalContent')">
 				<span class="close no-print">&times;</span>
 				<h1 id="modal_title"></h1>
 				<table id="first_single_modify" class="table">
@@ -258,8 +260,6 @@
 			<input id="record_exam_id" type="hidden" name="exam_date_id" />
 		</form>
 	</div>
-	<iframe name="print_frame" width="100" height="100" frameborder="0" src="about:blank"></iframe>
-
 </body>
 
 </html>

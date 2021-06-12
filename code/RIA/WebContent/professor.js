@@ -279,6 +279,7 @@
 		this.record_button = document.getElementById("record_button");
 		this.multiple_modify_button = document.getElementById("multiple_modify");
 		this.publish_button = document.getElementById("publish");
+		this.print_button = document.getElementById("print_button");
 		//VAR
 		var current_exam;
 
@@ -303,6 +304,8 @@
 			this.recordTableBody.style.visibility = "hidden";
 			this.recordLogo.style.visibility = "hidden";
 			this.recordLegalValue.style.visibility = "hidden";
+			this.print_button.style.visibility = "hidden";
+			
 		}
 
 		this.save = function (exam_date_id) {
@@ -781,6 +784,7 @@
 			var row, destcell;
 			// clear the modal page
 			this.resetModal();
+			this.print_button.style.visibility = "visible";
 			this.modal_content.setAttribute("class","modal_record");
 			this.modal.style.display = "block";
 			// setup the modal page content
