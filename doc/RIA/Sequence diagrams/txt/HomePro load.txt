@@ -1,0 +1,48 @@
+title HomePro load
+
+participant HomePro.html & professor.js
+participant pageOrchestrator
+participant personalMessage
+participant courseList
+participant courseDate
+participant sessionEnrolls
+participant GetCourseListPro (Servlet)
+participant CourseDAO
+participant sessionStorage
+participant allertContainer
+participant Session
+participant User
+
+HomePro.html & professor.js -->>pageOrchestrator: new pageOrchestrator
+
+HomePro.html & professor.js ->>pageOrchestrator: pageOrchestrator.start();
+
+sessionStorage ->pageOrchestrator: id, name, surname
+
+pageOrchestrator -> PersonalMessage: new personalMessage
+
+pageOrchestrator ->PersonalMessage: personalMessage.show()
+
+pageOrchestrator ->courseList: coursList.new()
+pageOrchestrator ->courseDate: courseDate.new()
+pageOrchestrator ->sessionEnrolls: sessionEnrolls.new()
+
+
+
+HomePro.html & professor.js ->>pageOrchestrator: pageOrchestrator.reset();
+
+pageOrchestrator ->courseList: coursList.reset()
+pageOrchestrator ->courseDate: courseDate.reset()
+pageOrchestrator ->sessionEnrolls: sessionEnrolls.resetMain() && sessionEnrolls.resetModal()
+
+pageOrchestrator ->courseList: coursList.show()
+
+courseList -->>GetCourseListPro (Servlet): Ajax GET
+
+GetCourseListPro (Servlet) -> Session: getAttribute(id)
+
+Session ->GetCourseListPro (Servlet): id
+
+GetCourseListPro (Servlet) -->>courseList: Http Code 200 - [serialized course]
+
+courseList ->courseList: courselsit.update() 

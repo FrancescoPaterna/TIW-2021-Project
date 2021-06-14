@@ -322,7 +322,7 @@
 
 		this.isRefusable = function (mark, status) {
 			if (status == "PUBLISHED") {
-				if (mark != "30L" && isNaN(mark)) return false;  
+				if (mark != "30L" && isNaN(mark)) return false;
 				if ((mark >= 18 && mark <= 30) || (mark == "30L")) {
 					return true;
 				} else return false;
@@ -375,20 +375,20 @@
 				alertContainer,
 				document.getElementById("id_courseStud"),
 				document.getElementById("id_courseStudBody"));
+
+
+			courseDate = new CourseDate(
+				alertContainer,
+				document.getElementById("id_courseDateStud"),
+				document.getElementById("id_courseDateStudBody")
+			)
+
+			resultDetails = new ResultDetails(
+				alertContainer,
+				document.getElementById("id_resultDetails"),
+				document.getElementById("id_resultDetailsBody")
+			)
 		}
-
-		courseDate = new CourseDate(
-			alertContainer,
-			document.getElementById("id_courseDateStud"),
-			document.getElementById("id_courseDateStudBody")
-		)
-
-		resultDetails = new ResultDetails(
-			alertContainer,
-			document.getElementById("id_resultDetails"),
-			document.getElementById("id_resultDetailsBody")
-		)
-
 		this.refresh = function () {
 			alertContainer.textContent = "";
 			courseList.reset();

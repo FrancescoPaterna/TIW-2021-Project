@@ -703,7 +703,7 @@
 		}
 
 		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
+		window.onclick = function (event) {
 			if (event.target == sessionEnrolls.modal) {
 				sessionEnrolls.modal.style.display = "none";
 				sessionEnrolls.resetModal();
@@ -869,22 +869,21 @@
 				alertContainer,
 				document.getElementById("id_coursePro"),
 				document.getElementById("id_courseProBody"));
+
+
+			courseDate = new CourseDate(
+				alertContainer,
+				document.getElementById("id_courseDatePro"),
+				document.getElementById("id_courseDateProBody")
+			)
+
+			sessionEnrolls = new SessionEnrolls(
+				alertContainer,
+				document.getElementById("id_sessionEnrolls"),
+				document.getElementById("id_sessionEnrollsBody")
+
+			)
 		}
-
-		courseDate = new CourseDate(
-			alertContainer,
-			document.getElementById("id_courseDatePro"),
-			document.getElementById("id_courseDateProBody")
-		)
-
-		sessionEnrolls = new SessionEnrolls(
-			alertContainer,
-			document.getElementById("id_sessionEnrolls"),
-			document.getElementById("id_sessionEnrollsBody")
-
-		)
-
-
 
 		this.refresh = function () {
 			alertContainer.textContent = "";

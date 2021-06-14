@@ -1,0 +1,39 @@
+title Iteraction Login Professor
+
+participant index.html & loginManagement.js
+
+participant CheckLogin
+participant Utils
+participant UserDAO
+participant Session
+participant sessionStorage
+participant Window
+
+index.html & loginManagement.js -> CheckLogin: POST
+
+
+
+note over index.html & loginManagement.js,CheckLogin:ID\nPassword
+
+alt id == null || password == null
+CheckLogin -->> index.html & loginManagement.js: Http status code 400
+index.html & loginManagement.js -> index.html & loginManagement.js:  showError
+end
+
+CheckLogin->Utils: pwd
+Utils->CheckLogin: secure_pwd (hash)
+CheckLogin->UserDAO: CheckCredentials(id, secure_pwd)
+UserDAO->CheckLogin: User 
+
+alt user = null (wrong credential) 
+CheckLogin -->> index.html & loginManagement.js: Http status code 401
+index.html & loginManagement.js -> index.html & loginManagement.js:  showError
+end
+
+alt user != null
+CheckLogin -->> index.html & loginManagement.js: Http status code = 200
+CheckLogin->Session: setAttribute("user", user)
+index.html & loginManagement.js->sessionStorage: id, name, surname, role
+index.html & loginManagement.js->Window: window.location.href = HomePro.html
+end
+
