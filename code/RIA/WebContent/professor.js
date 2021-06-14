@@ -703,11 +703,12 @@
 		}
 
 		// When the user clicks anywhere outside of the modal, close it
-		/*this.window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
+		window.onclick = function(event) {
+			if (event.target == sessionEnrolls.modal) {
+				sessionEnrolls.modal.style.display = "none";
+				sessionEnrolls.resetModal();
 			}
-		}*/
+		}
 
 		//Need to separate the Event Listner of MultipleModifyButton, to Add and Remove Easly
 		this.multiple_event = function () {

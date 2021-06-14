@@ -229,10 +229,9 @@ input[type=password] {
 }
 
 .prb {
-	background-color: white;
+	background-color: transparent;
 	color: grey;
-	position: absolute;
-	left: 243px;
+	float: left;
 	font-weight: bold;
 	width: 66px;
 	height: 58px;

@@ -92,6 +92,9 @@ public class UpdateStatus extends HttpServlet {
 			}
 
 			response.setStatus(HttpServletResponse.SC_OK);
+			/*		String path = getServletContext().getContextPath();
+			response.sendRedirect(path + "/GetSessionEnrolls?exam_date_id=" + exam_date_id);*/
+			
 
 		} else {
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

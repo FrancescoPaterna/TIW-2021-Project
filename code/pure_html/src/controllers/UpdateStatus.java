@@ -133,7 +133,6 @@ public class UpdateStatus extends HttpServlet {
 				}
 			
 
-			//sort = Rebuilder.resetSecretSortCode(secretsortcode);	
 			String sorturl = "?mask=" + mask + "&exam_date_id=" + exam_date_id + "&date=" + date + "&coursename=" + coursename + "&course_id=" + course_id + "&sort=" + sort;
 			target = "/GoToSessionEnrolls";
 			path = getServletContext().getContextPath();
