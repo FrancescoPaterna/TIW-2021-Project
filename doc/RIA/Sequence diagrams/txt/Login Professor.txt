@@ -1,39 +1,53 @@
-title Iteraction Login Professor
+frame Iteraction Login Professor
 
 participant index.html & loginManagement.js
 
-participant CheckLogin
-participant Utils
-participant UserDAO
-participant Session
+participant CheckLogin (Servlet) #lightblue
 participant sessionStorage
 participant Window
+participant Utils #lightblue
+participant UserDAO #lightblue
+participant Session #lightblue
 
-index.html & loginManagement.js -> CheckLogin: POST
+
+note over index.html & loginManagement.js:ID\nPassword
+index.html & loginManagement.js -> CheckLogin (Servlet):POST
+activate CheckLogin (Servlet)
 
 
-
-note over index.html & loginManagement.js,CheckLogin:ID\nPassword
 
 alt id == null || password == null
-CheckLogin -->> index.html & loginManagement.js: Http status code 400
-index.html & loginManagement.js -> index.html & loginManagement.js:  showError
+CheckLogin (Servlet) -->> index.html & loginManagement.js: Http status code 400
+activate index.html & loginManagement.js
+index.html & loginManagement.js ->index.html & loginManagement.js: showError
+deactivate index.html & loginManagement.js
 end
 
-CheckLogin->Utils: pwd
-Utils->CheckLogin: secure_pwd (hash)
-CheckLogin->UserDAO: CheckCredentials(id, secure_pwd)
-UserDAO->CheckLogin: User 
+CheckLogin (Servlet)->Utils: pwd
+activate Utils
+Utils->CheckLogin (Servlet): secure_pwd (hash)
+deactivate Utils
+CheckLogin (Servlet)->UserDAO: CheckCredentials(id, secure_pwd)
+activate UserDAO
+UserDAO->CheckLogin (Servlet): User 
+deactivate UserDAO
 
 alt user = null (wrong credential) 
-CheckLogin -->> index.html & loginManagement.js: Http status code 401
+CheckLogin (Servlet) -->> index.html & loginManagement.js: Http status code 401
+deactivate CheckLogin (Servlet)
+activate index.html & loginManagement.js
 index.html & loginManagement.js -> index.html & loginManagement.js:  showError
+deactivate index.html & loginManagement.js
 end
 
 alt user != null
-CheckLogin -->> index.html & loginManagement.js: Http status code = 200
-CheckLogin->Session: setAttribute("user", user)
+
+CheckLogin (Servlet) -->> index.html & loginManagement.js: Http status code = 200
+activate CheckLogin (Servlet)
+activate index.html & loginManagement.js
+CheckLogin (Servlet)->Session: setAttribute("user", user)
+deactivate CheckLogin (Servlet)
 index.html & loginManagement.js->sessionStorage: id, name, surname, role
 index.html & loginManagement.js->Window: window.location.href = HomePro.html
+deactivate index.html & loginManagement.js
 end
-

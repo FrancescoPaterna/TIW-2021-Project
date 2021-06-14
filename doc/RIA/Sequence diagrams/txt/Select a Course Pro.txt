@@ -1,0 +1,66 @@
+frame  Select a Course Pro
+
+participant HomePro.html & professor.js
+
+participant personalMessage
+participant courseList
+participant courseDate
+participant sessionEnrolls
+
+participant sessionStorage
+participant allertContainer
+participant GetCourseDatePro (Servlet) #lightblue
+participant CourseDAO #lightblue
+participant ExamDateDAO #lightblue
+participant Session #lightblue
+
+
+box left of HomePro.html & professor.js:User select a course
+HomePro.html & professor.js -> courseList: click event
+
+activate courseList
+courseList ->courseDate: courseDate.show(course_id)
+activate courseDate
+courseList ->>courseList: waiter();
+deactivate courseList
+
+
+courseDate ->GetCourseDatePro (Servlet): Ajax GET (course_id)
+activate GetCourseDatePro (Servlet)
+deactivate courseDate
+GetCourseDatePro (Servlet) -> CourseDAO: findCoursesByIdProf(user.getID) 
+deactivate GetCourseDatePro (Servlet)
+
+activate CourseDAO
+CourseDAO -->GetCourseDatePro (Servlet): List<course>
+activate GetCourseDatePro (Servlet)
+deactivate CourseDAO
+
+alt if course_id not in List<course>
+GetCourseDatePro (Servlet) -->courseDate: Http status code 400 "unauthorized access" 
+activate courseDate
+deactivate GetCourseDatePro (Servlet)
+
+
+courseDate ->courseDate: show error message
+deactivate courseDate
+end
+
+alt course_id in List<course>
+activate GetCourseDatePro (Servlet)
+
+GetCourseDatePro (Servlet) ->ExamDateDAO: FindExamDateBYCourseForProfessor(course_id)
+deactivate GetCourseDatePro (Servlet)
+activate ExamDateDAO
+ExamDateDAO -->GetCourseDatePro (Servlet): List<ExamDate>
+deactivate ExamDateDAO
+activate GetCourseDatePro (Servlet)
+
+GetCourseDatePro (Servlet) -->courseDate: serialized_coursesDate
+activate courseDate
+deactivate GetCourseDatePro (Servlet)
+
+
+courseDate ->courseDate: update(CoursesDates)
+deactivate courseDate
+end

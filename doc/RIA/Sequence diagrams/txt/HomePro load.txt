@@ -1,4 +1,4 @@
-title HomePro load
+frame  HomePro load
 
 participant HomePro.html & professor.js
 participant pageOrchestrator
@@ -6,43 +6,54 @@ participant personalMessage
 participant courseList
 participant courseDate
 participant sessionEnrolls
-participant GetCourseListPro (Servlet)
-participant CourseDAO
+
 participant sessionStorage
 participant allertContainer
-participant Session
-participant User
+participant GetCourseListPro (Servlet) #lightblue
+participant CourseDAO #lightblue
+participant Session #lightblue
+
 
 HomePro.html & professor.js -->>pageOrchestrator: new pageOrchestrator
 
+activate pageOrchestrator
+
 HomePro.html & professor.js ->>pageOrchestrator: pageOrchestrator.start();
 
-sessionStorage ->pageOrchestrator: id, name, surname
+sessionStorage -->pageOrchestrator: id, name, surname
 
-pageOrchestrator -> PersonalMessage: new personalMessage
+pageOrchestrator ->> personalMessage: new personalMessage
 
-pageOrchestrator ->PersonalMessage: personalMessage.show()
+pageOrchestrator ->>personalMessage: personalMessage.show()
 
-pageOrchestrator ->courseList: coursList.new()
-pageOrchestrator ->courseDate: courseDate.new()
-pageOrchestrator ->sessionEnrolls: sessionEnrolls.new()
+pageOrchestrator ->>courseList: coursList.new()
+pageOrchestrator ->>courseDate: courseDate.new()
+pageOrchestrator ->>sessionEnrolls: sessionEnrolls.new()
 
+deactivate pageOrchestrator
 
+HomePro.html & professor.js ->>pageOrchestrator: pageOrchestrator.refresh();
+activate pageOrchestrator
 
-HomePro.html & professor.js ->>pageOrchestrator: pageOrchestrator.reset();
+pageOrchestrator ->>courseList: coursList.reset()
+pageOrchestrator ->>courseDate: courseDate.reset()
+pageOrchestrator ->>sessionEnrolls: sessionEnrolls.resetMain() && sessionEnrolls.resetModal()
 
-pageOrchestrator ->courseList: coursList.reset()
-pageOrchestrator ->courseDate: courseDate.reset()
-pageOrchestrator ->sessionEnrolls: sessionEnrolls.resetMain() && sessionEnrolls.resetModal()
+pageOrchestrator ->>courseList: coursList.show()
+deactivate pageOrchestrator
+activate courseList
 
-pageOrchestrator ->courseList: coursList.show()
+courseList ->GetCourseListPro (Servlet): Ajax GET
+activate GetCourseListPro (Servlet)
 
-courseList -->>GetCourseListPro (Servlet): Ajax GET
 
 GetCourseListPro (Servlet) -> Session: getAttribute(id)
+activate Session
 
-Session ->GetCourseListPro (Servlet): id
+Session -->GetCourseListPro (Servlet): id
+deactivate Session
 
 GetCourseListPro (Servlet) -->>courseList: Http Code 200 - [serialized course]
+deactivate GetCourseListPro (Servlet)
 
 courseList ->courseList: courselsit.update() 
