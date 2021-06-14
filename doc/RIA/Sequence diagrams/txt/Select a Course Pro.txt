@@ -2,17 +2,14 @@ frame  Select a Course Pro
 
 participant HomePro.html & professor.js
 
-participant personalMessage
 participant courseList
 participant courseDate
-participant sessionEnrolls
 
 participant sessionStorage
 participant allertContainer
 participant GetCourseDatePro (Servlet) #lightblue
 participant CourseDAO #lightblue
 participant ExamDateDAO #lightblue
-participant Session #lightblue
 
 
 box left of HomePro.html & professor.js:User select a course
@@ -60,7 +57,7 @@ GetCourseDatePro (Servlet) -->courseDate: serialized_coursesDate
 activate courseDate
 deactivate GetCourseDatePro (Servlet)
 
-
+courseDate ->courseDate: 		courseDate.currentDateList = CoursesDates;
 courseDate ->courseDate: update(CoursesDates)
 deactivate courseDate
 end
