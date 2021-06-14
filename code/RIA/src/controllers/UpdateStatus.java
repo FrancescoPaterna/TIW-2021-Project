@@ -59,7 +59,7 @@ public class UpdateStatus extends HttpServlet {
 			// check if the user has the authorization to update status for the specified exam date
 			try {
 				if (!examdatedao.CheckExamDateByProf(user.getId(), exam_date_id)) {
-					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					response.getWriter().println("UNAUTHORIZED ACCESS,Attempt to access a resource not owned by you!");
 					session.invalidate();
 					return;

@@ -388,7 +388,16 @@
 				document.getElementById("id_resultDetails"),
 				document.getElementById("id_resultDetailsBody")
 			)
+			
+			// remove user data from session storage when logout is clicked
+			document.getElementById("logoutButton").addEventListener("click", () => {
+	        	window.sessionStorage.removeItem('id');
+				window.sessionStorage.removeItem('name');
+				window.sessionStorage.removeItem('surname');
+				window.sessionStorage.removeItem('role');
+	      	});
 		}
+		
 		this.refresh = function () {
 			alertContainer.textContent = "";
 			courseList.reset();
