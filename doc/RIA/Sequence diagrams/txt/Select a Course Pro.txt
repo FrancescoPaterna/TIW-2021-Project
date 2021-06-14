@@ -4,12 +4,12 @@ participant HomePro.html & professor.js
 
 participant courseList
 participant courseDate
-
 participant sessionStorage
 participant allertContainer
 participant GetCourseDatePro (Servlet) #lightblue
 participant CourseDAO #lightblue
 participant ExamDateDAO #lightblue
+participant Session #lightblue
 
 
 box left of HomePro.html & professor.js:User select a course
@@ -25,6 +25,10 @@ deactivate courseList
 courseDate ->GetCourseDatePro (Servlet): Ajax GET (course_id)
 activate GetCourseDatePro (Servlet)
 deactivate courseDate
+GetCourseDatePro (Servlet)->Session: getAttribute(user)
+activate Session
+Session-->GetCourseDatePro (Servlet): user
+deactivate Session
 GetCourseDatePro (Servlet) -> CourseDAO: findCoursesByIdProf(user.getID) 
 deactivate GetCourseDatePro (Servlet)
 

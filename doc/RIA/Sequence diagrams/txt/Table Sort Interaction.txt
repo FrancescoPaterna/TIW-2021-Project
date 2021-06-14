@@ -1,0 +1,24 @@
+frame Table Sort Interaction
+participant HomePro.html
+participant sort.js
+alt Click on any table header, except "Score"
+
+HomePro.html ->sort.js:sortTable(click_id)
+sort.js->sort.js: rowsArray.sort(createComparer(columnIdx, asc));
+sort.js -->HomePro.html: resetArrows(rowHeaders)
+sort.js -->HomePro.html: changeArrow(th)
+loop table rewrite
+sort.js-->HomePro.html: table.querySelector('tbody').appendChild(rowsArray[i]);
+end
+end
+
+alt Click on "Score" table header
+
+HomePro.html ->sort.js:sortCustom(click_id)
+sort.js->sort.js: rowsArray.sort(createCustomComparer(columnIdx, asc));
+sort.js -->HomePro.html: resetArrows(rowHeaders)
+sort.js -->HomePro.html: changeArrow(th)
+loop table rewrite
+sort.js-->HomePro.html: table.querySelector('tbody').appendChild(rowsArray[i]);
+end
+end

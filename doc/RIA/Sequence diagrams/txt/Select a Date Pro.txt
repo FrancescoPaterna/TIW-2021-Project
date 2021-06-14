@@ -1,0 +1,65 @@
+entryspacing 1.8
+frame  Select a Date Pro
+
+participant HomePro.html & professor.js
+
+
+participant courseDate
+participant sessionEnrolls
+
+participant sessionStorage
+participant allertContainer
+participant GetSessionEnrolls (Servlet) #lightblue
+participant EnrollsDAO #lightblue
+participant Session #lightblue
+
+
+box left of HomePro.html & professor.js:User select a date
+HomePro.html & professor.js -> courseDate: click event
+
+activate courseDate
+
+courseDate ->sessionEnrolls: sessionEnrolls.save(exam_date_id)
+activate sessionEnrolls
+courseDate ->sessionEnrolls: sessionEnrolls.show(exam_date_id)
+courseDate ->>courseDate: courseDate.waiter();
+deactivate courseDate
+
+
+sessionEnrolls ->GetSessionEnrolls (Servlet): Ajax GET (course_id)
+deactivate sessionEnrolls
+activate GetSessionEnrolls (Servlet)
+GetSessionEnrolls (Servlet)->Session: getAttribute(user)
+activate Session
+Session -->GetSessionEnrolls (Servlet): user
+deactivate Session
+GetSessionEnrolls (Servlet)->ExamDateDAO: CheckExamDateByProf(user.getId(), exam_date_id)
+
+alt CheckExamDateByProf(user.getId(), exam_date_id) == false
+
+GetSessionEnrolls (Servlet)->sessionEnrolls: Http status code 400 "unauthorized access" 
+activate sessionEnrolls
+deactivate GetSessionEnrolls (Servlet)
+
+sessionEnrolls ->sessionEnrolls: show error message
+deactivate sessionEnrolls
+end
+
+alt CheckExamDateByProf(user.getId(), exam_date_id) == true
+activate GetSessionEnrolls (Servlet)
+
+GetSessionEnrolls (Servlet) ->EnrollsDAO: FindEnrollsOrderedByIDAsc(exam_date_id)
+deactivate GetSessionEnrolls (Servlet)
+activate EnrollsDAO
+EnrollsDAO -->GetSessionEnrolls (Servlet): List<Enrolls>
+deactivate EnrollsDAO
+activate GetSessionEnrolls (Servlet)
+
+GetSessionEnrolls (Servlet) -->sessionEnrolls: serialized_enrolls
+activate sessionEnrolls
+deactivate GetSessionEnrolls (Servlet)
+
+
+sessionEnrolls ->sessionEnrolls: update(enrolls)
+deactivate sessionEnrolls
+end
