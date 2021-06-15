@@ -123,7 +123,7 @@ public class GoToExamDatesPro extends HttpServlet {
 			return;
 		}
 		
-		// Redirect to the HomePage and add exam dates to the parameters*/
+		// Redirect to the ExamDates page and add exam dates to the parameters*/
 		path = "/WEB-INF/ExamDatesPro.html";
 		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("course_id", course_id);
