@@ -1,5 +1,4 @@
-entryspacing 1.8
-frame  Select a Date Pro
+frame  Select a Date Pro Interaction
 
 participant HomePro.html & professor.js
 
@@ -10,6 +9,7 @@ participant sessionEnrolls
 participant sessionStorage
 participant allertContainer
 participant GetSessionEnrolls (Servlet) #lightblue
+participant ExamDateDAO #lightblue
 participant EnrollsDAO #lightblue
 participant Session #lightblue
 
@@ -26,7 +26,7 @@ courseDate ->>courseDate: courseDate.waiter();
 deactivate courseDate
 
 
-sessionEnrolls ->GetSessionEnrolls (Servlet): Ajax GET (course_id)
+sessionEnrolls ->>GetSessionEnrolls (Servlet): Ajax GET (course_id)
 deactivate sessionEnrolls
 activate GetSessionEnrolls (Servlet)
 GetSessionEnrolls (Servlet)->Session: getAttribute(user)
@@ -37,7 +37,7 @@ GetSessionEnrolls (Servlet)->ExamDateDAO: CheckExamDateByProf(user.getId(), exam
 
 alt CheckExamDateByProf(user.getId(), exam_date_id) == false
 
-GetSessionEnrolls (Servlet)->sessionEnrolls: Http status code 400 "unauthorized access" 
+GetSessionEnrolls (Servlet)->>sessionEnrolls: Http status code 400 "unauthorized access" 
 activate sessionEnrolls
 deactivate GetSessionEnrolls (Servlet)
 
@@ -55,11 +55,12 @@ EnrollsDAO -->GetSessionEnrolls (Servlet): List<Enrolls>
 deactivate EnrollsDAO
 activate GetSessionEnrolls (Servlet)
 
-GetSessionEnrolls (Servlet) -->sessionEnrolls: serialized_enrolls
+GetSessionEnrolls (Servlet) -->>sessionEnrolls: Http status code 200 - serialized_enrolls
 activate sessionEnrolls
 deactivate GetSessionEnrolls (Servlet)
 
 
-sessionEnrolls ->sessionEnrolls: update(enrolls)
+sessionEnrolls ->sessionEnrolls:update(enrolls) [with AppendIfNotInserted*]
 deactivate sessionEnrolls
 end
+note left of sessionEnrolls:*The AppendIfNotInserted create the Form of\nMultiple Modifify, if he finds a vote in the status\nNOT_INSERTED, add the student data to the \nMultiple Modify Form

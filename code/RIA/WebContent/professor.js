@@ -290,7 +290,19 @@
 			this.record_button.style.visibility = "hidden";
 			this.publish_button.style.visibility = "hidden";
 			this.multiple_modify_button.style.visibility = "hidden";
+			try { document.getElementsByClassName("boldarrow")[0].className = "normalarrow" }
+			catch{
+				//no click ever made
+			}
+			try {
+				this.multiple_modify_button.removeEventListener("click", sessionEnrolls.multiple_event);
+			}
+			catch{
+				//multiple_modify_button in disable state yet
+			}
 		}
+
+
 
 
 		this.resetModal = function () {
@@ -883,14 +895,14 @@
 				document.getElementById("id_sessionEnrollsBody")
 
 			)
-			
+
 			// remove user data from session storage when logout is clicked
 			document.getElementById("logoutButton").addEventListener("click", () => {
-	        	window.sessionStorage.removeItem('id');
+				window.sessionStorage.removeItem('id');
 				window.sessionStorage.removeItem('name');
 				window.sessionStorage.removeItem('surname');
 				window.sessionStorage.removeItem('role');
-	      	});
+			});
 		};
 
 		this.refresh = function () {

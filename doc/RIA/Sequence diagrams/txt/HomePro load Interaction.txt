@@ -1,4 +1,4 @@
-frame  HomePro load
+frame  HomePro load Interaction
 
 participant HomePro.html & professor.js
 participant pageOrchestrator
@@ -8,7 +8,6 @@ participant courseDate
 participant sessionEnrolls
 
 participant sessionStorage
-participant allertContainer
 participant GetCourseListPro (Servlet) #lightblue
 participant CourseDAO #lightblue
 participant Session #lightblue
@@ -20,6 +19,7 @@ activate pageOrchestrator
 
 HomePro.html & professor.js ->>pageOrchestrator: pageOrchestrator.start();
 
+pageOrchestrator->sessionStorage: getItem('name') && getItem('surname') && getIten('Id')
 sessionStorage -->pageOrchestrator: id, name, surname
 
 pageOrchestrator ->> personalMessage: new personalMessage
@@ -43,7 +43,7 @@ pageOrchestrator ->>courseList: coursList.show()
 deactivate pageOrchestrator
 activate courseList
 
-courseList ->GetCourseListPro (Servlet): Ajax GET
+courseList ->>GetCourseListPro (Servlet): Ajax GET
 activate GetCourseListPro (Servlet)
 
 

@@ -49,11 +49,13 @@ public class GoToHomePagePro extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
+		// get the user from the session
 		User user = (User) session.getAttribute("user");
 		
 		CourseDAO courseDAO = new CourseDAO(connection);
 		List<Course> courses = new ArrayList<>();
 		
+		// find courses held by the professor connecting to the database
 		try {
 			courses = courseDAO.findCoursesByIdProf(user.getId());
 		} catch (SQLException e) {

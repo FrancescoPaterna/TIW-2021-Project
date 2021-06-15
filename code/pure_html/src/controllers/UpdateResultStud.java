@@ -85,7 +85,10 @@ public class UpdateResultStud extends HttpServlet {
 		EnrollsDAO enrollsDAO = new EnrollsDAO(connection);
 		
 		Enroll enroll;
-
+		
+		// refuse score editing the status of the enroll in the database
+		// the query is safe because it uses the user_id got from the session
+		// if a user tries to refuse a score of another user, no tuples of the database are affected
 		try {
 			enrollsDAO.RefuseScore(IDExamDate, user.getId());
 			
@@ -93,7 +96,8 @@ public class UpdateResultStud extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not Possible to refuse score");
 			return;
 		}
-			
+		
+		// retrieve the student score just modified in order to update the client view with updated data
 		try {
 
 			enroll = enrollsDAO.FindStudentScore(IDExamDate, user.getId());
@@ -102,7 +106,8 @@ public class UpdateResultStud extends HttpServlet {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Not possible to get Scores");
 			return;
 		}
-			
+		
+		// redirect to the right result page depending on the status of the enroll
 		if (!(enroll.getStatus() == Status.NOT_INSERTED || enroll.getStatus() == Status.INSERTED)) {
 			if (enroll.getStatus() == Status.PUBLISHED && GoodScore.CheckGoodScore(enroll.getMark())) {
 				String path = "/WEB-INF/Result.html";

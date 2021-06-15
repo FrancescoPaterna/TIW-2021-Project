@@ -25,9 +25,6 @@ import beans.User;
 import dao.ExamDateDAO;
 import utils.ConnectionHandler;
 
-/**
- * Servlet implementation class GoToSessionEnrolls
- */
 @WebServlet("/GoToExamDatesStud")
 public class GoToExamDatesStud extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -52,6 +49,7 @@ public class GoToExamDatesStud extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
+		// get the user from the session
 		User user = (User) session.getAttribute("user");
 		Integer course_id; 
 		String coursename;
@@ -77,6 +75,10 @@ public class GoToExamDatesStud extends HttpServlet {
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);
 		List<ExamDate> exams = new ArrayList<>();
 		
+		
+		// get the exam dates the student is signed up for from the database
+		// this query is safe from attacks because it uses user_id to get the exam dates, 
+		// which is stored in the session
 		try {
 			
 			exams = ExamDateDAO.FindExameDateBYCourseForStudent(user.getId(), course_id);
@@ -86,7 +88,8 @@ public class GoToExamDatesStud extends HttpServlet {
 			return;
 		}
 		
-		// Redirect to the HomePage and add courses to the parameters
+		// Redirect to the ExamDates page and add exam dates to the parameters if there are any, else
+		// redirect to a page to inform the user that he is not enrolled to any exam date for this course
 		if(!(exams.isEmpty())) {
 			String path ="/WEB-INF/ExamDatesStud.html";
 			ServletContext servletContext = getServletContext();
