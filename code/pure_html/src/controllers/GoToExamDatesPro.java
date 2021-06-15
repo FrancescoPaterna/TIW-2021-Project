@@ -73,6 +73,7 @@ public class GoToExamDatesPro extends HttpServlet {
 			return;
 		}
 		
+		// get the user from the session
 		User user = (User) session.getAttribute("user");
 		
 		
@@ -97,6 +98,8 @@ public class GoToExamDatesPro extends HttpServlet {
 			}
 		}
 		
+		// if the course has not been found, the user is trying to access a course not held by him,
+		// so redirect him to an error page and invalidate the sesssion
 		if(!course_found) {
 			path ="/WEB-INF/Forbidden.html";
 			ctx.setVariable("error", "UNAUTHORIZED ACCESS");
@@ -112,6 +115,7 @@ public class GoToExamDatesPro extends HttpServlet {
 		ExamDateDAO ExamDateDAO = new ExamDateDAO(connection);
 		List<ExamDate> exams = new ArrayList<>();
 		
+		// get the list of the exam dates for this course from the database
 		try {
 			exams = ExamDateDAO.FindExameDateBYCourseForProfessor(course_id);
 		} catch (SQLException e) {
@@ -119,7 +123,7 @@ public class GoToExamDatesPro extends HttpServlet {
 			return;
 		}
 		
-		// Redirect to the HomePage and add courses to the parameters*/
+		// Redirect to the HomePage and add exam dates to the parameters*/
 		path = "/WEB-INF/ExamDatesPro.html";
 		ctx.setVariable("coursename", coursename);
 		ctx.setVariable("course_id", course_id);
