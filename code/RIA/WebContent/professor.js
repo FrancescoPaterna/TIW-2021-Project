@@ -290,14 +290,15 @@
 			this.record_button.style.visibility = "hidden";
 			this.publish_button.style.visibility = "hidden";
 			this.multiple_modify_button.style.visibility = "hidden";
-			try { document.getElementsByClassName("boldarrow")[0].className = "normalarrow" }
-			catch{
+			try { document.getElementsByClassName("boldarrow")[0].className = "normalarrow" 
+			}
+			catch(exception){
 				//no click ever made
 			}
 			try {
 				this.multiple_modify_button.removeEventListener("click", sessionEnrolls.multiple_event);
 			}
-			catch{
+			catch(exception){
 				//multiple_modify_button in disable state yet
 			}
 		}
