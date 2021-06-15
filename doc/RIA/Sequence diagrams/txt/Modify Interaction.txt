@@ -20,7 +20,7 @@ activate sessionEnrolls
 HomePro.html & professor.js ->sessionEnrolls: update.eventHandler("click")
 
 sessionEnrolls->sessionEnrolls: new_score = form.querySelector("select[name = 'score']").value;
-sessionEnrolls ->UpdateScore (Serlvet): AJAX POST (id_stud, exam_date_id, score)
+sessionEnrolls ->>UpdateScore (Serlvet): AJAX POST (id_stud, exam_date_id, score)
 deactivate sessionEnrolls
 activate UpdateScore (Serlvet)
 
@@ -32,7 +32,7 @@ alt invalid score
 GoodScore -->UpdateScore (Serlvet): false
 deactivate GoodScore
 activate UpdateScore (Serlvet)
-UpdateScore (Serlvet) -->sessionEnrolls: Http Status 400 "Not Valid Score"
+UpdateScore (Serlvet) -->>sessionEnrolls: Http Status 400 "Not Valid Score"
 deactivate UpdateScore (Serlvet)
 
 activate sessionEnrolls
@@ -56,7 +56,7 @@ activate ExamDateDAO
 ExamDateDAO -->UpdateScore (Serlvet): false
 deactivate ExamDateDAO
 activate UpdateScore (Serlvet)
-UpdateScore (Serlvet) -->sessionEnrolls: Http Status 403 "UNAUTHORIZED MODIFY"
+UpdateScore (Serlvet) -->>sessionEnrolls: Http Status 403 "UNAUTHORIZED MODIFY"
 activate sessionEnrolls
 
 UpdateScore (Serlvet)->Session: invalidate()
@@ -81,7 +81,7 @@ EnrollsDAO-->UpdateScore (Serlvet): 0
 deactivate EnrollsDAO
 activate UpdateScore (Serlvet)
 
-UpdateScore (Serlvet) -->sessionEnrolls: Http Status 403 "Attempt to access a resource not owned by you!"
+UpdateScore (Serlvet) -->>sessionEnrolls: Http Status 403 "Attempt to access a resource not owned by you!"
 activate sessionEnrolls
 sessionEnrolls->sessionEnrolls:show error message
 deactivate sessionEnrolls
@@ -94,7 +94,7 @@ activate EnrollsDAO
 EnrollsDAO-->UpdateScore (Serlvet): 1
 deactivate EnrollsDAO
 activate UpdateScore (Serlvet)
-UpdateScore (Serlvet)->sessionEnrolls: Http Status 200
+UpdateScore (Serlvet)->>sessionEnrolls: Http Status 200
 deactivate UpdateScore (Serlvet)
 activate sessionEnrolls
 sessionEnrolls->sessionEnrolls:score.textContent = new_score;
@@ -105,4 +105,3 @@ deactivate sessionEnrolls
 end
 end
 end
-

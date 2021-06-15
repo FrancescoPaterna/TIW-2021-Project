@@ -1,4 +1,4 @@
-frame  Select a Course Pro
+frame  Select a Course Pro Interaction
 
 participant HomePro.html & professor.js
 
@@ -18,11 +18,11 @@ HomePro.html & professor.js -> courseList: click event
 activate courseList
 courseList ->courseDate: courseDate.show(course_id)
 activate courseDate
-courseList ->>courseList: waiter();
+courseList ->courseList: waiter();
 deactivate courseList
 
 
-courseDate ->GetCourseDatePro (Servlet): Ajax GET (course_id)
+courseDate ->>GetCourseDatePro (Servlet): Ajax GET (course_id)
 activate GetCourseDatePro (Servlet)
 deactivate courseDate
 GetCourseDatePro (Servlet)->Session: getAttribute(user)
@@ -38,7 +38,7 @@ activate GetCourseDatePro (Servlet)
 deactivate CourseDAO
 
 alt if course_id not in List<course>
-GetCourseDatePro (Servlet) -->courseDate: Http status code 400 "unauthorized access" 
+GetCourseDatePro (Servlet) -->>courseDate: Http status code 400 "unauthorized access" 
 activate courseDate
 deactivate GetCourseDatePro (Servlet)
 
@@ -57,7 +57,7 @@ ExamDateDAO -->GetCourseDatePro (Servlet): List<ExamDate>
 deactivate ExamDateDAO
 activate GetCourseDatePro (Servlet)
 
-GetCourseDatePro (Servlet) -->courseDate: serialized_coursesDate
+GetCourseDatePro (Servlet) -->>courseDate: Http status code 200 - serialized_coursesDate
 activate courseDate
 deactivate GetCourseDatePro (Servlet)
 

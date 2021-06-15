@@ -1,10 +1,9 @@
-frame Iteraction Login Professor
+frame Login Professor Interaction
 
 participant index.html & loginManagement.js
-
-participant CheckLogin (Servlet) #lightblue
 participant sessionStorage
 participant Window
+participant CheckLogin (Servlet) #lightblue
 participant Utils #lightblue
 participant UserDAO #lightblue
 participant Session #lightblue
@@ -25,11 +24,11 @@ end
 
 CheckLogin (Servlet)->Utils: pwd
 activate Utils
-Utils->CheckLogin (Servlet): secure_pwd (hash)
+Utils-->CheckLogin (Servlet): secure_pwd (hash)
 deactivate Utils
 CheckLogin (Servlet)->UserDAO: CheckCredentials(id, secure_pwd)
 activate UserDAO
-UserDAO->CheckLogin (Servlet): User 
+UserDAO-->CheckLogin (Servlet): User 
 deactivate UserDAO
 
 alt user = null (wrong credential) 

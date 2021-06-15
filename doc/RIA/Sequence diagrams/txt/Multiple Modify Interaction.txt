@@ -22,7 +22,7 @@ HomePro.html & professor.js ->sessionEnrolls: select ["score"] in form
 HomePro.html & professor.js ->sessionEnrolls: update.eventHandler("click")
 
 
-sessionEnrolls ->UpdateMultipleScore (Serlvet): AJAX JSON POST (List<id_stud>, exam_date_id, score)
+sessionEnrolls ->>UpdateMultipleScore (Serlvet): AJAX JSON POST (List<id_stud>, exam_date_id, score)
 deactivate sessionEnrolls
 activate UpdateMultipleScore (Serlvet)
 
@@ -34,7 +34,7 @@ alt invalid score
 GoodScore -->UpdateMultipleScore (Serlvet): false
 deactivate GoodScore
 activate UpdateMultipleScore (Serlvet)
-UpdateMultipleScore (Serlvet) -->sessionEnrolls: Http Status 400 "Not Valid Score"
+UpdateMultipleScore (Serlvet) -->>sessionEnrolls: Http Status 400 "Not Valid Score"
 deactivate UpdateMultipleScore (Serlvet)
 
 activate sessionEnrolls
@@ -58,7 +58,7 @@ activate ExamDateDAO
 ExamDateDAO -->UpdateMultipleScore (Serlvet): false
 deactivate ExamDateDAO
 activate UpdateMultipleScore (Serlvet)
-UpdateMultipleScore (Serlvet) -->sessionEnrolls: Http Status 403 "UNAUTHORIZED MODIFY"
+UpdateMultipleScore (Serlvet) -->>sessionEnrolls: Http Status 403 "UNAUTHORIZED MODIFY"
 activate sessionEnrolls
 
 UpdateMultipleScore (Serlvet)->Session: invalidate()
@@ -84,7 +84,7 @@ EnrollsDAO-->UpdateMultipleScore (Serlvet): 0
 deactivate EnrollsDAO
 activate UpdateMultipleScore (Serlvet)
 
-UpdateMultipleScore (Serlvet) -->sessionEnrolls: Http Status 403 "Attempt to access a resource not owned by you!"
+UpdateMultipleScore (Serlvet) -->>sessionEnrolls: Http Status 403 "Attempt to access a resource not owned by you!"
 activate sessionEnrolls
 sessionEnrolls->sessionEnrolls:show error message
 deactivate sessionEnrolls
@@ -98,7 +98,7 @@ activate UpdateMultipleScore (Serlvet)
 end
 end
 alt Correct Multiple Modify Request
-UpdateMultipleScore (Serlvet)->sessionEnrolls: Http Status 200
+UpdateMultipleScore (Serlvet)->>sessionEnrolls: Http Status 200
 deactivate UpdateMultipleScore (Serlvet)
 activate sessionEnrolls
 sessionEnrolls->sessionEnrolls:resetModal()
