@@ -1,0 +1,50 @@
+frame Student ExamDate Selection interaction
+
+participant CourseDate
+participant ResultDetails
+participant GetResultDetails #lightblue
+participant EnrollsDAO #lightblue
+participant Session #lightblue
+
+[->>CourseDate: click on exam date
+activate CourseDate
+CourseDate->>CourseDate: waiter(examdates)
+CourseDate->>ResultDetails: reset()
+activate ResultDetails
+CourseDate->>ResultDetails: show(exam_date_id, exam_date, course_id, course_name)
+
+deactivateafter CourseDate
+ResultDetails-->>GetResultDetails: Ajax GET(GetResultDetails?IDExamDate)
+
+activate GetResultDetails
+GetResultDetails->Session: getAttribute("user")
+activate Session
+Session-->>GetResultDetails: user
+
+deactivate Session
+GetResultDetails-->>EnrollsDAO: new EnrollsDAO()
+
+activate EnrollsDAO
+deactivateafter EnrollsDAO
+GetResultDetails->EnrollsDAO: FindStudentScore(IDExamDate, user.getId())
+activate EnrollsDAO
+EnrollsDAO-->>GetResultDetails: enroll
+
+deactivateafter EnrollsDAO
+alt !(enroll.getStatus() == (NOT_INSERTED || INSERTED)
+GetResultDetails-->>ResultDetails: Http Code 200 [serialized_resultDetails]
+else otherwise
+GetResultDetails-->>ResultDetails: Http Code 204
+deactivateafter GetResultDetails
+end
+
+alt Http Code == 200
+ResultDetails->>ResultDetails: update(resultDet)
+else otherwise
+ResultDetails->>ResultDetails: showError()
+end
+
+
+
+
+

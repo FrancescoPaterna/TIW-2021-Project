@@ -1,0 +1,31 @@
+frame Student Logout interaction
+
+participant HomeStud.html & student.js
+participant SessionStorage
+participant Logout#lightblue
+participant Session #lightblue
+participant index.html
+
+[->>HomeStud.html & student.js: click on Logout button
+activate HomeStud.html & student.js
+HomeStud.html & student.js->>SessionStorage:removeItem(user)
+activate SessionStorage
+deactivateafter SessionStorage
+note right of HomeStud.html & student.js: id\nname\nsurname\nrole
+HomeStud.html & student.js->>Logout: GET()
+
+activate Logout
+deactivateafter HomeStud.html & student.js
+Logout->>Session: invalidate()
+activate Session
+deactivateafter Session
+Logout->>index.html: sendRedirect()
+
+
+
+
+
+
+
+activate index.html
+deactivateafter Logout
