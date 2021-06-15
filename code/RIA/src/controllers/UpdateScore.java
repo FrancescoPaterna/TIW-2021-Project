@@ -109,9 +109,7 @@ public class UpdateScore extends HttpServlet {
 			return;
 		}
 
-		// Redirect to the servlet in order to get the update list of session enrolls
-		String path = getServletContext().getContextPath();
-		response.sendRedirect(path + "/GetSessionEnrolls?exam_date_id=" + exam_date_id);
+		response.setStatus(HttpServletResponse.SC_OK);
 	}
 
 }

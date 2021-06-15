@@ -1,0 +1,108 @@
+frame Modify Interaction
+participant HomePro.html & professor.js
+participant sessionEnrolls
+participant UpdateScore (Serlvet)#lightblue
+participant GetCourseDatePro (Servlet) #lightblue
+participant EnrollsDAO #lightblue
+participant ExamDateDAO #lightblue
+participant Session #lightblue
+participant GoodScore #lightblue
+
+HomePro.html & professor.js ->sessionEnrolls: modify.eventHandler("click")
+activate sessionEnrolls
+sessionEnrolls->sessionEnrolls: sessionEnrolls.resetModal()
+sessionEnrolls->sessionEnrolls: updateSingleModifier()
+deactivate sessionEnrolls
+
+
+HomePro.html & professor.js ->sessionEnrolls: select ["score"] in form
+activate sessionEnrolls
+HomePro.html & professor.js ->sessionEnrolls: update.eventHandler("click")
+
+sessionEnrolls->sessionEnrolls: new_score = form.querySelector("select[name = 'score']").value;
+sessionEnrolls ->UpdateScore (Serlvet): AJAX POST (id_stud, exam_date_id, score)
+deactivate sessionEnrolls
+activate UpdateScore (Serlvet)
+
+UpdateScore (Serlvet) ->GoodScore: CheckValidScore(score)
+
+deactivate UpdateScore (Serlvet)
+activate GoodScore
+alt invalid score
+GoodScore -->UpdateScore (Serlvet): false
+deactivate GoodScore
+activate UpdateScore (Serlvet)
+UpdateScore (Serlvet) -->sessionEnrolls: Http Status 400 "Not Valid Score"
+deactivate UpdateScore (Serlvet)
+
+activate sessionEnrolls
+sessionEnrolls->sessionEnrolls:show error message
+deactivate sessionEnrolls
+end
+
+alt valid score
+activate GoodScore
+GoodScore -->UpdateScore (Serlvet): true
+deactivate GoodScore
+activate UpdateScore (Serlvet)
+UpdateScore (Serlvet)->ExamDateDAO:CheckExamDateByProf(user.getId(), exam_date_id)
+deactivate UpdateScore (Serlvet)
+
+
+alt Attempt Attack, Exam does not belong to the professor
+
+
+activate ExamDateDAO
+ExamDateDAO -->UpdateScore (Serlvet): false
+deactivate ExamDateDAO
+activate UpdateScore (Serlvet)
+UpdateScore (Serlvet) -->sessionEnrolls: Http Status 403 "UNAUTHORIZED MODIFY"
+activate sessionEnrolls
+
+UpdateScore (Serlvet)->Session: invalidate()
+deactivate UpdateScore (Serlvet)
+sessionEnrolls->sessionEnrolls:show error message
+deactivate sessionEnrolls
+end 
+
+
+alt Exam Belong to the Teacher
+activate ExamDateDAO
+ExamDateDAO -->UpdateScore (Serlvet): true
+deactivate ExamDateDAO
+activate UpdateScore (Serlvet)
+UpdateScore (Serlvet) ->EnrollsDAO:enrollsdao.insertMark(exam_date_id, id_stud, score)
+deactivate UpdateScore (Serlvet)
+
+
+alt Attempted to Modify a score not in INSERTED or NOT_INSERED state
+activate EnrollsDAO
+EnrollsDAO-->UpdateScore (Serlvet): 0
+deactivate EnrollsDAO
+activate UpdateScore (Serlvet)
+
+UpdateScore (Serlvet) -->sessionEnrolls: Http Status 403 "Attempt to access a resource not owned by you!"
+activate sessionEnrolls
+sessionEnrolls->sessionEnrolls:show error message
+deactivate sessionEnrolls
+UpdateScore (Serlvet)->Session: invalidate()
+deactivate UpdateScore (Serlvet)
+end
+
+alt Correct Modify Request
+activate EnrollsDAO
+EnrollsDAO-->UpdateScore (Serlvet): 1
+deactivate EnrollsDAO
+activate UpdateScore (Serlvet)
+UpdateScore (Serlvet)->sessionEnrolls: Http Status 200
+deactivate UpdateScore (Serlvet)
+activate sessionEnrolls
+sessionEnrolls->sessionEnrolls:score.textContent = new_score;
+sessionEnrolls->sessionEnrolls:status.textContent = "INSERTED";
+sessionEnrolls->sessionEnrolls:resetMain()
+sessionEnrolls->sessionEnrolls:sessionEnrolls.show(sessionEnrolls.current_exam)
+deactivate sessionEnrolls
+end
+end
+end
+
