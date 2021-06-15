@@ -1,0 +1,74 @@
+frame HomeStud load
+
+participant HomeStud.html & student.js
+participant PageOrchestrator
+participant PersonalMessage
+participant CourseList
+participant CourseDate
+participant ResultDetails
+participant GetCourseStud #lightblue
+participant CourseDAO #lightblue
+participant sessionStorage
+participant alertContainer
+participant Session #lightblue
+
+HomeStud.html & student.js -->>PageOrchestrator: new pageOrchestrator
+
+activate HomeStud.html & student.js
+activate PageOrchestrator
+HomeStud.html & student.js->>PageOrchestrator: start();
+
+PageOrchestrator->sessionStorage: getItem('name', 'surname', 'id')
+
+
+activate sessionStorage
+
+deactivateafter sessionStorage
+PageOrchestrator-->>PersonalMessage: new personalMessage()
+activate PersonalMessage
+PageOrchestrator->>PersonalMessage: show()
+
+deactivateafter PersonalMessage
+PageOrchestrator-->>CourseList: new CourseList()
+activate CourseList
+deactivateafter CourseList
+PageOrchestrator-->>CourseDate: new CourseDate()
+activate CourseDate
+deactivateafter CourseDate
+PageOrchestrator-->>ResultDetails: new ResultDetails()
+
+activate ResultDetails
+deactivateafter ResultDetails
+HomeStud.html & student.js ->>PageOrchestrator: refresh();
+
+PageOrchestrator->>CourseList: reset()
+activate CourseList
+deactivateafter CourseList
+PageOrchestrator->>CourseDate: reset()
+activate CourseDate
+deactivateafter CourseDate
+PageOrchestrator->>ResultDetails: reset()
+
+
+activate ResultDetails
+deactivateafter ResultDetails
+PageOrchestrator->>CourseList: show()
+
+activate CourseList
+CourseList-->>GetCourseStud: Ajax GET
+
+activate GetCourseStud
+GetCourseStud->Session: getAttribute("user")
+activate Session
+Session-->>GetCourseStud: user
+
+deactivate Session
+GetCourseStud->CourseDAO: findCoursesByIdStudent(user.getId())
+activate CourseDAO
+CourseDAO-->>GetCourseStud: courses
+
+deactivateafter CourseDAO
+GetCourseStud-->>CourseList: Http Code 200 - [serialized_courses]
+
+deactivateafter GetCourseStud
+CourseList ->CourseList: update()

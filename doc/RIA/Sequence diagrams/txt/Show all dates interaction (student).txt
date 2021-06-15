@@ -1,0 +1,16 @@
+frame Show all dates interaction (student)
+
+participant CourseDate
+participant ResultDetails
+
+[->>CourseDate: click on "show all dates" button
+
+activate CourseDate
+CourseDate->>CourseDate: reset()
+CourseDate->>CourseDate: update(currentDateList)
+
+CourseDate->>ResultDetails: reset()
+
+activate ResultDetails
+deactivateafter ResultDetails
+note right of CourseDate: Hide "show all dates" buttons

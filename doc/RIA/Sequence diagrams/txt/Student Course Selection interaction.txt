@@ -1,0 +1,45 @@
+frame Student Course Selection interaction
+
+participant CourseList
+participant CourseDate
+participant GetCourseDateStud #lightblue
+participant ExamDateDAO #lightblue
+participant Session #lightblue
+
+[->>CourseList: click on course
+activate CourseList
+CourseList->>CourseDate: show(course_id, coursename)
+activate CourseDate
+CourseList->>CourseList: waiter(course)
+deactivateafter CourseList
+CourseDate-->>GetCourseDateStud: Ajax GET(GetCourseDateStud?course_id)
+
+activate GetCourseDateStud
+GetCourseDateStud->Session: getAttribute("user")
+activate Session
+Session-->>GetCourseDateStud: user
+
+deactivateafter Session
+GetCourseDateStud-->>ExamDateDAO: newExamDateDAO()
+activate ExamDateDAO
+deactivateafter ExamDateDAO
+GetCourseDateStud->ExamDateDAO: FindExameDateBYCourseForStudent(user.getId(), course_id)
+activate ExamDateDAO
+ExamDateDAO-->>GetCourseDateStud: exams
+
+deactivateafter ExamDateDAO
+alt !(exam.isEmpty())
+GetCourseDateStud-->>CourseDate: Http Code 200 - [serialized_courseDates]
+else otherwise
+GetCourseDateStud-->>CourseDate: Http Code 204
+deactivateafter GetCourseDateStud
+end
+
+alt Http Code == 200
+CourseDate->>CourseDate: update(courseDates)
+else otherwise
+CourseDate->>CourseDate: showError()
+end
+
+
+

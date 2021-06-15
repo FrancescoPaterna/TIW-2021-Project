@@ -1,0 +1,65 @@
+frame Mark Rejection interaction
+
+participant ResultDetails
+participant UpdateResultStud #lightblue
+participant GetResultDetails #lightblue
+participant EnrollsDAO #lightblue
+participant Session #lightblue
+
+[->>ResultDetails: click on Refuse button
+activate ResultDetails
+ResultDetails->>ResultDetails: refuseScore(form)
+note over ResultDetails, UpdateResultStud: only if form.checkValidity() is true
+ResultDetails-->>UpdateResultStud: Ajax POST
+
+activate UpdateResultStud
+UpdateResultStud->Session: getAttribute("user")
+activate Session
+Session-->>UpdateResultStud: user
+
+deactivateafter Session
+UpdateResultStud-->>EnrollsDAO: new EnrollsDAO()
+activate EnrollsDAO
+deactivateafter EnrollsDAO
+UpdateResultStud->>EnrollsDAO: RefuseScore(IDExamDate, user.getId())
+activate EnrollsDAO
+deactivateafter EnrollsDAO
+UpdateResultStud->>GetResultDetails: Redirect
+
+activate GetResultDetails
+deactivateafter UpdateResultStud
+GetResultDetails->Session: getAttribute("user")
+activate Session
+Session-->>GetResultDetails: user
+
+deactivate Session
+GetResultDetails-->>EnrollsDAO: new EnrollsDAO()
+
+activate EnrollsDAO
+deactivateafter EnrollsDAO
+GetResultDetails->EnrollsDAO: FindStudentScore(IDExamDate, user.getId())
+activate EnrollsDAO
+EnrollsDAO-->>GetResultDetails: enroll
+
+deactivateafter EnrollsDAO
+alt !(enroll.getStatus() == (NOT_INSERTED || INSERTED)
+GetResultDetails-->>ResultDetails: Http Code 200 [serialized_resultDetails]
+else otherwise
+GetResultDetails-->>ResultDetails: Http Code 204
+deactivateafter GetResultDetails
+end
+
+alt Http Code == 200
+ResultDetails->>ResultDetails: update(message)
+else otherwise
+ResultDetails->>ResultDetails: showError()
+ResultDetails->>ResultDetails: reset()
+end
+
+
+
+
+
+
+
+

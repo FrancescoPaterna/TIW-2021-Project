@@ -1,0 +1,19 @@
+frame Show all courses interaction (student)
+
+participant CourseList
+participant CourseDate
+participant ResultDetails
+
+[->>CourseList: click on "show all courses" button
+activate CourseList
+CourseList->>CourseList: reset()
+CourseList->>CourseList: update(current_courseList)
+CourseList->>CourseDate: reset()
+activate CourseDate
+deactivateafter CourseDate
+CourseList->>ResultDetails: reset()
+
+
+activate ResultDetails
+deactivateafter ResultDetails
+note right of CourseList: Hide "show all courses" and "show all dates" buttons
