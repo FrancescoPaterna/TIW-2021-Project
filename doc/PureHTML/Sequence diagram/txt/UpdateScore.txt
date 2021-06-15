@@ -12,7 +12,7 @@ participant TemplateEngine
 
 note left of Browser:course_id\nid_stud\nexam_date_id\nsort\nscore\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg
 
-Browser->UpdateScore: POST
+Browser->>UpdateScore: POST
 
 activate UpdateScore
 UpdateScore-->>EnrollsDAO: new EnrollsDAO(connection)
@@ -28,40 +28,40 @@ Session-->>UpdateScore:user
 
 deactivate Session
 alt score == null || !(GoodScore.CheckValidScore(score)
-UpdateScore->WebContext:setVariable("error", "NotValidScore")
+UpdateScore->>WebContext:setVariable("error", "NotValidScore")
 activate WebContext
-UpdateScore->WebContext:setVariable("description", "Selected Score is not Valid")
+UpdateScore->>WebContext:setVariable("description", "Selected Score is not Valid")
 deactivate WebContext
-UpdateScore->TemplateEngine:process("Warning.html", ctx, response.getWriter())
+UpdateScore->>TemplateEngine:process("Warning.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 else otherwise
 alt examdatedao.CheckExamDateByProf(user.getId(), exam_date_id) == true
 alt enrollsdao.insertMark(exam_date_id, id_stud, score) == 0
-UpdateScore->WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
+UpdateScore->>WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
 activate WebContext
-UpdateScore->WebContext:setVariable("description", "Attempt to modify a score recorded or refused")
+UpdateScore->>WebContext:setVariable("description", "Attempt to modify a score recorded or refused")
 deactivate WebContext
-UpdateScore->Session:invalidate()
+UpdateScore->>Session:invalidate()
 activate Session
 deactivateafter Session
-UpdateScore->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
+UpdateScore->>TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 else otherwise
-UpdateScore->GoToModify:Redirect
+UpdateScore->>GoToModify:Redirect
 activate GoToModify
 deactivateafter GoToModify
 end 
 else otherwise
-UpdateScore->WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
+UpdateScore->>WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
 activate WebContext
-UpdateScore->WebContext:setVariable("description", "Attempt to modify a resource not owned by you")
+UpdateScore->>WebContext:setVariable("description", "Attempt to modify a resource not owned by you")
 deactivate WebContext
-UpdateScore->Session:invalidate()
+UpdateScore->>Session:invalidate()
 activate Session
 deactivateafter Session
-UpdateScore->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
+UpdateScore->>TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 end 

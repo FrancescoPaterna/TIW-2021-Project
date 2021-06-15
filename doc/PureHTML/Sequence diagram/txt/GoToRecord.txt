@@ -12,7 +12,7 @@ participant TemplateEngine
 
 note left of Browser:sort\ncourse_id\nexam_date_id\ncoursename\ndate\nmask
 
-Browser->GoToRecord:POST
+Browser->>GoToRecord:POST
 
 activate GoToRecord
 GoToRecord->Session:getAttribute("user")
@@ -25,26 +25,26 @@ GoToRecord-->>RecordDAO:new RecordDAO(connection)
 GoToRecord-->>ExamDateDAO:new ExamDateDAO(connection)
 
 alt examdateDAO.CheckExamDateByProf(user.getId(), exam_date_id) == false
-GoToRecord->WebContext:setVariable("error", "UNAUTHORIZED ACCESS")
+GoToRecord->>WebContext:setVariable("error", "UNAUTHORIZED ACCESS")
 activate WebContext
-GoToRecord->WebContext:setVariable("description", "Attemp to access a resource not owned by you!")
+GoToRecord->>WebContext:setVariable("description", "Attemp to access a resource not owned by you!")
 deactivate WebContext
-GoToRecord->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
+GoToRecord->>TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
-GoToRecord->Session:invalidate()
+GoToRecord->>Session:invalidate()
 activate Session
 deactivateafter Session
 else otherwise
 alt enrollsDAO.assertion_record(exam_date_id) == true
-GoToRecord->RecordDAO:writeRecordOnDb(exam_date_id)
+GoToRecord->>RecordDAO:writeRecordOnDb(exam_date_id)
 activate RecordDAO
 deactivateafter RecordDAO
 GoToRecord->RecordDAO:getCurrentID(exam_date_id)
 activate RecordDAO
 RecordDAO-->>GoToRecord:rec
 deactivate RecordDAO
-GoToRecord->EnrollsDAO:recordScore(exam_date_id, rec)
+GoToRecord->>EnrollsDAO:recordScore(exam_date_id, rec)
 activate EnrollsDAO
 deactivateafter EnrollsDAO
 GoToRecord->EnrollsDAO:findRecordedStudents(rec)
@@ -65,28 +65,28 @@ GoToRecord->SimpleDateFormat:format(timestamp)
 activate SimpleDateFormat
 SimpleDateFormat-->>GoToRecord:time
 deactivate SimpleDateFormat
-GoToRecord->WebContext:setVariable("recorded", recorded)
+GoToRecord->>WebContext:setVariable("recorded", recorded)
 activate WebContext
-GoToRecord->WebContext:setVariable("mask", mask)
-GoToRecord->WebContext:setVariable("sort", sort)
-GoToRecord->WebContext:setVariable("recorded", recorded)
-GoToRecord->WebContext:setVariable("rec", rec)
-GoToRecord->WebContext:setVariable("coursename", coursename)
-GoToRecord->WebContext:setVariable("date", date)
-GoToRecord->WebContext:setVariable("time", time)
-GoToRecord->WebContext:setVariable("exam_date_id", exam_date_id)
-GoToRecord->WebContext:setVariable("course_id", course_id)
-GoToRecord->WebContext:setVariable("professor", professor)
+GoToRecord->>WebContext:setVariable("mask", mask)
+GoToRecord->>WebContext:setVariable("sort", sort)
+GoToRecord->>WebContext:setVariable("recorded", recorded)
+GoToRecord->>WebContext:setVariable("rec", rec)
+GoToRecord->>WebContext:setVariable("coursename", coursename)
+GoToRecord->>WebContext:setVariable("date", date)
+GoToRecord->>WebContext:setVariable("time", time)
+GoToRecord->>WebContext:setVariable("exam_date_id", exam_date_id)
+GoToRecord->>WebContext:setVariable("course_id", course_id)
+GoToRecord->>WebContext:setVariable("professor", professor)
 deactivate WebContext
-GoToRecord->TemplateEngine:process("Record.html, ctx, response.getWriter())
+GoToRecord->>TemplateEngine:process("Record.html, ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 else otherwise
-GoToRecord->WebContext:setVariable("error", "Impossible To Record Score")
+GoToRecord->>WebContext:setVariable("error", "Impossible To Record Score")
 activate WebContext
-GoToRecord->WebContext:setVariable("description", "Cannot Find Any Score in Published State!")
+GoToRecord->>WebContext:setVariable("description", "Cannot Find Any Score in Published State!")
 deactivate WebContext
-GoToRecord->TemplateEngine:process("Warning.html", ctx, response.getWriter())
+GoToRecord->>TemplateEngine:process("Warning.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 end

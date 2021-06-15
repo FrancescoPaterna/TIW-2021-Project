@@ -5,13 +5,13 @@ participant Logout
 participant Session
 participant CheckLogin
 
-Browser->Logout:GET
+Browser->>Logout:GET
 
 activate Logout
-Logout->Session:Invalidate
+Logout->>Session:Invalidate
 
 activate Session
 deactivateafter Session
-Logout->CheckLogin:Redirect
+Logout->>CheckLogin:Redirect
 
 activate CheckLogin

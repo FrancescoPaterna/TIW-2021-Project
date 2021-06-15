@@ -8,7 +8,7 @@ participant TemplateEngine
 
 note left of Browser:sort\ncourse_id\nid_stud\nexam_date_id\nmark\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg\nstatus
 
-Browser->GoToModify:GET
+Browser->>GoToModify:GET
 activate GoToModify
 
 GoToModify-->>EnrollsDAO: new EnrollsDAO(connection)
@@ -22,30 +22,30 @@ EnrollsDAO-->>GoToModify: isModifiable
 deactivate EnrollsDAO
 
 alt isModifiable == false
-GoToModify->WebContext:setVariable("error", "Impossible To Modify Score")
+GoToModify->>WebContext:setVariable("error", "Impossible To Modify Score")
 activate WebContext
-GoToModify->WebContext:setVariable("description", "You Can Only Modify Score in NOT_INSERTED or INSERTED Status!")
+GoToModify->>WebContext:setVariable("description", "You Can Only Modify Score in NOT_INSERTED or INSERTED Status!")
 deactivate WebContext
-GoToModify->TemplateEngine: process("Warning.html", ctx, response.getWriter())
+GoToModify->>TemplateEngine: process("Warning.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 else otherwise
-GoToModify->WebContext:setVariable("sort", secretsortcode)
+GoToModify->>WebContext:setVariable("sort", secretsortcode)
 activate WebContext
-GoToModify->WebContext:setVariable("course_id", course_id)
-GoToModify->WebContext:setVariable("id_stud", id_stud)
-GoToModify->WebContext:setVariable("exam_date_id", exam_date_id)
-GoToModify->WebContext:setVariable("mask", recovered_mask)
-GoToModify->WebContext:setVariable("mark", mark)
-GoToModify->WebContext:setVariable("coursename", coursename)
-GoToModify->WebContext:setVariable("date", date)
-GoToModify->WebContext:setVariable("name", name)
-GoToModify->WebContext:setVariable("surname", surname)
-GoToModify->WebContext:setVariable("email", email)
-GoToModify->WebContext:setVariable("coursedeg", coursedeg)
-GoToModify->WebContext:setVariable("status", status)
+GoToModify->>WebContext:setVariable("course_id", course_id)
+GoToModify->>WebContext:setVariable("id_stud", id_stud)
+GoToModify->>WebContext:setVariable("exam_date_id", exam_date_id)
+GoToModify->>WebContext:setVariable("mask", recovered_mask)
+GoToModify->>WebContext:setVariable("mark", mark)
+GoToModify->>WebContext:setVariable("coursename", coursename)
+GoToModify->>WebContext:setVariable("date", date)
+GoToModify->>WebContext:setVariable("name", name)
+GoToModify->>WebContext:setVariable("surname", surname)
+GoToModify->>WebContext:setVariable("email", email)
+GoToModify->>WebContext:setVariable("coursedeg", coursedeg)
+GoToModify->>WebContext:setVariable("status", status)
 deactivate WebContext
-GoToModify->TemplateEngine:process("Modify.html", ctx, response.getWriter())
+GoToModify->>TemplateEngine:process("Modify.html", ctx, response.getWriter())
 activate TemplateEngine
 deactivateafter TemplateEngine
 end
