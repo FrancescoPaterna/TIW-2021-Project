@@ -1,4 +1,4 @@
-title GoToResult
+frame GoToResult
 
 participant Browser
 participant GoToResult

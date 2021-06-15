@@ -1,4 +1,4 @@
-title LoginChecker
+frame LoginChecker
 
 participant Browser
 participant LoginChecker
@@ -7,19 +7,28 @@ participant TemplateEngine
 
 
 Browser->LoginChecker: GET || POST
+activate LoginChecker
 LoginChecker->Session: getSession()
+deactivate LoginChecker
+activate Session
 Session-->LoginChecker: Session
-
+deactivate Session
+activate LoginChecker
 alt Session is new
 LoginChecker->TemplateEngine: index.html, "You're not logged in"
+deactivate LoginChecker
 end 
 
 alt Session isn't new
+activate LoginChecker
 alt user == null
 LoginChecker->TemplateEngine: index.html, "You're not logged in"
+deactivate LoginChecker
 end 
 alt user != null
+activate LoginChecker
 LoginChecker->LoginChecker: dofilter(req,res)
+deactivate LoginChecker
 end 
 
 end 

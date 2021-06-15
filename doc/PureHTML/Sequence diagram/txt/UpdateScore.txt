@@ -1,4 +1,4 @@
-title UpdateScore
+frame UpdateScore
 
 participant Browser
 participant UpdateScore

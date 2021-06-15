@@ -1,4 +1,4 @@
-title Logout
+frame Logout
 
 participant Browser
 participant Logout

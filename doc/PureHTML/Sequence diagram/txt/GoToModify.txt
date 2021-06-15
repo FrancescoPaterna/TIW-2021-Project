@@ -1,4 +1,4 @@
-title GoToModify
+frame GoToModify
 
 participant Browser
 participant GoToModify

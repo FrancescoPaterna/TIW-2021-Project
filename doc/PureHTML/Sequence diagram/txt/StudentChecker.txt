@@ -1,4 +1,4 @@
-title StudentChecker
+frame StudentChecker
 
 participant Browser
 participant StudentChecker
@@ -7,8 +7,13 @@ participant TemplateEngine
 
 
 Browser->StudentChecker: GET || POST
+activate StudentChecker
 StudentChecker->Session: getSession()
+deactivate StudentChecker
+activate Session
 Session-->StudentChecker: Session
+deactivate Session
+activate StudentChecker
 
 
 
@@ -16,10 +21,13 @@ alt user.getRole() != student
 
 StudentChecker->TemplateEngine: Forbidden.html, "UNAUTHORIZED ACCESS", description
 StudentChecker->Session: invalidate()
+deactivate StudentChecker
 
 end 
+activate StudentChecker
 alt user.getRole() == student 
-StudentChecker->StudentChecker: doFilter(req,res)              
+StudentChecker->StudentChecker: doFilter(req,res)        
+deactivate StudentChecker
 end 
 
  

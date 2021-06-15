@@ -1,4 +1,4 @@
-title GoToRecord
+frame GoToRecord
 
 participant Browser
 participant GoToRecord

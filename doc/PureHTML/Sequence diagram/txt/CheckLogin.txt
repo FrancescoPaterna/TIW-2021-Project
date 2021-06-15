@@ -1,4 +1,4 @@
-title CheckLogin
+frame CheckLogin
 
 participant Browser
 participant CheckLogin
@@ -9,33 +9,48 @@ participant Session
 participant GoToHomePageStud
 
 
-Browser->CheckLogin:POST
 note over Browser, CheckLogin: Id, Pwd
-
+Browser->CheckLogin:POST
+activate CheckLogin
 
 
 
 alt id = null || id = '' ||  pwd = null || pwd ='' 
 CheckLogin->TemplateEngine: ("index.html", "No pwd/id insert")
+deactivate CheckLogin
 end
-
+activate CheckLogin
 CheckLogin->Utils: pwd
+activate Utils
+deactivate CheckLogin
 Utils->CheckLogin: secure_pwd (hash)
+deactivate Utils
+activate CheckLogin
+
 
 CheckLogin->UserDAO: CheckCredentials(id, secure_pwd)
+deactivate CheckLogin
+activate UserDAO
 
 UserDAO->CheckLogin: User 
+deactivate UserDAO
+activate CheckLogin
 
 alt  user = null
 CheckLogin->TemplateEngine: process("index.html", "Incorrect Usr or Pwd")
+deactivate CheckLogin
 end
-
+activate CheckLogin
 CheckLogin->Session: SetAttribute("user", user)
 
-alt user.getRole().equals("Student")
+alt user.getRole().equals("Student")activate CheckLogin
+
 CheckLogin->GoToHomePageStud: redirect
+deactivate CheckLogin
 end
 
 alt user.getRole().equals("Professor")
+activate CheckLogin
 CheckLogin->GoToHomePagePro: redirect
+deactivate CheckLogin
 end

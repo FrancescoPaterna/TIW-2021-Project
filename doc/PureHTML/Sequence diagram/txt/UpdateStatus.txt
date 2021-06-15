@@ -1,48 +1,68 @@
-title UpdateStatus
+title UpdateScore
 
 participant Browser
-participant UpdateStatus
+participant UpdateScore
 participant ExamDateDAO
 participant EnrollsDAO
 participant Session
+participant GoodScore
+participant WebContext
+participant GoToModify
 participant TemplateEngine
-participant Rebuilder
-participant Response
 
-note left of Browser:coursename\ndate\nmask\nsecretsortcode\ncourse_id\nexam_date_id
+note left of Browser:course_id\nid_stud\nexam_date_id\nsort\nscore\ncoursename\nmask\ndate\nname\nsurname\nemail\ncoursedeg
 
+Browser->UpdateScore: POST
 
-Browser->UpdateStatus:POST
+activate UpdateScore
+UpdateScore-->>EnrollsDAO: new EnrollsDAO(connection)
+activate EnrollsDAO
+deactivateafter EnrollsDAO
+UpdateScore-->>ExamDateDAO:new ExamDateDAO(connection)
 
-UpdateStatus->Session: getSession()
+activate ExamDateDAO
+deactivateafter ExamDateDAO
+UpdateScore->Session:getAttribute("user")
+activate Session
+Session-->>UpdateScore:user
 
-
-
-alt user.getRole() == professor
-UpdateStatus->ExamDateDAO: CheckExamDateByProf(user.getId(), Exam_date_id)
-
-alt false [Attack = attempted attack]
-UpdateStatus->TemplateEngine: Forbidden.html, "UNAUTHORIZED ACCESS", description
-end
-
-alt true [Session Belongs To Current User]
-UpdateStatus->EnrollsDAO: assertion_published(exam_date_id)
-alt Count INSERTED Scores > 0
-UpdateStatus->EnrollsDAO:PublishScore(exam_date_id)
+deactivate Session
+alt score == null || !(GoodScore.CheckValidScore(score)
+UpdateScore->WebContext:setVariable("error", "NotValidScore")
+activate WebContext
+UpdateScore->WebContext:setVariable("description", "Selected Score is not Valid")
+deactivate WebContext
+UpdateScore->TemplateEngine:process("Warning.html", ctx, response.getWriter())
+activate TemplateEngine
+deactivateafter TemplateEngine
+else otherwise
+alt examdatedao.CheckExamDateByProf(user.getId(), exam_date_id) == true
+alt enrollsdao.insertMark(exam_date_id, id_stud, score) == 0
+UpdateScore->WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
+activate WebContext
+UpdateScore->WebContext:setVariable("description", "Attempt to modify a score recorded or refused")
+deactivate WebContext
+UpdateScore->Session:invalidate()
+activate Session
+deactivateafter Session
+UpdateScore->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
+activate TemplateEngine
+deactivateafter TemplateEngine
+else otherwise
+UpdateScore->GoToModify:Redirect
+activate GoToModify
+deactivateafter GoToModify
 end 
-alt Count INSETED Scores = 0
-UpdateStatus->TemplateEngine: Warning.html, "Impossible To Publish Any Score", description
-end
-end
-UpdateStatus ->Rebuilder: resetMask(mask,secretsortcode)
-Rebuilder-->UpdateStatus: recovered_mask
-UpdateStatus ->Rebuilder: resetSecretSortCode
-Rebuilder ->UpdateStatus:sort
-UpdateStatus->Response: sendRedirect(getServletContext().getContextPath() + "/GoToSessionEnrolls" + all GET attributes recovered)
-end
-
-
-alt user.getRole() != professor
-note right of UpdateStatus: Another Check if filter fails 
-UpdateStatus->Response: sendError(SC_INTERNAL_SERVER_ERROR, "Not Allowed User")
-end
+else otherwise
+UpdateScore->WebContext:setVariable("error", "UNAUTHORIZED MODIFY")
+activate WebContext
+UpdateScore->WebContext:setVariable("description", "Attempt to modify a resource not owned by you")
+deactivate WebContext
+UpdateScore->Session:invalidate()
+activate Session
+deactivateafter Session
+UpdateScore->TemplateEngine:process("Forbidden.html", ctx, response.getWriter())
+activate TemplateEngine
+deactivateafter TemplateEngine
+end 
+end 

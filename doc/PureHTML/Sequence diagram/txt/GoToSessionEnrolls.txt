@@ -1,4 +1,4 @@
-title GoToSessionEnrolls
+frame GoToSessionEnrolls
 
 participant Browser
 participant GoToSessionEnrolls
@@ -7,6 +7,7 @@ participant UserDAO
 participant ExamDateDAO
 participant EnrollsDAO
 participant Session
+participant Rebuilder
 participant TemplateEngine
 
 
@@ -14,31 +15,74 @@ note left of Browser:coursename\ncourse_id\nexam_date_id\ndate \nmask,sort
 
 
 Browser->GoToSessionEnrolls:GET
+activate GoToSessionEnrolls
+GoToSessionEnrolls->Session: getAttribute(user)
+deactivate GoToSessionEnrolls
+activate Session
+Session-->GoToSessionEnrolls: user
+deactivate Session
+activate GoToSessionEnrolls
 
 GoToSessionEnrolls->UserDAO: CheckExamDateByProf(user.getId())
 
 alt ExamDate Not Owned By User.id 
 GoToSessionEnrolls->TemplateEngine: ("Forbidden.html", "UNAUTHORIZED ACCESS")
 GoToSessionEnrolls->Session: invalidate
+deactivate GoToSessionEnrolls
 end 
 
 
 ==SORTING SYSTEM SUMMARY \n==
 alt Sort By IDStud (sort = n)
+activate GoToSessionEnrolls
 alt mask[n-1] = '0'OR mask[n-1] = '2'
 note over GoToSessionEnrolls:maskget: Create a Deafualt Mask [2222222] and Set '1' To Position (Column -1)
 GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByXXXXAsc(exam_date_id)
+deactivate GoToSessionEnrolls
+activate EnrollsDAO
+EnrollsDAO -->GoToSessionEnrolls: List<Enrolls>
+deactivate EnrollsDAO
+activate GoToSessionEnrolls
+
 end
+deactivate GoToSessionEnrolls
 alt mask[n-1] = '1'
+activate GoToSessionEnrolls
 note over GoToSessionEnrolls:maskget: Create a Deafualt Mask [2222222] and Set '0' To Position (Column -1)
 GoToSessionEnrolls->EnrollsDAO:FindEnrollsOrderedByXXXXDesc(exam_date_id)
+deactivate GoToSessionEnrolls
+activate EnrollsDAO
+EnrollsDAO -->GoToSessionEnrolls: List<Enrolls>
+deactivate EnrollsDAO
+activate GoToSessionEnrolls
 end
+deactivate GoToSessionEnrolls
 end
+activate GoToSessionEnrolls
 
 
 
 ==END SORTING SYSTEM\n\n   See all function in the\n      complete version==
 GoToSessionEnrolls->EnrollsDAO: assertion_published(exam_date_id)
+activate EnrollsDAO
+deactivate GoToSessionEnrolls
+EnrollsDAO-->GoToSessionEnrolls:true or false
+deactivate EnrollsDAO
+activate GoToSessionEnrolls
 GoToSessionEnrolls->EnrollsDAO: assertion_record(exam_date_id)
-GoToSessionEnrolls->TemplateEngine: ExamEnrolls.html, recovered_mask, publish, record, course_id, exam_date_id, enrolls, coursename, date, mask, sort
+activate EnrollsDAO
+deactivate GoToSessionEnrolls
+EnrollsDAO-->GoToSessionEnrolls:true or false
 
+deactivate EnrollsDAO
+activate GoToSessionEnrolls
+GoToSessionEnrolls->Rebuilder: mask
+activate Rebuilder
+deactivate GoToSessionEnrolls
+Rebuilder-->GoToSessionEnrolls: recovered_mask
+deactivate Rebuilder
+activate GoToSessionEnrolls
+GoToSessionEnrolls->TemplateEngine: ExamEnrolls.html, recovered_mask, publish, record, course_id, exam_date_id, enrolls, coursename, date, mask, recovered_mask, sort
+deactivate GoToSessionEnrolls
+
+deactivate GoToSessionEnrolls
