@@ -29,7 +29,7 @@ Here you can find all the docuemnts about db design, sequence diagram, IFML sche
 <br>
 |  Preview | Links |
 | ------------- | ------------- |
-|<img src="https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/login_page.png" alt="login_page" width="500"/>|Pure HTML - [pdf](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/HTML_PURE%20-%20Gruppo%2025%20-%20Paterna-Restelli-Sanchini.pdf)<br>RIA - [pdf](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/RIA%20-%20Gruppo%2025%20-%20Paterna-Restelli-Sanchini.pdf)<br>Additional Features - [pptx](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Funzionalità%20Aggiuntive%20-%20Gruppo%2025.pptx)|
+|<img src="https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/login_page.png" alt="login_page" width="500"/>|Pure HTML - [pdf](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/HTML_PURE%20-%20Gruppo%2025%20-%20Paterna-Restelli-Sanchini.pdf)<br>RIA - [pdf](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/RIA%20-%20Gruppo%2025%20-%20Paterna-Restelli-Sanchini.pdf)<br>Additional Features - [pptx](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Funzionalità%20Aggiuntive%20-%20Gruppo%2025.pptx)|
 
 <br><br>
 
