@@ -1,4 +1,4 @@
-![NightCity Universiry Banner](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/banner.jpg)
+![NightCity University Banner](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/banner.jpg)
 
 # Final Project of Web Information Technologies 2021 
 
@@ -29,10 +29,10 @@ You need and IDE like **Eclipse IDE for Enterprise Java Developers** (or similar
 ### Tecnologies Used: HTML, CSS, JDBC, MySQL, Thymeleaf, Java. 
 
 #### Professor's Home Page
-![Pro_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Professor_PureHTML.gif)
+![Pro_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/Professor_PureHTML.gif)
 
 #### Student's Home Page
-![Stud_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Student_PureHTML.gif)
+![Stud_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/Student_PureHTML.gif)
 
 
 <br><br>
@@ -42,7 +42,7 @@ You need and IDE like **Eclipse IDE for Enterprise Java Developers** (or similar
 ### Tecnologies Used: HTML, CSS, JDBC, MySQL, Java, JavaScript, JQuery. 
 
 #### Professor's Home Page
-![Pro_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Professor_RIA.gif)
+![Pro_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/Professor_RIA.gif)
 
 #### Student's Home Page
-![Stud_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/Student_RIA.gif)
+![Stud_RIA](https://github.com/FrancescoPaterna/TIW-2021-Project/blob/master/doc/Final/resources/Student_RIA.gif)
