@@ -162,33 +162,28 @@
 
 		};
 
-		this.update = function (courlist) {
+		this.update = function (examdates) {
 			var elem, i, row, destcell, linkcell, anchor;
 			this.courseDateProBody.innerHTML = ""; // empty the table body = document.getElementById("modify_surname")
 			// build updated list
 			var self = this;
-			courlist.forEach(function (examdates) { // self visible here, not this
+			examdates.forEach(function (examdate) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.ID;
+				destcell.textContent = examdate.ID;
 				row.appendChild(destcell);
-				/*destcell = document.createElement("td");
-				destcell.textContent = session.data;
-				row.appendChild(destcell);
-				self.courseDateProBody.appendChild(row);*/
 				linkcell = document.createElement("td");
 				anchor = document.createElement("a");
 				linkcell.appendChild(anchor);
-				linkText = document.createTextNode(examdates.data);
+				linkText = document.createTextNode(examdate.data);
 				anchor.appendChild(linkText);
-				//anchor.missionid = mission.id; // make list item clickable
-				anchor.setAttribute('exam_date_id', examdates.ID); // set a custom HTML attribute
+				anchor.setAttribute('exam_date_id', examdate.ID); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
 					sessionEnrolls.save(e.target.getAttribute("exam_date_id")); // save the selected exam_date_id in the current_exam VAR
 					sessionEnrolls.show(e.target.getAttribute("exam_date_id")); // the list must know the details container
-					courseDate.waiter(examdates);
-				}, false); //TODO Repeat bubbling? 
+					courseDate.waiter(examdate);
+				}, false);
 				anchor.href = "#";
 				row.appendChild(linkcell);
 				self.courseDateProBody.appendChild(row);
@@ -216,7 +211,7 @@
 				courseDate.update(courseDate.currentDateList);  //Async 2.0 MODE
 				sessionEnrolls.resetMain();
 				document.getElementById("showdate").style.visibility = "hidden";
-			}, false); //TODO Repeat bubbling?
+			}, false);
 		}
 	}
 
@@ -365,47 +360,47 @@
 			// build updated list
 			var self = this;     //FIRST 
 			flag = 0;
-			enrolls.forEach(function (examdates) { // self visible here, not this
+			enrolls.forEach(function (enroll) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.IDstudent;
+				destcell.textContent = enroll.IDstudent;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.name;
+				destcell.textContent = enroll.name;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.surname;
+				destcell.textContent = enroll.surname;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.mail;
+				destcell.textContent = enroll.mail;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.courseDeg;
+				destcell.textContent = enroll.courseDeg;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.mark;
+				destcell.textContent = enroll.mark;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.status;
+				destcell.textContent = enroll.status;
 				row.appendChild(destcell);
 				destcell = document.createElement("td");
-				if (examdates.status == "NOT_INSERTED") {
-					self.AppendIfNOTINSERTED(examdates);
+				if (enroll.status == "NOT_INSERTED") {
+					self.AppendIfNOTINSERTED(enroll);
 					self.multiple_modify_button_flag = true;
 				}
 
 				// if there is a mark in "PUBLISHED" or "REJECTED" status, enable record button
-				if (examdates.status.trim() == "PUBLISHED" || examdates.status.trim() == "REJECTED") {
+				if (enroll.status.trim() == "PUBLISHED" || enroll.status.trim() == "REJECTED") {
 					self.isRecordable = true;
 				}
 
 				// if there is a mark in "INSERTED" status, enable published button
-				if (examdates.status.trim() == "INSERTED") {
+				if (enroll.status.trim() == "INSERTED") {
 					self.isPublishable = true;
 				}
 
 				/*If a score == INSERTED OR NOT_INSERTED OR PUBLISH, Enable the Single Modify Button */
-				if (self.isModifible(examdates.status.trim())) {
+				if (self.isModifible(enroll.status.trim())) {
 					elem = document.createElement("button");
 					elem.classList.add("smodify");
 					elem.textContent = "Modify";
@@ -419,11 +414,11 @@
 						sessionEnrolls.modal_content.style.width = "75%";
 						self.first_single_modify.style.visibility = "visible";
 						self.second_single_modify.style.visibility = "visible";
-						self.modify_handler_id.setAttribute("value", examdates.IDstudent);
+						self.modify_handler_id.setAttribute("value", enroll.IDstudent);
 						self.modify_handler_examdate.setAttribute("value", self.current_exam);
 						//UPDATE THE MODAL WINDOW WITH UPDATE_SINGLE_MODIFIER FUNCTION
-						self.update_single_modifier(examdates.IDstudent, examdates.name, examdates.surname,
-							examdates.mail, examdates.mark, examdates.courseDeg, examdates.status);
+						self.update_single_modifier(enroll.IDstudent, enroll.name, enroll.surname,
+							enroll.mail, enroll.mark, enroll.courseDeg, enroll.status);
 						var self2 = self;
 						//ENABLE THE CLOSE MODAL WINDOW BUTTON
 						self.span.addEventListener("click", (c) => {

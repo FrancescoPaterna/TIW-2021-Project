@@ -164,28 +164,28 @@
 
 		};
 
-		this.update = function (courlist) {
+		this.update = function (examdates) {
 			var elem, i, row, destcell, linkcell, anchor;
 			this.courseDateStudBody.innerHTML = ""; // empty the table body
 			// build updated list
 			var self = this;
-			courlist.forEach(function (examdates) { // self visible here, not this
+			examdates.forEach(function (examdate) { // self visible here, not this
 				row = document.createElement("tr");
 				destcell = document.createElement("td");
-				destcell.textContent = examdates.ID;
+				destcell.textContent = examdate.ID;
 				row.appendChild(destcell);
 				linkcell = document.createElement("td");
 				anchor = document.createElement("a");
 				linkcell.appendChild(anchor);
-				linkText = document.createTextNode(examdates.data);
+				linkText = document.createTextNode(examdate.data);
 				anchor.appendChild(linkText);
-				anchor.setAttribute('exam_date_id', examdates.ID);
-				anchor.setAttribute('exam_date', examdates.data);
+				anchor.setAttribute('exam_date_id', examdate.ID);
+				anchor.setAttribute('exam_date', examdate.data);
 				anchor.setAttribute('course_id', self.course_id);
 				anchor.setAttribute('coursename', self.coursename); // set a custom HTML attribute
 				anchor.addEventListener("click", (e) => {
 					// dependency via module parameter
-					courseDate.waiter(examdates);
+					courseDate.waiter(examdate);
 					resultDetails.reset();
 					resultDetails.show(e.target.getAttribute("exam_date_id"),
 						e.target.getAttribute("exam_date"),
