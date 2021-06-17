@@ -410,7 +410,7 @@ public class GoToSessionEnrolls extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		String recovered_mask = Rebuilder.resetMask(mask);
+		String recovered_mask = Rebuilder.resetMask(maskget);
 		
 		ctx.setVariable("recovered_mask", recovered_mask);
 		ctx.setVariable("publish", publish);
