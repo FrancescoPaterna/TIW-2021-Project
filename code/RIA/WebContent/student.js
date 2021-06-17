@@ -158,7 +158,7 @@
 							self.update(courseDates); // self visible by closure
 						}
 						else {
-							self.alert.textContent = message;
+							resultDetails.alertNoResults.textContent = message;
 						}
 					} 
 				}

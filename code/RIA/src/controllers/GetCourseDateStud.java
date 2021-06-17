@@ -69,7 +69,7 @@ public class GetCourseDateStud extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(serialized_coursesDate);
 		} else {
-			response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			response.getWriter().println("You are not enrolled to any exam date for this exam date yet");
 		}
 	}
