@@ -54,9 +54,10 @@
 							}
 							self.update(coursesToShow); // self visible by closure
 						}
-					} else {
-						self.alert.textContent = message;
-					}
+						else {
+							self.alert.textContent = message;
+						}
+					} 
 				}
 			);
 
@@ -156,9 +157,10 @@
 							}
 							self.update(courseDates); // self visible by closure
 						}
-					} else {
-						self.alert.textContent = message;
-					}
+						else {
+							self.alert.textContent = message;
+						}
+					} 
 				}
 			);
 
@@ -269,9 +271,10 @@
 							self.alertNoResults.textContent = "The result has not been published yet!";
 							return;
 						}
-					} else {
-						self.alert.textContent = message;
-					}
+						else {
+							self.alert.textContent = message;
+						}
+					} 
 				}
 			);
 		}

@@ -55,9 +55,10 @@
 							}
 							self.update(CoursesToShow); // self visible by closure
 						}
-					} else {
-						self.alert.textContent = message;
-					}
+						else {
+							self.alert.textContent = message;
+						}
+					} 
 				}
 			);
 
@@ -154,8 +155,9 @@
 							}
 							self.update(CoursesDates); // self visible by closure
 						}
-					} else {
-						self.alert.textContent = message;
+						else {
+							self.alert.textContent = message;
+						}
 					}
 				}
 			);
@@ -337,10 +339,11 @@
 							}
 							self.update(enrolls); // self visible by closure
 						}
-					} else {
-						self.alert.textContent = message;
-						return;
-					}
+						else {
+							self.alert.textContent = message;
+							return;
+						}
+					} 
 				}
 			);
 			this.sessionEnrolls.style.visibility = "visible";
